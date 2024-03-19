@@ -1,0 +1,58 @@
+.main-title {
+    margin-top: 100px;
+    height: 89px;
+    font-size: 84px;
+}
+
+.main-description {
+    margin-top: 40px;
+    margin-bottom: 30px;
+    color: #878686;
+}
+
+.main-button {
+    width: 229px;
+    height: 52px;
+    border-radius: 25px;
+    background-color: #FC4928;
+    color: white;
+    border: none;
+    transition: opacity 0.15s;
+}
+
+.contact {
+    color: #878686;
+    margin-top: 20px;
+}
+
+.url-contact {
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.btn-ballon {
+    margin-top: 85px;
+    width: 94px;
+    height: 93px;
+    background-color: #FC4928;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    transition: opacity 0.15s;
+}
+
+.main-button:hover,
+.url-contact:hover,
+.btn-ballon:hover {
+    opacity: 0.8;
+}
+
+.main-button:active,
+.url-contact:active,
+.btn-ballon:active {
+    opacity: 0.5;
+}
+
+.balloon {
+    height: 30px;
+}

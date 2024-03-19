@@ -1,0 +1,88 @@
+.header {
+    height: 65px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    background-color: white;
+    border-bottom: 1px solid rgb(228, 228, 228);
+
+    z-index: 100;
+}
+
+.left-section {
+    display: flex;
+    flex: 1;
+    align-items: center;
+}
+
+.iShariu-logo {
+    height: 52px;
+    margin-left: 150px;
+    cursor: pointer;
+}
+
+.project-name {
+    height: 0;
+    align-items: center;
+    cursor: pointer;
+}
+
+.middle-section {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-item {
+    height: 0;
+    cursor: pointer;
+    margin-right: 30px;
+}
+
+.right-section {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: end;
+    flex-shrink: 0;
+}
+
+.btn-sign-in {
+    justify-content: end;
+    background: none;
+    border: none;
+    width: 80px;
+    height: 36px;
+    margin-right: 10px;
+}
+
+.btn-sign-up {
+    border-radius: 25px;
+    background-color: #FC4928;
+    color: white;
+    border: none;
+    width: 90px;
+    height: 36px;
+    margin-right: 100px;
+    justify-content: end;
+    transition: opacity 0.15s;
+}
+
+.btn-sign-up:hover,
+.btn-sign-in:hover {
+    opacity: 0.8;
+}
+
+.btn-sign-up:active,
+.btn-sign-in:active {
+    opacity: 0.5;
+}
