@@ -1,3 +1,31 @@
 ﻿@{
-    ViewData["Title"] = "Sign up";
+    ViewData["Title"] = "Sign Up";
 }
+
+<div class="container">
+    <div class="auth-img">
+        <img src="~/img/botan.png">
+    </div>
+
+    <div class="auth-form">
+        <div class="title">Sign Up</div>
+        <div class="registration-message">If you already have an account register
+            <a class="registration-link" asp-action="register" asp-controller="account">Login here!</a>
+        </div>
+
+        <div class="input-form mt-5">
+            <p class="input-title">Email</p>
+            <input class="mb-5" type="email" placeholder="Enter your email address">
+            <p class="input-title mb-5">Username</p>
+            <input class="mb-5" type="password" placeholder="Enter your User name">
+            <p class="input-title">Password</p>
+            <input class="mb-5" type="password" placeholder="Enter your Password">
+            <p class="input-title">Confirm Password</p>
+            <input class="mb-5" type="password" placeholder="Confirm your password">
+        </div>
+        <input type="checkbox" checked><span class="checkbox-text">Remember me!</span>
+        <div class="mt-5">
+            <button type="submit" class="submit-btn">Register</button>
+        </div>
+    </div>
+</div>
