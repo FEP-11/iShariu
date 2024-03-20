@@ -31,7 +31,7 @@
 }
 
 .btn-ballon {
-    margin-top: 85px;
+    margin-top: 14vh;
     width: 94px;
     height: 93px;
     background-color: #FC4928;
@@ -54,5 +54,5 @@
 }
 
 .balloon {
-    height: 30px;
+    height: 50px;
 }

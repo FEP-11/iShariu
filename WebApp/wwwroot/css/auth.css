@@ -1,0 +1,79 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    padding: 0;
+}
+
+.auth-img {
+    flex: 3;
+    border-right: 9px solid #FF432A;
+}
+
+.auth-img img {
+    margin: 0;
+    padding: 0;
+    height: 91.2vh;
+    width: 100%;
+}
+
+.auth-form {
+    flex: 1;
+    margin-top: 10%;
+    margin-left: 30px;
+}
+
+.auth-form .title {
+    font-size: 25px;
+}
+
+.registration-message,
+.registration-link,
+.input-title {
+    font-size: 12px;
+    width: 70%;
+}
+
+.registration-link {
+    color: red;
+    cursor: pointer;
+}
+
+.input-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-title {
+    margin: 0;
+}
+
+.input-form input {
+    border: none;
+    border-bottom: 2px solid #FF432A;
+    background: none;
+    outline: none;
+}
+
+.checkbox-text {
+    font-size: 12px;
+    margin-left: 5px;
+}
+
+.submit-btn {
+    padding: 2% 60%;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    background-color: #FF432A;
+    color: white;
+    border-radius: 20px;
+    border: none;
+    transition: opacity 0.15s;
+}
+
+.submit-btn:hover {
+    opacity: 0.8;
+}
+
+.submit-btn:active {
+    opacity: 0.5;
+}

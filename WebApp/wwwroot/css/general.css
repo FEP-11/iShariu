@@ -1,8 +1,10 @@
 body {
-    position: relative;
+    font-family: Inter, Arial;
+    padding-top: 65px;
+}
+
+.body-img {
     background-image: url(../img/Group\ 397-3.png);
     background-position: right 50% bottom 220%;
     background-repeat: no-repeat;
-    font-family: Inter, Arial;
-    padding-top: 90px;
 }

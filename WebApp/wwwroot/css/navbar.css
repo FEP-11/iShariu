@@ -30,6 +30,9 @@
 
 .project-name {
     height: 0;
+    font-weight: bold;
+    color: #ac2020;
+    font-size: large;
     align-items: center;
     cursor: pointer;
 }
