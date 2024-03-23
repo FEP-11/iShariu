@@ -1,5 +1,5 @@
 .header {
-    height: 65px;
+    height: 4em;
 
     display: flex;
     flex-direction: row;
@@ -88,4 +88,12 @@
 .btn-sign-up:active,
 .btn-sign-in:active {
     opacity: 0.5;
+}
+
+.submit-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
 }
