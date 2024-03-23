@@ -51,7 +51,7 @@
 }
 
 .auth-img {
-    flex: 1 0 0;
+    flex: 0.5;
     border-bottom: none;
     border-right: 9px solid #FF432A;
     height: 100%;
@@ -64,7 +64,7 @@
 
 .auth-form {
     height: auto;
-    padding-left: 5em;
+    padding-left: 2em;
     width: auto;
     flex: 1 0 0;
     margin-left: 5vw;
@@ -126,4 +126,11 @@
 .submit-btn:active {
     opacity: 0.5;
 }
+
+.auth-img-right img {
+    padding-left: 7em;
+    width: auto;
+    height: 100%;
+}
+
 
