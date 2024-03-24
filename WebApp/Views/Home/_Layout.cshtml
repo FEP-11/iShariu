@@ -19,32 +19,31 @@
 </head>
 
 <body class="body-img">
-    @* Navbar *@
-    <header class="header">
-        <div class="left-section">
-            <img class="iShariu-logo" src="~/ballon.ico">
-            <p class="project-name">ЯШарю</p>
-        </div>
-
-        <div class="middle-section">
-            <p class="nav-item">Home</p>
-            <p class="nav-item">Courses</p>
-            <p class="nav-item">About us</p>
-            <p class="nav-item">Contact</p>
-        </div>
-
-        <div class="right-section">
-            <a asp-action="signin" asp-controller="account"><button class="btn-sign-in">Sign in</button></a>
-            <a asp-action="register" asp-controller="account"><button class="btn-sign-up">Sign up</button></a>
-        </div>
-    </header>
-
-    @* Main page *@
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+<header class="header">
+    <div class="left-section">
+        <img class="iShariu-logo" src="~/ballon.ico">
+        <p class="project-name">ЯШарю</p>
     </div>
+     
+    <div class="middle-section">
+        <p class="nav-item">Home</p>
+        <p class="nav-item">Courses</p>
+        <p class="nav-item">About us</p>
+        <p class="nav-item">Contact</p>
+    </div>
+     
+    <div class="right-section">
+        <a asp-action="signin" asp-controller="account"><button class="btn-sign-in">Sign in</button></a>
+        <a asp-action="register" asp-controller="account"><button class="btn-sign-up">Sign up</button></a>
+    </div>
+</header>
+
+<div class="container">
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+</div>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

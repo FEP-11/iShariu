@@ -25,3 +25,11 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "admin",
+        pattern: "adminpanel/{action=Index}/{id?}",
+        defaults: new { controller = "Admin" });
+});
