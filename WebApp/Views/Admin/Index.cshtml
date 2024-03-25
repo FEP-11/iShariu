@@ -2,6 +2,43 @@
     ViewData["Title"] = "Dashboard";
 }
 
-<div class="jumbotron">
-    <h1 class="display-4">Admin Dashboard</h1>
+<div class="dashboard">
+    <h1 class="main-text">In the last 30 days,</h1>
+
+    <div class="info-boxes">
+        <div class="info-box">
+            <h2>Sales</h2>
+            <p>@ViewData["Sales"]</p>
+        </div>
+        <div class="info-box">
+            <h2>New Creators</h2>
+            <p>@ViewData["NewCreators"]</p>
+        </div>
+        <div class="info-box">
+            <h2>Revenue Generated</h2>
+            <p>@ViewData["Revenue"]</p>
+        </div>
+    </div>
+
+    <div class="boxes-row">
+    <div class="creator-box">
+        <h2>Best Selling Creators</h2> 
+        @* @foreach (var creator in Model) *@
+        @* { *@
+        @*     <div class="creator"> *@
+        @*         <img src="@creator.ProfilePictureUrl" alt="@creator.Name's profile picture" class="creator-profile-picture"> *@
+        @*         <p>@creator.Name - Sales: @creator.Sales, Revenue: @creator.Revenue</p> *@
+        @*     </div> *@
+        @* } *@
+        <div style="margin-bottom: 35vh;"></div>
+        <a href="/creators">View All Creators</a>
+    </div>
+    
+    <div class="course-box">
+        <h2>Best Selling Courses</h2>
+        <!-- Course data goes here -->
+        <div style="margin-bottom: 35vh;"></div>
+            <a href="/courses">View All Courses</a>
+    </div>
+</div>
 </div>

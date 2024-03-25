@@ -9,6 +9,8 @@
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/adminnavbar.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/adminsidebar.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/admindashboard.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 
@@ -44,18 +46,33 @@
         <div class="row">
             <div class="col-md-3">
                 <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-action active">Dashboard</a>
-                    <a href="#" class="list-group-item list-group-item-action">Creators</a>
-                    <a href="#" class="list-group-item list-group-item-action">Courses</a>
-                    <a href="#" class="list-group-item list-group-item-action">Sales</a>
-                    <a href="#" class="list-group-item list-group-item-action">Settings</a>
+                    <a href="#" class="list-group-item list-group-item-action active">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action">
+                        <i class="fas fa-users"></i> Creators
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action">
+                        <i class="fas fa-book"></i> Courses
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action">
+                        <i class="fas fa-chart-line"></i> Sales
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action">
+                        <i class="fas fa-cogs"></i> Settings
+                    </a>
+                    <div style="height: 50vh;"></div>
+                    <a href="@Url.Action("Logout", "Account")" class="list-group-item list-group-item-action logout-button">
+                        <i class="fas fa-sign-out-alt"></i> Log out
+                    </a>
                 </div>
             </div>
+            
             <div class="col-md-9">
-                <h1>@ViewData["Title"]</h1>
                 @RenderBody()
             </div>
         </div>
+        
     </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
