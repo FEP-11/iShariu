@@ -1,8 +1,23 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overflow: auto;
+  width: 100%;
+}
+
 html {
   font-size: 14px;
 }
 
-@media (min-width: 768px) {
+@media {
+  .container {
+    flex-direction: row;
+  }
   html {
     font-size: 16px;
   }
