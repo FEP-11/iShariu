@@ -1,35 +1,36 @@
-﻿@{
+﻿@model User
+@{
     ViewData["Title"] = "Sign Up";
 }
 
 <div class="container">
-        <div class="auth-img">
-            <img src="~/img/auth-side-image.png">
-        </div>
+  <div class="auth-img">
+    <img src="~/img/auth-side-image.png">
+  </div>
 
-        <div class="auth-form">
-            <div class="title">Sign Up</div>
-            <div class="registration-message">If you already have an account
-                <a class="registration-link" asp-action="register" asp-controller="account">Login here!</a>
-            </div>
+  <form method="post" class="auth-form">
+    <div class="title">Sign Up</div>
+    <div class="registration-message">If you already have an account
+        <a class="registration-link" asp-action="signin" asp-controller="account">Login here!</a>
+    </div>
 
-            <div class="input-form mb-5">
-                <p class="input-title mt-5">Email</p>
-                <input class="mb-4" type="email" placeholder="Enter your email address">
-                <p class="input-title">Username</p>
-                <input class="mb-4" type="text" placeholder="Enter your username">
-                <p class="input-title">Password</p>
-                <input class="mb-4" type="password" placeholder="Enter your password">
-                <p class="input-title">Confirm Password</p>
-                <input class="mb-2" type="password" placeholder="Confirm your password">
-            </div>
-            <div class="mt-5">
-                <button type="submit" class="submit-btn">Register</button>
-            </div>
-        </div>
-        
-        <div class="auth-img-right">
-            <img src="~/img/balloon.png" alt="balloon">
-        </div>
-        
+    <div class="input-form mb-5">
+        <p class="input-title mt-5">Email</p>
+        <input class="mb-4" type="email" asp-for="Email" placeholder="Enter your email address">
+        <p class="input-title">Username</p>
+        <input class="mb-4" type="text" asp-for="Username" placeholder="Enter your username">
+        <p class="input-title">Password</p>
+        <input class="mb-4" type="password" asp-for="Password" placeholder="Enter your password">
+        <p class="input-title">Confirm Password</p>
+        <input class="mb-2" type="password" placeholder="Confirm your password">
+    </div>
+    <div class="mt-5">
+        <button type="submit" class="submit-btn">Register</button>
+    </div>
+    </а>
+
+    <div class="auth-img-right">
+        <img src="~/img/balloon.png">
+    </div>
+  </form>
 </div>
