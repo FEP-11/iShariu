@@ -1,15 +1,19 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
-
+using WebApp.Models;
+using WebApp.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.Configure<iShariuDatabaseSettings>(builder.Configuration.GetSection("iShariu"));
+builder.Services.AddSingleton<MongoDBService>();
+
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
         options.LoginPath = "/account/signin";
-        options.LogoutPath = "/logout";
+        options.LogoutPath = "/account/logout";
         options.Cookie.HttpOnly = true;
         options.SlidingExpiration = true;
         options.ExpireTimeSpan = TimeSpan.FromDays(30);
@@ -17,8 +21,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("Admin", p => 
-        p.RequireClaim("Role", "admin"));
+    options.AddPolicy("Admin", p => p.RequireRole(UserRole.Admin));
+    options.AddPolicy("Creator", p => p.RequireRole(UserRole.Creator));
 });
 
 builder.Services.AddSession(options =>
@@ -52,11 +56,3 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
-
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllerRoute(
-        name: "admin",
-        pattern: "adminpanel/{action=Index}/{id?}",
-        defaults: new { controller = "Admin" });
-});
