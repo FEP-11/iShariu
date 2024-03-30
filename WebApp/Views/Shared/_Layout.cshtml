@@ -38,8 +38,18 @@
         </div>
 
         <div class="right-section">
-            <a asp-action="signin" asp-controller="account"><button class="btn-sign-in">Sign in</button></a>
-            <a asp-action="register" asp-controller="account"><button class="btn-sign-up">Sign up</button></a>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="username">Hello, @User.Identity.Name</div>
+                <form asp-action="logout" asp-controller="account" method="post">
+                    <button type="submit" class="btn-logout">Log out</button>
+                </form>
+            }
+            else
+            {
+                <a asp-action="signin" asp-controller="account"><button class="btn-sign-in">Sign in</button></a>
+                <a asp-action="register" asp-controller="account"><button class="btn-sign-up">Sign up</button></a>
+            }
         </div>
     </header>
 
@@ -51,6 +61,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/auth.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 
