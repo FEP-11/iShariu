@@ -4,37 +4,39 @@ using WebApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using MongoDB.Driver;
+using WebApp.Services;
 
 namespace WebApp.Controllers
 {
     public class AccountController : Controller
     {
         private readonly ILogger<AccountController> _logger;
+        private readonly MongoDBService _users; 
 
-        public AccountController(ILogger<AccountController> logger)
+        public AccountController(ILogger<AccountController> logger, MongoDBService settings)
         {
             _logger = logger;
+            _users = settings;
         }
 
         [AllowAnonymous]
         [HttpGet]
-        public ActionResult SignIn()
-        {
-            if (User.Identity.IsAuthenticated) return RedirectToAction("Index", "Home");
-
-            _logger.LogInformation("Logger is working");
-
-            return View();
-        }
+        public ActionResult SignIn() => View();
         
         [AllowAnonymous]    
-        [HttpPost]
-        public async Task<ActionResult> SignInAsync(User user)
+        [HttpPost("/account/signin")]
+        public async Task<ActionResult> SignInAsync([FromForm] User user)
         {
+            List<User> users = await _users.GetAsync();
+            User? foundedUser = users.FirstOrDefault(u => u.Username == user.Username && u.Password == user.Password);
+
+            if (foundedUser == null) return BadRequest();
+
             var claims = new List<Claim>()
             {
-                new Claim(ClaimTypes.Name, user.Username),
-                new Claim(ClaimTypes.Role, user.Role)
+                new Claim(ClaimTypes.Name, foundedUser.Username),
+                new Claim(ClaimTypes.Role, UserRole.Admin)
             };
 
             ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Cookies");
@@ -45,26 +47,15 @@ namespace WebApp.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpPost]
+        [AllowAnonymous]
+        [HttpGet]
+        public ActionResult Register() => View();
+        [Authorize]
         public async Task<ActionResult> LogOutAsync()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
             return RedirectToAction("Index", "Home");
-        }
-
-        [AllowAnonymous]
-        [HttpGet]
-        public ActionResult Register()
-        {
-            return View();
-        }
-
-        [AllowAnonymous]
-        [HttpPost]
-        public ActionResult Register(User user)
-        {
-            return View();
         }
     }
 }

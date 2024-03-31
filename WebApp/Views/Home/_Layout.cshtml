@@ -39,10 +39,12 @@
         <div class="right-section">
             @if (User.Identity.IsAuthenticated)
             {
+                @if (User.IsInRole("admin"))
+                {
+                    <a asp-action="index" asp-controller="admin"><button class="btn btn-info">Admin</button></a>
+                }
                 <div class="username">Hello, @User.Identity.Name</div>
-                <form asp-action="logout" asp-controller="account" method="post">
-                    <button type="submit" class="btn-logout">Log out</button>
-                </form>
+                <a asp-action="logout" asp-controller="account"><button type="submit" class="btn-logout">Log out</button></a>
             }
             else
             {

@@ -40,10 +40,12 @@
         <div class="right-section">
             @if (User.Identity.IsAuthenticated)
             {
+                @if (User.IsInRole("admin"))
+                {
+                    <a asp-action="index" asp-controller="admin"><button class="btn btn-info">Admin</button></a>
+                }
                 <div class="username">Hello, @User.Identity.Name</div>
-                <form asp-action="logout" asp-controller="account" method="post">
-                    <button type="submit" class="btn-logout">Log out</button>
-                </form>
+                <a asp-action="logout" asp-controller="account"><button type="submit" class="btn-logout">Log out</button></a>
             }
             else
             {
@@ -60,8 +62,7 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/js/auth.js" asp-append-version="true"></script>
+    <script src="~/js/authentication.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 

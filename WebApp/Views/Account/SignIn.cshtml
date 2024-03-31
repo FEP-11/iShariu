@@ -1,4 +1,5 @@
-﻿@{
+﻿@model User
+@{
     ViewData["Title"] = "Sign In";
 }
 
@@ -15,10 +16,10 @@
 
         <div class="input-form mt-5">
             <label class="input-title">Username</label>
-            <input class="email-form mb-5" type="text" name="username" id="usernameLogin"
+            <input class="email-form mb-5" type="text" asp-for="Username" id="usernameLogin"
                 placeholder="Enter your username">
             <label class="input-title">Password</label>
-            <input class="password-form" type="password" name="password" id="passwordLogin"
+            <input class="password-form" type="password" asp-for="Password" id="passwordLogin"
                 placeholder="Enter your Password">
         </div>
         <input type="checkbox" checked><span class="checkbox-text">Remember me!</span>
