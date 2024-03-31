@@ -34,19 +34,18 @@ namespace WebApp.Controllers
             var claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.Name, user.Username),
-                new Claim(ClaimTypes.Role, UserRole.Admin)
+                new Claim(ClaimTypes.Role, user.Role)
             };
 
             ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Cookies");
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
-            _logger.LogInformation($"User admin? {User.IsInRole("admin")}");
             _logger.LogInformation("Authorization has been successful");
             
             return RedirectToAction("Index", "Home");
         }
 
-        [Authorize]
+        [HttpPost]
         public async Task<ActionResult> LogOutAsync()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

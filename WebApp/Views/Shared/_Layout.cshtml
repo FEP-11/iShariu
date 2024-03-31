@@ -41,7 +41,9 @@
             @if (User.Identity.IsAuthenticated)
             {
                 <div class="username">Hello, @User.Identity.Name</div>
-                <button type="submit" asp-action="logout" asp-controller="account" class="btn-logout">Log out</button>
+                <form asp-action="logout" asp-controller="account" method="post">
+                    <button type="submit" class="btn-logout">Log out</button>
+                </form>
             }
             else
             {

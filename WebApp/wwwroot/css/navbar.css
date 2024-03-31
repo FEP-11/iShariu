@@ -85,8 +85,7 @@
     background-color: #FC4928;
     border-radius: 25px;
     color: white;
-    width: 90px;
-    height: 36px;
+    padding: 0.8vh 0.9vw;
     margin-left: 10px;
     margin-right: 100px;
     transition: opacity 0.15s;
