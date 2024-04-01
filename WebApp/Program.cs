@@ -3,6 +3,7 @@ using WebApp.Models;
 using WebApp.Services;
 using DotNetEnv;
 using System;
+using MongoDB.Bson.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 

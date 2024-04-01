@@ -22,17 +22,18 @@
 
     <div class="boxes-row">
     <div class="creator-box">
-        <h2>Best Selling Creators</h2> 
-            @model List<User>
-            
-            <!-- existing code... -->
-            
+        <h2>Best Selling Creators</h2>
+        @model List<User>
+        <div class="table">
             @foreach (var user in Model)
             {
-                <div>
-                    <h2>@user.Username</h2>
+                <div class="table-row">
+                    <div class="table-cell username">@user.Username</div>
+                    <div class="table-cell">@user.Sales sales</div>
+                    <div class="table-cell">$@user.RevenueGenerated revenue</div>
                 </div>
             }
+        </div>
         <a class="show-all-items" href="/creators">View All Creators</a>
     </div>
     

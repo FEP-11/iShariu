@@ -18,7 +18,10 @@ namespace WebApp.Controllers
         [Route("Admin/Index")]
         public async Task<IActionResult> Index()
         {
-            var users = await _dbService.GetAllUsers();
+            var users = (await _dbService.GetAllUsers())
+                .OrderByDescending(u => u.RevenueGenerated)
+                .Take(3)
+                .ToList();
             return View(users);
         }
 
