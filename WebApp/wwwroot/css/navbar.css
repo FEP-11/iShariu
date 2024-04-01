@@ -1,6 +1,6 @@
 .header {
     height: 4em;
-    
+
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -80,13 +80,27 @@
     transition: opacity 0.15s;
 }
 
+.btn-logout {
+    border: none;
+    background-color: #FC4928;
+    border-radius: 25px;
+    color: white;
+    width: 90px;
+    height: 36px;
+    margin-left: 10px;
+    margin-right: 100px;
+    transition: opacity 0.15s;
+}
+
 .btn-sign-up:hover,
-.btn-sign-in:hover {
+.btn-sign-in:hover,
+.btn-logout:hover {
     opacity: 0.8;
 }
 
 .btn-sign-up:active,
-.btn-sign-in:active {
+.btn-sign-in:active,
+.btn-logout:active {
     opacity: 0.5;
 }
 
