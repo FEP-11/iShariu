@@ -95,7 +95,7 @@
     margin-bottom: 10px;
 }
 
-.creator-box a, .course-box a{
+.show-all-items {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -104,18 +104,14 @@
     text-decoration: none;
     margin-left: 12vh;
     margin-right: 12vh;
+    margin-top: 12vh;
     padding: 10px 20px;
     background-color: #E99090;
     border-radius: 5px;
     transition: background-color 0.3s ease;
-    
 }
 
-.creator-box a:hover {
-    background-color: #da5a5a;
-}
-
-.course-box a:hover {
+.show-all-items:hover {
     background-color: #da5a5a;
 }
 

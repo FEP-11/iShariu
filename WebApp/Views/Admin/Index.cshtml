@@ -23,22 +23,24 @@
     <div class="boxes-row">
     <div class="creator-box">
         <h2>Best Selling Creators</h2> 
-        @* @foreach (var creator in Model) *@
-        @* { *@
-        @*     <div class="creator"> *@
-        @*         <img src="@creator.ProfilePictureUrl" alt="@creator.Name's profile picture" class="creator-profile-picture"> *@
-        @*         <p>@creator.Name - Sales: @creator.Sales, Revenue: @creator.Revenue</p> *@
-        @*     </div> *@
-        @* } *@
-        <div style="margin-bottom: 35vh;"></div>
-        <a href="/creators">View All Creators</a>
+            @model List<User>
+            
+            <!-- existing code... -->
+            
+            @foreach (var user in Model)
+            {
+                <div>
+                    <h2>@user.Username</h2>
+                </div>
+            }
+        <a class="show-all-items" href="/creators">View All Creators</a>
     </div>
     
     <div class="course-box">
         <h2>Best Selling Courses</h2>
         <!-- Course data goes here -->
         <div style="margin-bottom: 35vh;"></div>
-            <a href="/courses">View All Courses</a>
+            <a class="show-all-items" href="/courses">View All Courses</a>
     </div>
 </div>
 </div>

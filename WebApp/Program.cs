@@ -1,13 +1,28 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using WebApp.Models;
 using WebApp.Services;
+using DotNetEnv;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Load environment variables from .env file
+Env.Load();
+
+// Get MongoDB connection string from environment variables
+string connectionString = Environment.GetEnvironmentVariable("MONGO_CONNECTION_STRING");
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.Configure<iShariuDatabaseSettings>(builder.Configuration.GetSection("iShariu"));
+// Configure MongoDB service with connection string from environment variables
+builder.Services.Configure<iShariuDatabaseSettings>(options =>
+{
+    options.ConnectionString = connectionString;
+    options.DatabaseName = builder.Configuration.GetSection("iShariu:DatabaseName").Value;
+    options.UsersCollectionName = builder.Configuration.GetSection("iShariu:UsersCollectionName").Value;
+});
+
 builder.Services.AddSingleton<MongoDBService>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -32,7 +47,7 @@ builder.Services.AddSession(options =>
 });
 
 var app = builder.Build();
-    
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

@@ -38,4 +38,10 @@ public class MongoDBService
         FilterDefinition<User> filter = Builders<User>.Filter.Eq("Id", id);
         await _userCollection.DeleteOneAsync(filter);
     }
+
+    public async Task<List<User>> GetAllUsers()
+    {
+        var filter = Builders<User>.Filter.Eq("Role", "creator");
+        return await _userCollection.Find(filter).Limit(3).ToListAsync();
+    }
 }
