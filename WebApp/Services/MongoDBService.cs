@@ -42,6 +42,6 @@ public class MongoDBService
     public async Task<List<User>> GetAllUsers()
     {
         var filter = Builders<User>.Filter.Eq("Role", "creator");
-        return await _userCollection.Find(filter).ToListAsync();
+        return await _userCollection.Find(filter).Limit(10).ToListAsync();
     }
 }
