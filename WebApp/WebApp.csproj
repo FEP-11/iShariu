@@ -10,10 +10,4 @@
       <Compile Remove="Controllers\AdminPanel.cs" />
     </ItemGroup>
 
-    <ItemGroup>
-      <PackageReference Include="DotNetEnv" Version="3.0.0" />
-      <PackageReference Include="MongoDB.Bson" Version="2.24.0" />
-      <PackageReference Include="MongoDB.Driver" Version="2.24.0" />
-    </ItemGroup>
-
 </Project>

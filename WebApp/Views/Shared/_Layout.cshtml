@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="~/css/navbar.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WebApp.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/currentcourse.css" asp-append-version="true"/>
 </head>
 
 <body class="mb-0">
@@ -38,20 +39,8 @@
         </div>
 
         <div class="right-section">
-            @if (User.Identity.IsAuthenticated)
-            {
-                @if (User.IsInRole("admin"))
-                {
-                    <a asp-action="index" asp-controller="admin"><button class="btn btn-info">Admin</button></a>
-                }
-                <div class="username">Hello, @User.Identity.Name</div>
-                <a asp-action="logout" asp-controller="account"><button type="submit" class="btn-logout">Log out</button></a>
-            }
-            else
-            {
-                <a asp-action="signin" asp-controller="account"><button class="btn-sign-in">Sign in</button></a>
-                <a asp-action="register" asp-controller="account"><button class="btn-sign-up">Sign up</button></a>
-            }
+            <a asp-action="signin" asp-controller="account"><button class="btn-sign-in">Sign in</button></a>
+            <a asp-action="register" asp-controller="account"><button class="btn-sign-up">Sign up</button></a>
         </div>
     </header>
 
@@ -62,7 +51,7 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/authentication.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 

@@ -1,0 +1,127 @@
+﻿:root {
+    --rectangle: rgba(255, 242, 243, 0.95);
+    --rectangle-h1: #001A49FF;
+    --rectangle-p: #4F596AFF;
+    --btn: linear-gradient(to left, #FF1010, #FD4646 99%);
+    --btn-shadow: 0 0 10px 3px #c2c2c2;
+    --iframe-shadow: 0 0 10px 3px #c2c2c2;
+}
+        
+body {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.background img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.rectangle {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1390px;
+    height: 725px;
+    background: var(--rectangle);
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    mix-blend-mode: normal;
+}
+
+.rectangle h1 {
+    position: absolute;
+    left: 160px;
+    top: 100px;
+    width: 537px;
+    height: 136px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 85px;
+    font-weight: bold;
+    line-height: 68px;
+    letter-spacing: -1px;
+    color: var(--rectangle-h1);
+}
+
+.rectangle p {
+    position: absolute;
+    left: 160px;
+    top: 300px;
+    width: 400px;
+    height: 60px;
+    font-family: 'Mulish', sans-serif;
+    font-size: 25px;
+    font-weight: normal;
+    line-height: 30px;
+    letter-spacing: 0;
+    color: var(--rectangle-p);
+}
+
+.rectangle button.btn-get-started {
+    position: absolute;
+    left: 160px;
+    top: 450px;
+    width: 195px;
+    height: 55px;
+    border-radius: 33px;
+    background: var(--btn);
+    border: none;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
+}
+
+.rectangle button.btn-get-started:hover {
+    box-shadow: var(--btn-shadow);
+}
+
+.rectangle .avatars {
+    position: absolute;
+    left: 160px;
+    top: 550px;
+}
+
+.rectangle .avatars img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: -19px;
+    z-index: 1;
+}
+
+.rectangle .join-text {
+    position: absolute;
+    left: 275px;
+    top: 555px;
+    font-family: 'Mulish', sans-serif;
+    font-size: 17px;
+}
+
+iframe {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    box-shadow: var(--iframe-shadow);
+    position: absolute;
+    left: 99%;
+    transform: translateX(-50%) scale(1.1);
+    top: 25%;
+    width: 600px;
+    height: 360px;
+}
