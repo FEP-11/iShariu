@@ -1,18 +1,21 @@
+:root {
+    --project-name: #F03849FF;
+    --text-hover: #f6412d;
+    --btn-signup: #FC4928;
+    
+}
+
 .header {
     height: 4em;
-    
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-
     background-color: rgba(255, 255, 255, 0.9);
     border-bottom: 1px solid rgb(228, 228, 228);
-
     z-index: 100;
 }
 
@@ -20,21 +23,29 @@
     display: flex;
     flex: 1;
     align-items: center;
+    position: relative;
 }
 
 .iShariu-logo {
     height: 52px;
-    margin-left: 150px;
+    margin-left: 80px;
     cursor: pointer;
+}
+
+.iShariu-logo:active {
+    transform: translateY(1px);
 }
 
 .project-name {
     height: 0;
     font-weight: bold;
-    color: #ac2020;
+    color: var(--project-name);
     font-size: large;
-    align-items: center;
     cursor: pointer;
+    position: absolute;
+    left: 115px;
+    transform: translateY(-50%);
+    margin-left: 10px;
 }
 
 .middle-section {
@@ -52,16 +63,16 @@
 }
 
 .nav-item:hover {
-    color: #FC4928;
+    color: var(--text-hover);
 }
 
 .right-section {
     display: flex;
     flex: 1;
     align-items: center;
-    justify-content: flex-end; /* Используем flex-end для правильного выравнивания кнопок */
     flex-shrink: 0;
-    position: relative; /* Добавлено позиционирование relative */
+    justify-content: flex-end;
+    position: relative;
 }
 
 .btn-sign-in {
@@ -70,22 +81,22 @@
     width: 90px;
     height: 36px;
     position: absolute;
-    top: 50%; /* Расположение по вертикали по центру */
-    transform: translateY(-50%); /* Сдвигаем кнопку на половину ее высоты вверх */
-    right: 200px; /* Отступ справа */
+    top: 50%;
+    transform: translateY(-50%);
+    right: 200px;
 }
 
 .btn-sign-up {
     border-radius: 25px;
-    background-color: #FC4928;
+    background-color: var(--btn-signup);
     color: white;
     border: none;
     width: 90px;
     height: 36px;
     position: absolute;
-    top: 50%; /* Расположение по вертикали по центру */
-    transform: translateY(-50%); /* Сдвигаем кнопку на половину ее высоты вверх */
-    right: 100px; /* Отступ справа */
+    top: 50%;
+    transform: translateY(-50%);
+    right: 100px;
     transition: opacity 0.15s;
 }
 

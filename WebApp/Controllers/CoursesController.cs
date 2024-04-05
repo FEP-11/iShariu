@@ -1,12 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace WebApp.Controllers;
-
-public class CoursesController : Controller
+namespace WebApp.Controllers
 {
-    // GET
-    public IActionResult CurrentCourse()
+    public class CoursesController : Controller
     {
-        return View();
+        // GET
+        public IActionResult CurrentCourse()
+        {
+            return View();
+        }
+        
+        public IActionResult LessonsCourse()
+        {
+            return View("LessonsCourse");
+        }
     }
 }

@@ -1,0 +1,105 @@
+﻿:root {
+    --intro-text: #20355E;
+    --progress-line: #F67E7E;
+    --progress-text: #20355E;
+    --rectangle-lessons: rgba(255, 242, 243, 0.95);
+    --logo-shadow: 0 2px 4px rgb(194, 194, 194);
+    --btn-lessons: linear-gradient(to left, #FF1010, #FD4646 99%);
+    --btnshodow-lessons: 0 0 5px 2px #c2c2c2;
+}
+
+.intro-text {
+    text-align: center;
+    margin-top: 10px; /* Отступ сверху */
+}
+
+.intro-text h1 {
+    font-family: Montserrat, sans-serif;
+    font-size: 36px;
+    font-weight: bold;
+    line-height: 68px;
+    letter-spacing: -1px;
+    color: var(--intro-text);
+}
+
+.progress-bar {
+    width: 1000px;
+    height: 9px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 20px auto; /* Центрирование по горизонтали и добавление отступа сверху */
+}
+
+.progress {
+    height: 100%;
+    background-color: var(--progress-line);
+    border-radius: 10px;
+    width: 60%; /* Измените это значение для регулировки процента заполнения */
+}
+
+.progress-text {
+    font-family: DM Sans, sans-serif;
+    font-size: 15px;
+    font-weight: normal;
+    color: var(--progress-text);
+}
+
+.lessons-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.lesson {
+    width: 1300px;
+    height: 170px;
+    margin-bottom: auto;
+    background-color: var(--rectangle-lessons);
+    border-radius: 21px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.lesson img {
+    width: 70px;
+    height: 70px;
+    border-radius: 100%;
+    margin-right: 20px;
+    box-shadow: var(--logo-shadow);
+}
+
+.lesson h2 {
+    margin-top: 0;
+}
+
+.lesson p {
+    margin-top: 0;
+}
+
+.btn-lessons {
+    background: var(--btn-lessons);
+    color: white;
+    border: none;
+    border-radius: 33px;
+    padding: 18px 20px;
+    cursor: pointer;
+    justify-content: space-between;
+    margin-left: auto;
+}
+
+.lesson button:hover {
+    box-shadow: var(--btnshodow-lessons);
+}
+
+.lesson-info {
+    margin: 0 20px;
+}
+
+.divider {
+    border-left: 1px solid black; /* Установить толщину и стиль вертикальной палочки */
+    padding: 0 5px; /* Отступы между вертикальной палочкой и текстом */
+}
+
+
