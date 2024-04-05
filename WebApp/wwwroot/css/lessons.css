@@ -10,7 +10,7 @@
 
 .intro-text {
     text-align: center;
-    margin-top: 10px; /* Отступ сверху */
+    margin-top: 10px;
 }
 
 .intro-text h1 {
@@ -28,14 +28,14 @@
     background-color: #f0f0f0;
     border-radius: 10px;
     overflow: hidden;
-    margin: 20px auto; /* Центрирование по горизонтали и добавление отступа сверху */
+    margin: 20px auto;
 }
 
 .progress {
     height: 100%;
     background-color: var(--progress-line);
     border-radius: 10px;
-    width: 60%; /* Измените это значение для регулировки процента заполнения */
+    width: 60%;
 }
 
 .progress-text {
@@ -98,8 +98,8 @@
 }
 
 .divider {
-    border-left: 1px solid black; /* Установить толщину и стиль вертикальной палочки */
-    padding: 0 5px; /* Отступы между вертикальной палочкой и текстом */
+    border-left: 1px solid black;
+    padding: 0 5px;
 }
 
 

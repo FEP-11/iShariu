@@ -22,15 +22,15 @@
 <body class="body-img">
 <header class="header">
     <div class="left-section">
-        <img class="iShariu-logo" src="~/ballon.ico" alt="logo">
-        <p class="project-name">ЯШарю</p>
+        <a asp-action="Index" asp-controller="home"><img class="iShariu-logo" src="~/ballon.ico" alt="logo"></a>
+        <a class="project-name" asp-action="Index" asp-controller="home">ЯШарю</a>
     </div>
      
     <div class="middle-section">
-        <p class="nav-item">Home</p>
+        <a class="nav-item" asp-action="Index" asp-controller="home">Home</a>
         <a class="nav-item" asp-action="LessonsCourse" asp-controller="Courses">Courses</a>
-        <p class="nav-item">About us</p>
-        <p class="nav-item">Contact</p>
+        <a class="nav-item about-us">About us</a>
+        <a class="nav-item">Contacts</a>
     </div>
      
     <div class="right-section">
