@@ -2,8 +2,6 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using WebApp.Models;
 using WebApp.Services;
 using DotNetEnv;
-using System;
-using MongoDB.Bson.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,10 +19,10 @@ builder.Services.Configure<iShariuDatabaseSettings>(options =>
 {
     options.ConnectionString = connectionString;
     options.DatabaseName = builder.Configuration.GetSection("iShariu:DatabaseName").Value;
-    options.UsersCollectionName = builder.Configuration.GetSection("iShariu:UsersCollectionName").Value;
+    options.CollectionName = builder.Configuration.GetSection("iShariu:UsersCollectionName").Value;
 });
 
-builder.Services.AddSingleton<MongoDBService>();
+builder.Services.AddSingleton<MongoDBService<User>>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>

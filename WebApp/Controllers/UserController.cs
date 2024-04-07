@@ -8,9 +8,9 @@ namespace WebApp.Controllers;
 [Route("api/[controller]")]
 public class UserController : ControllerBase
 {
-    private readonly MongoDBService _mongoDBService;
+    private readonly MongoDBService<User> _mongoDBService;
 
-    public UserController(MongoDBService mongoDBService)
+    public UserController(MongoDBService<User> mongoDBService)
     {
         _mongoDBService = mongoDBService;
     }
@@ -22,7 +22,7 @@ public class UserController : ControllerBase
     public async Task<IActionResult> PostAsync([FromBody] User user)
     {
         await _mongoDBService.PostAsync(user);
-        return CreatedAtAction(nameof(GetAsync), new { id = user.Id }, user);
+        return CreatedAtAction("GetAsync", new { id = user.Id }, user);
     }
 
     [HttpPut("{id}")]

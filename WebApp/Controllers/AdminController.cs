@@ -1,34 +1,26 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Services;
-using System.Threading.Tasks;
+using WebApp.Models;
 
 namespace WebApp.Controllers
 {
     [Authorize(Policy = "Admin")]
     public class AdminController : Controller
     {
-        private readonly MongoDBService _dbService;
+        private readonly MongoDBService<User> _dbService;
 
-        public AdminController(MongoDBService dbService)
+        public AdminController(MongoDBService<User> dbService)
         {
             _dbService = dbService;
         }
 
-        [Route("Admin/Index")]
         public async Task<IActionResult> Index()
         {
-            var users = (await _dbService.GetAllUsers())
+            var users = (await _dbService.GetCreatorsAsync())
                 .OrderByDescending(u => u.RevenueGenerated)
                 .Take(3)
                 .ToList();
-            return View(users);
-        }
-
-        [Route("Admin/OtherIndex")]
-        public async Task<IActionResult> OtherIndex()
-        {
-            var users = await _dbService.GetAllUsers();
             return View(users);
         }
     }

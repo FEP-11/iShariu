@@ -26,8 +26,10 @@
     @* Navbar *@
     <header class="header">
         <div class="left-section">
-            <img class="iShariu-logo" src="~/ballon.ico">
-            <p class="project-name">ЯШарю</p>
+            <a asp-action="index" asp-controller="home">
+                <img class="iShariu-logo" src="~/ballon.ico">
+                <p class="project-name">ЯШарю</p>
+            </a>
         </div>
 
         <div class="middle-section">
@@ -45,7 +47,8 @@
                     <a asp-action="index" asp-controller="admin"><button class="btn btn-info">Admin</button></a>
                 }
                 <div class="username">Hello, @User.Identity.Name</div>
-                <a asp-action="logout" asp-controller="account"><button type="submit" class="btn-logout">Log out</button></a>
+                <a asp-action="logout" asp-controller="account"><button type="submit" class="btn-logout">Log
+                        out</button></a>
             }
             else
             {

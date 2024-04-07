@@ -4,7 +4,6 @@ using WebApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using MongoDB.Driver;
 using WebApp.Services;
 
 namespace WebApp.Controllers
@@ -12,9 +11,9 @@ namespace WebApp.Controllers
     public class AccountController : Controller
     {
         private readonly ILogger<AccountController> _logger;
-        private readonly MongoDBService _users; 
+        private readonly MongoDBService<User> _users; 
 
-        public AccountController(ILogger<AccountController> logger, MongoDBService settings)
+        public AccountController(ILogger<AccountController> logger, MongoDBService<User> settings)
         {
             _logger = logger;
             _users = settings;
@@ -48,8 +47,8 @@ namespace WebApp.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet]
         public ActionResult Register() => View();
+
         [Authorize]
         public async Task<ActionResult> LogOutAsync()
         {

@@ -15,14 +15,8 @@ namespace WebApp.Models
         public string Role { get; set; } = UserRole.User;
 
         // These fields are only relevant for creators
-        public List<Course> Courses { get; set; } = new List<Course>();
-        public int Sales { get; set; } = 0;
-        public decimal RevenueGenerated { get; set; } = 0m;
-    }
-
-    public class Course
-    {
-        public string CourseName { get; set; }
-        public decimal CoursePrice { get; set; }
+        public List<Course>? Courses { get; set; }
+        public int? Sales { get; set; }
+        public decimal? RevenueGenerated { get; set; }
     }
 }

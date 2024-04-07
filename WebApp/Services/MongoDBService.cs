@@ -5,43 +5,44 @@ using WebApp.Models;
 
 namespace WebApp.Services;
 
-public class MongoDBService
+public class MongoDBService<T>
 {
-    private readonly IMongoCollection<User> _userCollection;
+    private readonly IMongoCollection<T> _collection;
 
-    public MongoDBService(IOptions<iShariuDatabaseSettings> settings)
+    public MongoDBService(IOptions<iShariuDatabaseSettings> dbSettings)
     {
-        MongoClient client = new MongoClient(settings.Value.ConnectionString);
-        IMongoDatabase database = client.GetDatabase(settings.Value.DatabaseName);
-        _userCollection = database.GetCollection<User>(settings.Value.UsersCollectionName);
+        MongoClient client = new MongoClient(dbSettings.Value.ConnectionString);
+        IMongoDatabase database = client.GetDatabase(dbSettings.Value.DatabaseName);
+
+        _collection = database.GetCollection<T>(dbSettings.Value.CollectionName);
     }
 
-    public async Task<List<User>> GetAsync() => await _userCollection.Find(new BsonDocument()).ToListAsync();
+    public async Task<List<T>> GetAsync() => await _collection.Find(new BsonDocument()).ToListAsync();
 
-    public async Task<User> GetAsync(string id)
+    public async Task<T> GetAsync(string id)
     {
-        FilterDefinition<User> filter = Builders<User>.Filter.Eq(u => u.Id, id);
-        return await _userCollection.Find(filter).SingleOrDefaultAsync();
+        FilterDefinition<T> filter = Builders<T>.Filter.Eq("Id", id);
+        return await _collection.Find(filter).SingleOrDefaultAsync();
     }
 
-    public async Task PostAsync(User user) => await _userCollection.InsertOneAsync(user);
+    public async Task PostAsync(T entity) => await _collection.InsertOneAsync(entity);
 
     public async Task PutAsync(string id)
     {
-        FilterDefinition<User> filter = Builders<User>.Filter.Eq("Id", id);
-        UpdateDefinition<User> update = Builders<User>.Update.AddToSet<string>("Role", "user");
-        await _userCollection.UpdateOneAsync(filter, update);
+        FilterDefinition<T> filter = Builders<T>.Filter.Eq("Id", id);
+        UpdateDefinition<T> update = Builders<T>.Update.AddToSet("Role", "user");
+        await _collection.UpdateOneAsync(filter, update);
     }
     
     public async Task DeleteAsync(string id)
     {
-        FilterDefinition<User> filter = Builders<User>.Filter.Eq("Id", id);
-        await _userCollection.DeleteOneAsync(filter);
+        FilterDefinition<T> filter = Builders<T>.Filter.Eq("Id", id);
+        await _collection.DeleteOneAsync(filter);
     }
 
-    public async Task<List<User>> GetAllUsers()
+    public async Task<List<T>> GetCreatorsAsync()
     {
-        var filter = Builders<User>.Filter.Eq("Role", "creator");
-        return await _userCollection.Find(filter).Limit(10).ToListAsync();
+        var filter = Builders<T>.Filter.Eq("Role", "creator");
+        return await _collection.Find(filter).ToListAsync();
     }
 }
