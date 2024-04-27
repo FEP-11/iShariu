@@ -8,27 +8,27 @@
     <div class="info-boxes">
         <div class="info-box">
             <h2>Sales</h2>
-            <p>@ViewData["Sales"]</p>
+            <p class="number">@ViewData["Sales"]</p>
         </div>
         <div class="info-box">
-            <h2>New Creators</h2>
-            <p>@ViewData["NewCreators"]</p>
+            <h2>Creators</h2>
+            <p class="number">@ViewData["Creators"]</p>
         </div>
         <div class="info-box">
             <h2>Revenue Generated</h2>
-            <p>@ViewData["Revenue"]</p>
+            <p class="number">@ViewData["Revenue"]</p>
         </div>
     </div>
 
     <div class="boxes-row">
     <div class="creator-box">
         <h2>Best Selling Creators</h2>
-        @model List<User>
+        @model List<User>  
         <div class="table">
             @foreach (var user in Model)
             {
                 <div class="table-row">
-                    <div class="table-cell username">@user.Username</div>
+                    <div class="table-cell title">@user.Username</div>
                     <div class="table-cell">@user.Sales sales</div>
                     <div class="table-cell">$@user.RevenueGenerated revenue</div>
                 </div>
@@ -39,9 +39,15 @@
     
     <div class="course-box">
         <h2>Best Selling Courses</h2>
-        <!-- Course data goes here -->
-        <div style="margin-bottom: 35vh;"></div>
-            <a class="show-all-items" href="/courses">View All Courses</a>
+        @foreach (var course in (List<Course>)ViewData["Courses"])
+        {
+            <div class="table-row">
+                <div class="table-cell title">@course.CourseName</div>
+                <div class="table-cell">@course.Sales sales</div>
+                <div class="table-cell">$@course.RevenueGenerated revenue</div>
+            </div>
+        }
+        <a class="show-all-items" href="/courses">View All Courses</a>
     </div>
 </div>
 </div>
