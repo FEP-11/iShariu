@@ -45,7 +45,7 @@ namespace WebApp.Controllers
         [HttpGet("users")]
         public async Task<IActionResult> Users(string role, int page = 1)
         {
-            const int pageSize = 11;
+            const int pageSize = 9;
             var users = await _dbService.GetAsync();
 
             if (!string.IsNullOrEmpty(role))
@@ -98,6 +98,16 @@ namespace WebApp.Controllers
 
             // Add the new user to the database
             await _dbService.PostAsync(newUser);
+
+            // Redirect back to the users page
+            return RedirectToAction("Users");
+        }
+        
+        [HttpPost("deleteUser")]
+        public async Task<IActionResult> DeleteUser(string userId)
+        {
+            // Delete the user from the database
+            await _dbService.DeleteAsync(userId);
 
             // Redirect back to the users page
             return RedirectToAction("Users");

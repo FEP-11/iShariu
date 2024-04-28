@@ -70,6 +70,7 @@
         <th>Email</th>
         <th>Role</th>
         <th></th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
@@ -80,34 +81,45 @@
             <td>@user.Email</td>
             <td>@user.Role</td>
             <td>
-                <div class="dropdown">
-                    <button class="btn btn-danger d-flex justify-content-center dropdown-toggle" type="button" id="dropdownMenuButton-@user.Id" data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="d-flex align-items-center">
+                    <div class="dropdown">
+                    <button class="btn d-flex justify-content-center" type="button" id="dropdownMenuButton-@user.Id" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v"></i> <!-- Three vertical dots icon -->
                     </button>
-                    <ul class="dropdown-menu wider-dropdown" aria-labelledby="dropdownMenuButton-@user.Id">
-                        <li>
-                            <form asp-action="ChangeUserDetails" asp-controller="Admin" method="post" class="px-4 py-3">
-                                <input type="hidden" name="userId" value="@user.Id" />
-                                <div class="form-group">
-                                    <label for="username-@user.Id">Username</label>
-                                    <input type="text" name="username" value="@user.Username" class="form-control" id="username-@user.Id" />
-                                </div>
-                                <div class="form-group">
-                                    <label for="email-@user.Id">Email</label>
-                                    <input type="email" name="email" value="@user.Email" class="form-control" id="email-@user.Id" />
-                                </div>
-                                <div class="form-group">
-                                    <label for="role-@user.Id">Role</label>
-                                    <select name="role" id="role-@user.Id" class="form-control">
-                                        <option value="admin">admin</option>
-                                        <option value="creator">creator</option>
-                                        <!-- Add more options as needed -->
-                                    </select>
-                                </div>
-                                <input type="submit" value="Submit" class="btn btn-danger mt-2" />
-                            </form>
-                        </li>
-                    </ul>
+                        <ul class="dropdown-menu wider-dropdown" aria-labelledby="dropdownMenuButton-@user.Id">
+                            <li>
+                                <form asp-action="ChangeUserDetails" asp-controller="Admin" method="post" class="px-4 py-3">
+                                    <input type="hidden" name="userId" value="@user.Id"/>
+                                    <div class="form-group">
+                                        <label for="username-@user.Id">Username</label>
+                                        <input type="text" name="username" value="@user.Username" class="form-control" id="username-@user.Id"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email-@user.Id">Email</label>
+                                        <input type="email" name="email" value="@user.Email" class="form-control" id="email-@user.Id"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="role-@user.Id">Role</label>
+                                        <select name="role" id="role-@user.Id" class="form-control">
+                                            <option value="admin">admin</option>
+                                            <option value="creator">creator</option>
+                                            <!-- Add more options as needed -->
+                                        </select>
+                                    </div>
+                                    <input type="submit" value="Submit" class="btn btn-danger mt-2"/>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
+            </td>
+            <td>
+                <form asp-action="DeleteUser" asp-controller="Admin" method="post" class="d-inline">
+                    <input type="hidden" name="userId" value="@user.Id"/>
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> <!-- Trash can icon -->
+                    </button>
+                </form>
             </td>
         </tr>
     }

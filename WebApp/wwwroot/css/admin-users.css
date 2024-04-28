@@ -1,7 +1,7 @@
 .users-table {
     display: table;
     width: 100%;
-    height: calc(75vh - 2 * 1vh);
+    height: 40%;
 }
 
 .users-table th, .users-table td {
@@ -12,7 +12,7 @@
 }
 
 .users-table tr {
-    border-bottom: 1px solid #ddd; 
+    border-bottom: 1px solid #ddd;
 }
 
 .users-table th {
