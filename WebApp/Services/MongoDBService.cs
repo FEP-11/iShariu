@@ -45,7 +45,7 @@ namespace WebApp.Services
             await _userCollection.DeleteOneAsync(filter);
         }
 
-        public async Task<List<User>> GetAllUsers()
+        public async Task<List<User>> GetAllCreators()
         {
             var filter = Builders<User>.Filter.Eq("Role", "creator");
             return await _userCollection.Find(filter).Limit(10).ToListAsync();
@@ -79,6 +79,12 @@ namespace WebApp.Services
             var filter = Builders<Course>.Filter.Empty;
             var sort = Builders<Course>.Sort.Descending(c => c.RevenueGenerated);
             return await _courseCollection.Find(filter).Sort(sort).Limit(10).ToListAsync();
+        }
+        
+        public async Task PutAsync(string id, User updatedUser)
+        {
+            FilterDefinition<User> filter = Builders<User>.Filter.Eq("Id", id);
+            await _userCollection.ReplaceOneAsync(filter, updatedUser);
         }
     }
 }

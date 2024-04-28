@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="~/css/adminnavbar.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/adminsidebar.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/admindashboard.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/admin-users.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 
@@ -20,7 +22,7 @@
             <img class="iShariu-logo" src="~/ballon.ico">
             <p class="project-name">ЯШарю</p>
         </div>
-        
+
     <div class="middle-section">
         <form class="form-inline my-2 my-lg-0" method="get" action="@Url.Action("Search", "Home")">
             <div class="input-group">
@@ -33,7 +35,7 @@
             </div>
         </form>
     </div>
-        
+
     <div class="right-section">
 
             <img src="@Url.Action("ProfilePicture", "Account")" alt="Profile Picture" class="profile-picture">
@@ -46,13 +48,13 @@
         <div class="row">
             <div class="col-md-3">
                 <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-action active">
+                    <a href="@Url.Action("Index", "Admin")" class="list-group-item list-group-item-action @(ViewContext.RouteData.Values["Controller"].ToString() == "Admin" && ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active-link" : "")">
                         <i class="fas fa-tachometer-alt"></i> Dashboard
                     </a>
-                    <a href="#" class="list-group-item list-group-item-action">
-                        <i class="fas fa-users"></i> Creators
+                    <a href="@Url.Action("Users", "Admin")" class="list-group-item list-group-item-action @(ViewContext.RouteData.Values["Controller"].ToString() == "Admin" && ViewContext.RouteData.Values["Action"].ToString() == "Users" ? "active-link" : "")">
+                        <i class="fas fa-users"></i> Users
                     </a>
-                    <a href="#" class="list-group-item list-group-item-action">
+                    <a href="#" class="list-group-item list-group-item-action @(ViewContext.RouteData.Values["Controller"].ToString() == "Admin" && ViewContext.RouteData.Values["Action"].ToString() == "Courses" ? "active-link" : "")">
                         <i class="fas fa-book"></i> Courses
                     </a>
                     <a href="#" class="list-group-item list-group-item-action">
@@ -67,12 +69,12 @@
                     </a>
                 </div>
             </div>
-            
+
             <div class="col-md-9">
                 @RenderBody()
             </div>
         </div>
-        
+
     </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
