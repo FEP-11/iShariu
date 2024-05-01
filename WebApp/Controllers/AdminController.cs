@@ -74,7 +74,7 @@ namespace WebApp.Controllers
             user.Email = email;
             if (!string.IsNullOrEmpty(password))
             {
-                user.Password = password; // You should hash the password before storing it
+                user.Password = password;
             }
             user.Role = role;
 
@@ -86,31 +86,100 @@ namespace WebApp.Controllers
         [HttpPost("addUser")]
         public async Task<IActionResult> AddUser(string username, string email, string password, string role)
         {
-            // Create a new user with the provided details
             var newUser = new User
             {
                 Username = username,
                 Email = email,
-                Password = password, // Set the password
+                Password = password, 
                 Role = role,
-                // Set other properties as needed
             };
-
-            // Add the new user to the database
+            
             await _dbService.PostAsync(newUser);
-
-            // Redirect back to the users page
+            
             return RedirectToAction("Users");
         }
         
         [HttpPost("deleteUser")]
         public async Task<IActionResult> DeleteUser(string userId)
         {
-            // Delete the user from the database
-            await _dbService.DeleteAsync(userId);
-
-            // Redirect back to the users page
+            await _dbService.DeleteUserAsync(userId);
+            
             return RedirectToAction("Users");
+        }
+        
+        [HttpGet("courses")]
+        public async Task<IActionResult> Courses(int page = 1, string sortOrder = "courseName")
+        {
+            const int pageSize = 9;
+            var courses = await _dbService.GetCoursesAsync();
+            
+            switch (sortOrder)
+            {
+                case "courseName":
+                    courses = courses.OrderBy(c => c.CourseName).ToList();
+                    break;
+                case "coursePrice":
+                    courses = courses.OrderByDescending(c => c.CoursePrice).ToList();
+                    break;
+                case "sales":
+                    courses = courses.OrderByDescending(c => c.Sales).ToList();
+                    break;
+                default:
+                    courses = courses.OrderBy(c => c.CourseName).ToList();
+                    break;
+            }
+
+            var pagedCourses = courses.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            ViewData["CurrentPage"] = page;
+            ViewData["HasMorePages"] = courses.Count > page * pageSize;
+
+            return View(pagedCourses);
+        }
+        
+        [HttpPost("changeCourseDetails")]
+        public async Task<IActionResult> ChangeCourseDetails(string courseId, string courseName, decimal coursePrice)
+        {
+            var course = await _dbService.GetCourseAsync(courseId);
+            if (course == null)
+            {
+                return NotFound();
+            }
+
+            course.CourseName = courseName;
+            course.CoursePrice = coursePrice;
+
+            await _dbService.PutCourseAsync(course.Id, course);
+
+            return RedirectToAction("Courses");
+        }
+        
+        [HttpPost("deleteCourse")]
+        public async Task<IActionResult> DeleteCourse(string courseId)
+        {
+            Console.WriteLine($"DeleteCourse method called with courseId: {courseId}");
+
+            await _dbService.DeleteCourseAsync(courseId);
+
+            return RedirectToAction("Courses");
+        }
+        
+        [HttpPost("addCourse")]
+        public async Task<IActionResult> AddCourse(string courseName, decimal coursePrice)
+        {
+            // Create a new course with the provided details
+            var newCourse = new Course
+            {
+                CourseName = courseName,
+                CoursePrice = coursePrice,
+                // Set other properties as needed
+            };
+
+            // Add the new course to the database
+            await _dbService.PostCourseAsync(newCourse);
+
+            // Redirect back to the courses page
+            return RedirectToAction("Courses");
         }
     }
 }

@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="~/css/admindashboard.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/admin-users.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+   
 </head>
 
 <body>
@@ -54,7 +54,7 @@
                     <a href="@Url.Action("Users", "Admin")" class="list-group-item list-group-item-action @(ViewContext.RouteData.Values["Controller"].ToString() == "Admin" && ViewContext.RouteData.Values["Action"].ToString() == "Users" ? "active-link" : "")">
                         <i class="fas fa-users"></i> Users
                     </a>
-                    <a href="#" class="list-group-item list-group-item-action @(ViewContext.RouteData.Values["Controller"].ToString() == "Admin" && ViewContext.RouteData.Values["Action"].ToString() == "Courses" ? "active-link" : "")">
+                    <a href="@Url.Action("Courses", "Admin")" class="list-group-item list-group-item-action @(ViewContext.RouteData.Values["Controller"].ToString() == "Admin" && ViewContext.RouteData.Values["Action"].ToString() == "Courses" ? "active-link" : "")">
                         <i class="fas fa-book"></i> Courses
                     </a>
                     <a href="#" class="list-group-item list-group-item-action">

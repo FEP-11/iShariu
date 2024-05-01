@@ -35,7 +35,7 @@ public class UserController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteAsync(string id)
     {
-        await _mongoDBService.DeleteAsync(id);
+        await _mongoDBService.DeleteUserAsync(id);
         return NoContent();
     }
 }

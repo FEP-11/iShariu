@@ -39,7 +39,7 @@ namespace WebApp.Services
             await _userCollection.UpdateOneAsync(filter, update);
         }
 
-        public async Task DeleteAsync(string id)
+        public async Task DeleteUserAsync(string id)
         {
             FilterDefinition<User> filter = Builders<User>.Filter.Eq("Id", id);
             await _userCollection.DeleteOneAsync(filter);
@@ -56,7 +56,7 @@ namespace WebApp.Services
 
         public async Task<Course> GetCourseAsync(string id)
         {
-            FilterDefinition<Course> filter = Builders<Course>.Filter.Eq(c => c.CourseName, id);
+            FilterDefinition<Course> filter = Builders<Course>.Filter.Eq(c => c.Id, id);
             return await _courseCollection.Find(filter).SingleOrDefaultAsync();
         }
 
@@ -64,13 +64,13 @@ namespace WebApp.Services
 
         public async Task PutCourseAsync(string id, Course updatedCourse)
         {
-            FilterDefinition<Course> filter = Builders<Course>.Filter.Eq("CourseName", id);
+            FilterDefinition<Course> filter = Builders<Course>.Filter.Eq("Id", id);
             await _courseCollection.ReplaceOneAsync(filter, updatedCourse);
         }
 
         public async Task DeleteCourseAsync(string id)
         {
-            FilterDefinition<Course> filter = Builders<Course>.Filter.Eq("CourseName", id);
+            FilterDefinition<Course> filter = Builders<Course>.Filter.Eq("Id", id);
             await _courseCollection.DeleteOneAsync(filter);
         }
 
@@ -86,5 +86,32 @@ namespace WebApp.Services
             FilterDefinition<User> filter = Builders<User>.Filter.Eq("Id", id);
             await _userCollection.ReplaceOneAsync(filter, updatedUser);
         }
+        
+        public async Task EnrollUserInCourse(string userId, string courseId)
+        {
+            var user = await GetAsync(userId);
+            var course = await GetCourseAsync(courseId);
+            
+            user.CourseIds.Add(courseId);
+            
+            course.UserIds.Add(userId);
+
+            await PutAsync(userId, user);
+            await PutCourseAsync(courseId, course);
+        }
+        
+        public async Task RemoveCourseFromUser(string userId, string courseId)
+        {
+            var user = await GetAsync(userId);
+            var course = await GetCourseAsync(courseId);
+            
+            user.CourseIds.Remove(courseId);
+            
+            course.UserIds.Remove(userId);
+            
+            await PutAsync(userId, user);
+            await PutCourseAsync(courseId, course);
+        }
+        
     }
 }
