@@ -1,0 +1,36 @@
+﻿@model WebApp.Models.User
+@{
+    var countries = ViewData["Countries"] as List<Country>;
+}
+
+<div class="profile-header">
+    <h1>Edit @Model.Username's Profile</h1>
+</div>
+
+<form asp-action="UpdateProfile" asp-controller="Account" asp-route-username="@Model.Username" method="post" class="edit-profile-form">
+    <input type="hidden" asp-for="Username" />
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" asp-for="Email" class="form-input" />
+
+    <label for="location">Location:</label>
+    @if (countries != null && countries.Any())
+    {
+        <select id="location" asp-for="Location" class="form-input large-select">
+            <option value="">Select a country</option>
+            @foreach (var country in countries)
+            {
+                <option value="@country.Cca2">@country.Name.Common</option>
+            }
+        </select>
+    }
+    else
+    {
+        <p>Could not fetch the list of countries. Please try again later.</p>
+    }
+
+    <label for="password">New Password:</label>
+    <input type="password" id="password" asp-for="Password" class="form-input" />
+
+    <button type="submit" class="form-button">Update Profile</button>
+</form>

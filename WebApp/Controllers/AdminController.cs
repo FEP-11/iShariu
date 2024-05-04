@@ -167,19 +167,27 @@ namespace WebApp.Controllers
         [HttpPost("addCourse")]
         public async Task<IActionResult> AddCourse(string courseName, decimal coursePrice)
         {
-            // Create a new course with the provided details
             var newCourse = new Course
             {
                 CourseName = courseName,
                 CoursePrice = coursePrice,
-                // Set other properties as needed
             };
-
-            // Add the new course to the database
+            
             await _dbService.PostCourseAsync(newCourse);
-
-            // Redirect back to the courses page
+            
             return RedirectToAction("Courses");
+        }
+        
+        [Route("sales")]
+        public async Task<IActionResult> Sales()
+        {
+            return View();
+        }
+        
+        [Route("settings")]
+        public async Task<IActionResult> Settings()
+        {
+            return View();
         }
     }
 }

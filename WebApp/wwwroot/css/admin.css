@@ -3,9 +3,35 @@ body {
 }
 
 .active-link {
-    color: #ff0000 !important; /* Change this to the color you want */
+    color: #ff0000 !important; 
 }
 
 .wider-dropdown {
     width: 500px;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.spin {
+    animation: spin 2s linear infinite;
+}
+
+.progress-text {
+    font-size: 4em;
+    font-weight: bold;
+    -webkit-background-clip: text;
+}
+
+.progress-background {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }

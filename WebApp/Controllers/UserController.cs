@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using WebApp.Models;
 using WebApp.Services;
 
@@ -17,6 +19,7 @@ public class UserController : ControllerBase
 
     [HttpGet]
     public async Task<List<User>> GetAsync() => await _mongoDBService.GetAsync();
+    
 
     [HttpPost]
     public async Task<IActionResult> PostAsync([FromBody] User user)

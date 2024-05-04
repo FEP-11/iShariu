@@ -1,4 +1,5 @@
 ﻿@using System.Security.Claims
+@using System.Net
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,6 +14,9 @@
     <link rel="shortcut icon" type="image/x-icon" href="~/ballon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/css/general.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/auth.css" asp-append-version="true" />
@@ -20,8 +24,8 @@
     <link rel="stylesheet" href="~/css/navbar.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WebApp.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/user-profile.css" asp-append-version="true" />
 </head>
-
 <body class="mb-0">
     @* Navbar *@
     <header class="header">

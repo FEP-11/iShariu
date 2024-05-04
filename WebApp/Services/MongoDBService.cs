@@ -86,7 +86,11 @@ namespace WebApp.Services
             FilterDefinition<User> filter = Builders<User>.Filter.Eq("Id", id);
             await _userCollection.ReplaceOneAsync(filter, updatedUser);
         }
-        
+        public async Task<User> GetByUsernameAsync(string username)
+        {
+            FilterDefinition<User> filter = Builders<User>.Filter.Eq(u => u.Username, username);
+            return await _userCollection.Find(filter).FirstOrDefaultAsync();
+        }
         public async Task EnrollUserInCourse(string userId, string courseId)
         {
             var user = await GetAsync(userId);

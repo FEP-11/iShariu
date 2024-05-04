@@ -1,0 +1,35 @@
+﻿@model WebApp.Models.User
+
+<div class="profile-header">
+    <h1>@Model.Username's Profile</h1>
+</div>
+
+<div class="profile-details">
+    <h2>Personal Information</h2>
+    <p>Email: @Model.Email</p>
+    <p>Role: @Model.Role</p>
+    @if (!string.IsNullOrEmpty(Model.Location))
+    {
+        <p>Location: <img src="https://flagsapi.com/@Model.Location.Substring(0, 2)/flat/32.png" alt="@Model.Location flag" /> @Model.Location</p>
+    }
+    else
+    {
+        <p>Location: Not set</p>
+    }
+    <p>Joined: @Model.JoinDate.ToString("MMMM dd, yyyy")</p>
+</div>
+
+@if (Model.Courses != null && Model.Courses.Count > 0) {
+    <div class="profile-details">
+        <h2>Courses</h2>
+    </div>
+}
+
+@if (User.Identity.Name == Model.Username)
+{
+    <div class="mt-4">
+        <a asp-action="EditProfile" asp-controller="Account" asp-route-username="@Model.Username" class="btn btn-danger btn-block edit-profile-button">
+            Edit Profile
+        </a>
+    </div>
+}
