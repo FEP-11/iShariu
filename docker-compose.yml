@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+  webapp:
+    image: ${DOCKER_REGISTRY-}webapp
+    restart: always
+    build:
+      context: .
+      dockerfile: WebApp/Dockerfile
+    container_name: iShariu
+    depends_on:
+      - db
+
+  db:
+    image: "mongo:latest"
+    container_name: mongodb
+    ports:
+      - "27170:27170"
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:
