@@ -1,35 +1,33 @@
-﻿@model WebApp.Models.User
+﻿@model UserProfileViewModel
 
-<div class="profile-header">
-    <h1>@Model.Username's Profile</h1>
-</div>
-
-<div class="profile-details">
+<div class="profile-container">
+    <h1>@Model.User.Username's Profile</h1>
     <h2>Personal Information</h2>
-    <p>Email: @Model.Email</p>
-    <p>Role: @Model.Role</p>
-    @if (!string.IsNullOrEmpty(Model.Location))
+    <p>Email: @Model.User.Email</p>
+    <p>Role: @Model.User.Role</p>
+    @if (!string.IsNullOrEmpty(Model.User.Location))
     {
-        <p>Location: <img src="https://flagsapi.com/@Model.Location.Substring(0, 2)/flat/32.png" alt="@Model.Location flag" /> @Model.Location</p>
+        <p>Location: <img src="https://flagsapi.com/@Model.User.Location.Substring(0, 2)/flat/32.png" alt="@Model.User.Location flag" /> @Model.User.Location</p>
     }
     else
     {
         <p>Location: Not set</p>
     }
-    <p>Joined: @Model.JoinDate.ToString("MMMM dd, yyyy")</p>
+    <p>Joined: @Model.User.JoinDate.ToString("MMMM dd, yyyy")</p>
+    
+    <h2>Created Courses</h2>
+    <div class="courses-container">
+        @foreach (var course in Model.CreatedCourses.Take(3))
+        {
+            <div class="course"><h3>@course.CourseName</h3></div>
+        }
+    </div>
+    
+    <h2>Enrolled Courses</h2>
+    <div class="courses-container">
+        @foreach (var course in Model.EnrolledCourses.Take(3))
+        {
+            <div class="course"><h3>@course.CourseName</h3></div>
+        }
+    </div>
 </div>
-
-@if (Model.Courses != null && Model.Courses.Count > 0) {
-    <div class="profile-details">
-        <h2>Courses</h2>
-    </div>
-}
-
-@if (User.Identity.Name == Model.Username)
-{
-    <div class="mt-4">
-        <a asp-action="EditProfile" asp-controller="Account" asp-route-username="@Model.Username" class="btn btn-danger btn-block edit-profile-button">
-            Edit Profile
-        </a>
-    </div>
-}

@@ -16,5 +16,6 @@ namespace WebApp.Models
             
             public List<string> UserIds { get; set; } = new List<string>();
             public string CreatorId { get; set; }
+            
         }
     }

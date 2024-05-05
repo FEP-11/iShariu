@@ -91,31 +91,6 @@ namespace WebApp.Services
             FilterDefinition<User> filter = Builders<User>.Filter.Eq(u => u.Username, username);
             return await _userCollection.Find(filter).FirstOrDefaultAsync();
         }
-        public async Task EnrollUserInCourse(string userId, string courseId)
-        {
-            var user = await GetAsync(userId);
-            var course = await GetCourseAsync(courseId);
-            
-            user.CourseIds.Add(courseId);
-            
-            course.UserIds.Add(userId);
-
-            await PutAsync(userId, user);
-            await PutCourseAsync(courseId, course);
-        }
-        
-        public async Task RemoveCourseFromUser(string userId, string courseId)
-        {
-            var user = await GetAsync(userId);
-            var course = await GetCourseAsync(courseId);
-            
-            user.CourseIds.Remove(courseId);
-            
-            course.UserIds.Remove(userId);
-            
-            await PutAsync(userId, user);
-            await PutCourseAsync(courseId, course);
-        }
         
     }
 }

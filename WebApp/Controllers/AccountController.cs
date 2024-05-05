@@ -71,12 +71,31 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            var model = new User
+            var createdCourses = new List<Course>();
+            foreach (var courseId in user.CreatedCourses)
             {
-                Username = user.Username,
-                Email = user.Email,
-                Role = user.Role,
-                Location = user.Location
+                var course = await _users.GetCourseAsync(courseId);
+                if (course != null)
+                {
+                    createdCourses.Add(course);
+                }
+            }
+
+            var enrolledCourses = new List<Course>();
+            foreach (var courseId in user.EnrolledCourses)
+            {
+                var course = await _users.GetCourseAsync(courseId);
+                if (course != null)
+                {
+                    enrolledCourses.Add(course);
+                }
+            }
+
+            var model = new UserProfileViewModel
+            {
+                User = user,
+                CreatedCourses = createdCourses,
+                EnrolledCourses = enrolledCourses
             };
 
             return View(model);
@@ -113,8 +132,8 @@ namespace WebApp.Controllers
         }
         
         [Authorize]
-        [HttpGet("user/{username}/edit")]
-        public async Task<IActionResult> EditProfile(string username)
+        [HttpGet("user/{username}/settings")]
+        public async Task<IActionResult> UserSettings(string username)
         {
             if (User.Identity.Name != username)
             {
@@ -144,6 +163,14 @@ namespace WebApp.Controllers
 
             return View(user);
         }
+
+        [HttpGet("courses")]
+        public async Task<IActionResult> Courses()
+        {
+            // Implement your courses logic here...
+            return View();
+        }
+        
         
     }
 }
