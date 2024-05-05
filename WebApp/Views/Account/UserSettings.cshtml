@@ -1,36 +1,56 @@
-﻿@model WebApp.Models.User
-@{
-    var countries = ViewData["Countries"] as List<Country>;
-}
+﻿
+<div class="profile-container">
+    <div class="container">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="account-tab" data-toggle="tab" href="#account" role="tab" aria-controls="account" aria-selected="true">Account Settings</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="security-tab" data-toggle="tab" href="#security" role="tab" aria-controls="security" aria-selected="false">Login & Security</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="notifications-tab" data-toggle="tab" href="#notifications" role="tab" aria-controls="notifications" aria-selected="false">Notifications</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
+                @model WebApp.Models.User
+                @{
+                    var countries = ViewData["Countries"] as List<Country>;
+                }
 
-<div class="profile-header">
-    <h1>Edit @Model.Username's Profile</h1>
+                <form asp-action="UpdateProfile" asp-controller="Account" asp-route-username="@Model.Username" method="post" class="edit-profile-form">
+                
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" asp-for="Email" class="form-input" placeholder="Enter your new email" />
+                
+                    <label for="location">Location:</label>
+                    @if (countries != null && countries.Any())
+                    {
+                        <select id="location" asp-for="Location" class="form-input large-select">
+                            <option value="">Select a country</option>
+                            @foreach (var country in countries)
+                            {
+                                <option value="@country.Cca2">@country.Name.Common</option>
+                            }
+                        </select>
+                    }
+                    else
+                    {
+                        <p>Could not fetch the list of countries. Please try again later.</p>
+                    }
+
+                    <label for="password">New Password:</label>
+                    <input type="password" id="password" asp-for="Password" class="form-input" placeholder="Enter your new password" />
+                <button type="submit" class="form-button btn btn-danger">Update Profile</button>
+                </form>
+            </div>
+            <div class="tab-pane fade" id="security" role="tabpanel" aria-labelledby="security-tab">
+                <!-- Login & Security Form Goes Here -->
+            </div>
+            <div class="tab-pane fade" id="notifications" role="tabpanel" aria-labelledby="notifications-tab">
+                <!-- Notifications Form Goes Here -->
+            </div>
+        </div>
+    </div>
 </div>
-
-<form asp-action="UpdateProfile" asp-controller="Account" asp-route-username="@Model.Username" method="post" class="edit-profile-form">
-    <input type="hidden" asp-for="Username" />
-
-    <label for="email">Email:</label>
-    <input type="email" id="email" asp-for="Email" class="form-input" />
-
-    <label for="location">Location:</label>
-    @if (countries != null && countries.Any())
-    {
-        <select id="location" asp-for="Location" class="form-input large-select">
-            <option value="">Select a country</option>
-            @foreach (var country in countries)
-            {
-                <option value="@country.Cca2">@country.Name.Common</option>
-            }
-        </select>
-    }
-    else
-    {
-        <p>Could not fetch the list of countries. Please try again later.</p>
-    }
-
-    <label for="password">New Password:</label>
-    <input type="password" id="password" asp-for="Password" class="form-input" />
-
-    <button type="submit" class="form-button">Update Profile</button>
-</form>
