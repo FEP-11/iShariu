@@ -20,7 +20,9 @@ namespace WebApp.Models
         public List<string> EnrolledCourses { get; set; } = new List<string>();
         public int Sales { get; set; } = 0;
         public decimal RevenueGenerated { get; set; } = 0m;
-        
         public string PhoneNumber { get; set; }
+        public bool HasMFAEnabled { get; set; }
+        public bool AllowAccessToAgeRestrictedContent { get; set; }
+        public bool UseDataToImproveIShariu { get; set; }
     }
 }

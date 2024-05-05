@@ -75,5 +75,131 @@ html, .profile-container, .container, .tab-content {
     appearance: none; 
 }
 
+#successToast {
+    margin-bottom: 2em;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    animation: toast-in 0.5s, toast-out 0.5s 2.5s;
+    animation-fill-mode: forwards;
+}
 
+@keyframes toast-in {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes toast-out {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+.mfa-enabled {
+    margin-top: 10px;
+    color: #137c4f !important;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.mfa-disabled {
+    margin-top: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.authenticator-app {
+    margin-top: 20px;
+}
+
+.authenticator-app h2 {
+    color: #6d7786;
+    font-size: 1em;
+    font-weight: bold;
+    border-bottom: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+.authenticator-app p {
+    font-size: 14px;
+    color: #9196a2;
+    margin-top: 1px;
+}
+
+button.dsbld {
+    cursor: not-allowed !important;
+    opacity: 0.6;
+}
+
+button.dsbld:hover {
+    color: #999;
+}
+
+.sms-backup-authentication {
+    margin-top: 20px;
+}
+
+.sms-backup-authentication h2 {
+    color: #6d7786;
+    font-size: 1em;
+    font-weight: bold;
+    border-bottom: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+.sms-backup-authentication p {
+    font-size: 14px;
+    color: #9196a2;
+    margin-top: 1px;
+}
+
+.phone-number-container {
+    display: flex;
+    align-items: center;
+    padding-bottom: 0.6em;
+}
+
+.settings-divider {
+    margin-top: 20px;
+    border-top: 2px solid #d5d9dd;
+}
+
+.form-check-input:checked {
+    background-color: #d43543;
+    border-color: #d43543;
+}
+
+.terms-and-privacy {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-top: 20px;
+    border-radius: 10px;
+    display: inline-block;
+}
+
+.profile-container {
+    position: relative;
+}
+
+.delete-account-container {
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 1.3em;
+    right: 0;
+    margin-right: 2.5em;
+    width: auto;
+}
 

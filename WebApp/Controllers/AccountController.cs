@@ -132,6 +132,9 @@ namespace WebApp.Controllers
                 user.Password = model.Password;
             }
 
+            user.AllowAccessToAgeRestrictedContent = model.AllowAccessToAgeRestrictedContent;
+            user.UseDataToImproveIShariu = model.UseDataToImproveIShariu;
+
             await _users.PutAsync(user.Id, user);
 
             return RedirectToAction("UserProfile", new { id = model.Id });
@@ -170,6 +173,85 @@ namespace WebApp.Controllers
             ViewData["Countries"] = countries;
 
             return View(user);
+        }
+        
+        [Authorize]
+        [HttpPost("/account/changepassword")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordModel model)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _users.GetByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            if (user.Password != model.CurrentPassword)
+            {
+                return Json(new { success = false, message = "Current password is incorrect." });
+            }
+
+            if (model.NewPassword == model.CurrentPassword)
+            {
+                return Json(new { success = false, message = "New password cannot be the same as the current password." });
+            }
+
+            user.Password = model.NewPassword;
+            await _users.PutAsync(user.Id, user);
+
+            return Json(new { success = true });
+        }
+        
+        [Authorize]
+        [HttpPost("/account/updatesetting")]
+        public async Task<IActionResult> UpdateSetting([FromBody] UpdateSettingModel model)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _users.GetByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            switch (model.SettingName)
+            {
+                case "AllowAccessToAgeRestrictedContent":
+                    user.AllowAccessToAgeRestrictedContent = model.SettingValue;
+                    break;
+                case "UseDataToImproveIShariu":
+                    user.UseDataToImproveIShariu = model.SettingValue;
+                    break;
+                default:
+                    return BadRequest();
+            }
+
+            await _users.PutAsync(user.Id, user);
+
+            return Ok();
+        }
+        
+        [Authorize]
+        [HttpPost("/account/deleteaccount")]
+        public async Task<IActionResult> DeleteAccount([FromBody] DeleteAccountModel model)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _users.GetByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            if (user.Password != model.Password)
+            {
+                return Json(new { success = false, message = "Incorrect password." });
+            }
+
+            await _users.DeleteUserAsync(user.Id);
+
+            // Sign out the user
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            return Json(new { success = true });
         }
 
         [HttpGet("courses")]
