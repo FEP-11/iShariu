@@ -4,6 +4,7 @@ using WebApp.Services;
 using DotNetEnv;
 using System;
 using MongoDB.Bson.Serialization;
+using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,14 +18,11 @@ string connectionString = Environment.GetEnvironmentVariable("MONGO_CONNECTION_S
 builder.Services.AddControllersWithViews();
 
 // Configure MongoDB service with connection string from environment variables
-builder.Services.Configure<iShariuDatabaseSettings>(options =>
-{
-    options.ConnectionString = connectionString;
-    options.DatabaseName = builder.Configuration.GetSection("iShariu:DatabaseName").Value;
-    options.UsersCollectionName = builder.Configuration.GetSection("iShariu:UsersCollectionName").Value;
-});
+MongoClient client = new MongoClient(connectionString);
+IMongoDatabase database = client.GetDatabase("iShariu"); // replace "YourDatabaseName" with the name of your database
+builder.Services.AddSingleton(database);
 
-builder.Services.AddSingleton<MongoDBService>();
+builder.Services.AddScoped(typeof(IEntityService<>), typeof(EntityService<>));
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
@@ -46,6 +44,12 @@ builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromDays(30);
 });
+
+// Register EntityService with a factory method
+builder.Services.AddScoped(typeof(IEntityService<User>), serviceProvider => 
+    new EntityService<User>(database, "User")); 
+builder.Services.AddScoped(typeof(IEntityService<Course>), serviceProvider => 
+    new EntityService<Course>(database, "Course")); 
 
 var app = builder.Build();
 

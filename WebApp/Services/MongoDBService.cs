@@ -5,113 +5,32 @@ using WebApp.Models;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using WebApp.Models;
+using WebApp.Services;
 
-namespace WebApp.Services
+public class MongoDBService
 {
-    public class MongoDBService
+    private readonly IEntityService<User> _userService;
+    private readonly IEntityService<Course> _courseService;
+
+    public MongoDBService(IOptions<iShariuDatabaseSettings> settings)
     {
-        private readonly IMongoCollection<User> _userCollection;
-        private readonly IMongoCollection<Course> _courseCollection;
-
-        public MongoDBService(IOptions<iShariuDatabaseSettings> settings)
-        {
-            MongoClient client = new MongoClient(settings.Value.ConnectionString);
-            IMongoDatabase database = client.GetDatabase(settings.Value.DatabaseName);
-            _userCollection = database.GetCollection<User>(settings.Value.UsersCollectionName);
-            _courseCollection = database.GetCollection<Course>("Course"); 
-        }
-
-        // User methods
-        public async Task<List<User>> GetAsync() => await _userCollection.Find(new BsonDocument()).ToListAsync();
-
-        public async Task<User> GetAsync(string id)
-        {
-            FilterDefinition<User> filter = Builders<User>.Filter.Eq(u => u.Id, id);
-            return await _userCollection.Find(filter).SingleOrDefaultAsync();
-        }
-
-        public async Task PostAsync(User user) => await _userCollection.InsertOneAsync(user);
-
-        public async Task PutAsync(string id)
-        {
-            FilterDefinition<User> filter = Builders<User>.Filter.Eq("Id", id);
-            UpdateDefinition<User> update = Builders<User>.Update.AddToSet<string>("Role", "user");
-            await _userCollection.UpdateOneAsync(filter, update);
-        }
-
-        public async Task DeleteUserAsync(string id)
-        {
-            FilterDefinition<User> filter = Builders<User>.Filter.Eq("Id", id);
-            await _userCollection.DeleteOneAsync(filter);
-        }
-
-        public async Task<List<User>> GetAllCreators()
-        {
-            var filter = Builders<User>.Filter.Eq("Role", "creator");
-            return await _userCollection.Find(filter).Limit(10).ToListAsync();
-        }
-
-        // Course methods
-        public async Task<List<Course>> GetCoursesAsync() => await _courseCollection.Find(new BsonDocument()).ToListAsync();
-
-        public async Task<Course> GetCourseAsync(string id)
-        {
-            FilterDefinition<Course> filter = Builders<Course>.Filter.Eq(c => c.Id, id);
-            return await _courseCollection.Find(filter).SingleOrDefaultAsync();
-        }
-
-        public async Task PostCourseAsync(Course course) => await _courseCollection.InsertOneAsync(course);
-
-        public async Task PutCourseAsync(string id, Course updatedCourse)
-        {
-            FilterDefinition<Course> filter = Builders<Course>.Filter.Eq("Id", id);
-            await _courseCollection.ReplaceOneAsync(filter, updatedCourse);
-        }
-
-        public async Task DeleteCourseAsync(string id)
-        {
-            FilterDefinition<Course> filter = Builders<Course>.Filter.Eq("Id", id);
-            await _courseCollection.DeleteOneAsync(filter);
-        }
-
-        public async Task<List<Course>> GetBestSellingCoursesAsync()
-        {
-            var filter = Builders<Course>.Filter.Empty;
-            var sort = Builders<Course>.Sort.Descending(c => c.RevenueGenerated);
-            return await _courseCollection.Find(filter).Sort(sort).Limit(10).ToListAsync();
-        }
-        
-        public async Task PutAsync(string id, User updatedUser)
-        {
-            FilterDefinition<User> filter = Builders<User>.Filter.Eq("Id", id);
-            await _userCollection.ReplaceOneAsync(filter, updatedUser);
-        }
-        
-        public async Task EnrollUserInCourse(string userId, string courseId)
-        {
-            var user = await GetAsync(userId);
-            var course = await GetCourseAsync(courseId);
-            
-            user.CourseIds.Add(courseId);
-            
-            course.UserIds.Add(userId);
-
-            await PutAsync(userId, user);
-            await PutCourseAsync(courseId, course);
-        }
-        
-        public async Task RemoveCourseFromUser(string userId, string courseId)
-        {
-            var user = await GetAsync(userId);
-            var course = await GetCourseAsync(courseId);
-            
-            user.CourseIds.Remove(courseId);
-            
-            course.UserIds.Remove(userId);
-            
-            await PutAsync(userId, user);
-            await PutCourseAsync(courseId, course);
-        }
-        
+        MongoClient client = new MongoClient(settings.Value.ConnectionString);
+        IMongoDatabase database = client.GetDatabase(settings.Value.DatabaseName);
+        _userService = new EntityService<User>(database, settings.Value.UsersCollectionName);
+        _courseService = new EntityService<Course>(database, "Course");
     }
+
+    // User methods
+    public Task<List<User>> GetUsersAsync() => _userService.GetAsync();
+    public Task<User> GetUserAsync(string id) => _userService.GetAsync(id);
+    public Task PostUserAsync(User user) => _userService.PostAsync(user);
+    public Task PutUserAsync(string id, User updatedUser) => _userService.PutAsync(id, updatedUser);
+    public Task DeleteUserAsync(string id) => _userService.DeleteAsync(id);
+
+    // Course methods
+    public Task<List<Course>> GetCoursesAsync() => _courseService.GetAsync();
+    public Task<Course> GetCourseAsync(string id) => _courseService.GetAsync(id);
+    public Task PostCourseAsync(Course course) => _courseService.PostAsync(course);
+    public Task PutCourseAsync(string id, Course updatedCourse) => _courseService.PutAsync(id, updatedCourse);
+    public Task DeleteCourseAsync(string id) => _courseService.DeleteAsync(id);
 }

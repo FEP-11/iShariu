@@ -8,34 +8,45 @@ namespace WebApp.Controllers;
 [Route("api/[controller]")]
 public class UserController : ControllerBase
 {
-    private readonly MongoDBService _mongoDBService;
+    private readonly IEntityService<User> _userService;
 
-    public UserController(MongoDBService mongoDBService)
+    public UserController(IEntityService<User> userService)
     {
-        _mongoDBService = mongoDBService;
+        _userService = userService;
     }
 
     [HttpGet]
-    public async Task<List<User>> GetAsync() => await _mongoDBService.GetAsync();
+    public async Task<List<User>> GetAsync() => await _userService.GetAsync();
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<User>> GetAsync(string id)
+    {
+        var user = await _userService.GetAsync(id);
+        if (user == null)
+        {
+            return NotFound();
+        }
+        return user;
+    }
 
     [HttpPost]
     public async Task<IActionResult> PostAsync([FromBody] User user)
     {
-        await _mongoDBService.PostAsync(user);
+        await _userService.PostAsync(user);
         return CreatedAtAction(nameof(GetAsync), new { id = user.Id }, user);
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutAsync(string id)
+    public async Task<IActionResult> PutAsync(string id, [FromBody] User updatedUser)
     {
-        await _mongoDBService.PutAsync(id);
+        await _userService.PutAsync(id, updatedUser);
         return NoContent();
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteAsync(string id)
     {
-        await _mongoDBService.DeleteUserAsync(id);
+        await _userService.DeleteAsync(id);
         return NoContent();
     }
 }

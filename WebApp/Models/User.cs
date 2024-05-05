@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 namespace WebApp.Models
 {
+    [BsonIgnoreExtraElements]
     public class User
     {
         [BsonId]

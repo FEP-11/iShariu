@@ -12,23 +12,23 @@ namespace WebApp.Controllers
     public class AccountController : Controller
     {
         private readonly ILogger<AccountController> _logger;
-        private readonly MongoDBService _users; 
+        private readonly IEntityService<User> _userService;
 
-        public AccountController(ILogger<AccountController> logger, MongoDBService settings)
+        public AccountController(ILogger<AccountController> logger, IEntityService<User> userService)
         {
             _logger = logger;
-            _users = settings;
+            _userService = userService;
         }
 
         [AllowAnonymous]
         [HttpGet]
         public ActionResult SignIn() => View();
-        
-        [AllowAnonymous]    
+
+        [AllowAnonymous]
         [HttpPost("/account/signin")]
         public async Task<ActionResult> SignInAsync([FromForm] User user)
         {
-            List<User> users = await _users.GetAsync();
+            List<User> users = await _userService.GetAsync();
             User? foundedUser = users.FirstOrDefault(u => u.Username == user.Username && u.Password == user.Password);
 
             if (foundedUser == null) return BadRequest();
@@ -43,7 +43,7 @@ namespace WebApp.Controllers
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
             _logger.LogInformation("Authorization has been successful");
-            
+
             return RedirectToAction("Index", "Home");
         }
 
