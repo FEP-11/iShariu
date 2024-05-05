@@ -9,5 +9,7 @@ public class Country
 {
     public CountryName Name { get; set; }
     public string Cca2 { get; set; }
-    // other properties...
+    
+    public string CallingCode { get; set; }
+
 }

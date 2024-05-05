@@ -37,7 +37,7 @@ namespace WebApp.Controllers
 
             var claims = new List<Claim>()
             {
-                new Claim(ClaimTypes.Name, foundedUser.Username),
+                new Claim(ClaimTypes.NameIdentifier, foundedUser.Id),
                 new Claim(ClaimTypes.Role, UserRole.Admin)
             };
 
@@ -62,10 +62,15 @@ namespace WebApp.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("user/{username}")]
-        public async Task<IActionResult> UserProfile(string username)
+        [HttpGet("user/{id}")]
+        public async Task<IActionResult> UserProfile(string id = null)
         {
-            var user = await _users.GetByUsernameAsync(username);
+            if (id == null)
+            {
+                id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            }
+            
+            var user = await _users.GetByIdAsync(id);
             if (user == null)
             {
                 return NotFound();
@@ -102,16 +107,16 @@ namespace WebApp.Controllers
         }
         
         [Authorize]
-        [HttpPost("user/{username}")]
-        public async Task<IActionResult> UpdateProfile(User model)
+        [HttpPost("user/{id}")]
+        public async Task<IActionResult> UpdateProfile(User model, string id)
         {
-            // Check if the username of the currently logged in user matches the username provided in the URL
-            if (User.Identity.Name != model.Username)
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId != id)
             {
                 return Forbid();
             }
 
-            var user = await _users.GetByUsernameAsync(model.Username);
+            var user = await _users.GetByIdAsync(id);
             if (user == null)
             {
                 return NotFound();
@@ -119,8 +124,9 @@ namespace WebApp.Controllers
 
             user.Email = model.Email;
             user.Location = model.Location;
+            user.PhoneNumber = model.PhoneNumber;
+            user.Username = model.Username;
 
-            // If a new password is provided, update the password
             if (!string.IsNullOrEmpty(model.Password))
             {
                 user.Password = model.Password;
@@ -128,19 +134,21 @@ namespace WebApp.Controllers
 
             await _users.PutAsync(user.Id, user);
 
-            return RedirectToAction("UserProfile", new { username = model.Username });
+            return RedirectToAction("UserProfile", new { id = model.Id });
         }
         
         [Authorize]
-        [HttpGet("user/{username}/settings")]
-        public async Task<IActionResult> UserSettings(string username)
+        [HttpGet("user/{id}/settings")]
+        public async Task<IActionResult> UserSettings(string id)
         {
-            if (User.Identity.Name != username)
+           
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId != id)
             {
                 return Forbid();
             }
 
-            var user = await _users.GetByUsernameAsync(username);
+            var user = await _users.GetByIdAsync(id);
             if (user == null)
             {
                 return NotFound();

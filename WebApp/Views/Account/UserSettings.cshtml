@@ -14,13 +14,19 @@
         </ul>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
-                @model WebApp.Models.User
+                @using System.Security.Claims                
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model WebApp.Models.User
                 @{
                     var countries = ViewData["Countries"] as List<Country>;
                 }
 
-                <form asp-action="UpdateProfile" asp-controller="Account" asp-route-username="@Model.Username" method="post" class="edit-profile-form">
-                
+                <form asp-action="UpdateProfile" asp-controller="Account" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)" method="post" class="edit-profile-form">
+                    <input type="hidden" asp-for="Id" />
+                   
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" asp-for="Username" class="form-input" placeholder="Enter your new username" />
+                    
                     <label for="email">Email:</label>
                     <input type="email" id="email" asp-for="Email" class="form-input" placeholder="Enter your new email" />
                 
@@ -40,8 +46,8 @@
                         <p>Could not fetch the list of countries. Please try again later.</p>
                     }
 
-                    <label for="password">New Password:</label>
-                    <input type="password" id="password" asp-for="Password" class="form-input" placeholder="Enter your new password" />
+                    <label for="phoneNumber">Phone Number:</label>
+                    <input type="tel" id="phoneNumber" asp-for="PhoneNumber" class="form-input" placeholder="Enter your new phone number" />
                 <button type="submit" class="form-button btn btn-danger">Update Profile</button>
                 </form>
             </div>

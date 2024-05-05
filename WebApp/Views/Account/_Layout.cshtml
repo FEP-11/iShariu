@@ -1,3 +1,4 @@
+@using System.Security.Claims
 
 @{
     var controller = (string)ViewContext.RouteData.Values["controller"];
@@ -95,17 +96,17 @@
 
 <div class="container">
     <div class="row">
-        @if (User?.Identity?.Name != null && ViewContext.RouteData.Values["username"] != null && User.Identity.Name == ViewContext.RouteData.Values["username"].ToString())
+        @if (User?.FindFirstValue(ClaimTypes.NameIdentifier) != null && ViewContext.RouteData.Values["id"] != null && User.FindFirstValue(ClaimTypes.NameIdentifier) == ViewContext.RouteData.Values["id"].ToString())
         {
             <div class="col-md-3">
                 <div class="list-group">
-                    <a href="@Url.RouteUrl(new { controller = "Account", action = "UserProfile", username = User.Identity.Name })" class="list-group-item list-group-item-action @(ViewContext.RouteData.Values["Controller"].ToString() == "Account" && ViewContext.RouteData.Values["Action"].ToString() == "UserProfile" ? "active-link" : "")">
+                    <a href="@Url.RouteUrl(new { controller = "Account", action = "UserProfile", id = User.FindFirstValue(ClaimTypes.NameIdentifier) })" class="list-group-item list-group-item-action @(ViewContext.RouteData.Values["Controller"].ToString() == "Account" && ViewContext.RouteData.Values["Action"].ToString() == "UserProfile" ? "active-link" : "")">
                         <i class="fas fa-user-circle"></i> Profile
                     </a>
                     <a href="@Url.Action("Courses", "Account")" class="list-group-item list-group-item-action @(ViewContext.RouteData.Values["Controller"].ToString() == "Account" && ViewContext.RouteData.Values["Action"].ToString() == "Courses" ? "active-link" : "")">
                         <i class="fas fa-book"></i> Courses
                     </a>
-                    <a href="@Url.RouteUrl(new { controller = "Account", action = "UserSettings", username = User.Identity.Name })" class="list-group-item list-group-item-action @(ViewContext.RouteData.Values["Controller"].ToString() == "Account" && ViewContext.RouteData.Values["Action"].ToString() == "UserSettings" ? "active-link" : "")">
+                    <a href="@Url.RouteUrl(new { controller = "Account", action = "UserSettings", id = User.FindFirstValue(ClaimTypes.NameIdentifier) })" class="list-group-item list-group-item-action @(ViewContext.RouteData.Values["Controller"].ToString() == "Account" && ViewContext.RouteData.Values["Action"].ToString() == "UserSettings" ? "active-link" : "")">
                         <i class="fas fa-cogs"></i> Settings
                     </a>
                     <div style="height: 70vh;"></div>

@@ -47,7 +47,8 @@
                 <a asp-action="logout" asp-controller="account"><button type="submit" class="btn-logout">Log out</button></a>
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <a href="@Url.Action("UserProfile", "Account", new { username = User.Identity.Name })">View Profile</a>
+                    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                    <a href="@Url.Action("UserProfile", "Account", new { id = userId })">View Profile</a>
                 }
             }
             else

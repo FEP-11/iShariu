@@ -92,5 +92,11 @@ namespace WebApp.Services
             return await _userCollection.Find(filter).FirstOrDefaultAsync();
         }
         
+        public async Task<User> GetByIdAsync(string id)
+        {
+            FilterDefinition<User> filter = Builders<User>.Filter.Eq(u => u.Id, id);
+            return await _userCollection.Find(filter).FirstOrDefaultAsync();
+        }
+        
     }
 }
