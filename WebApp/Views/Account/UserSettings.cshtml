@@ -23,31 +23,48 @@
 
                 <form asp-action="UpdateProfile" asp-controller="Account" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)" method="post" class="edit-profile-form">
                     <input type="hidden" asp-for="Id" />
-                   
-                    <label for="username">Username:</label>
-                    <input type="text" id="username" asp-for="Username" class="form-input" placeholder="Enter your new username" />
                     
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" asp-for="Email" class="form-input" placeholder="Enter your new email" />
-                
-                    <label for="location">Location:</label>
-                    @if (countries != null && countries.Any())
-                    {
-                        <select id="location" asp-for="Location" class="form-input large-select">
-                            <option value="">Select a country</option>
-                            @foreach (var country in countries)
-                            {
-                                <option value="@country.Cca2">@country.Name.Common</option>
-                            }
-                        </select>
-                    }
-                    else
-                    {
-                        <p>Could not fetch the list of countries. Please try again later.</p>
-                    }
+                    <div class="color-picker-container">
+                        <div>Profile picture color:</div>
+                        <input type="color" id="profileColor" name="profileColor" value="@Model.ProfileColor" class="color-picker"/>
+                    </div>
+                    <hr class="settings-divider">
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="username">Username:</label>
+                            <input type="text" id="username" asp-for="Username" class="form-input" placeholder="Enter your new username" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" asp-for="Email" class="form-input" placeholder="Enter your new email" />
+                        </div>
+                    </div>
 
-                    <label for="phoneNumber">Phone Number:</label>
-                    <input type="tel" id="phoneNumber" asp-for="PhoneNumber" class="form-input" placeholder="Enter your new phone number" />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="location">Location:</label>
+                            @if (countries != null && countries.Any())
+                            {
+                                <select id="location" asp-for="Location" class="form-input large-select">
+                                    <option value="">Select a country</option>
+                                    @foreach (var country in countries)
+                                    {
+                                        <option value="@country.Cca2">@country.Name.Common</option>
+                                    }
+                                </select>
+                            }
+                            else
+                            {
+                                <p>Could not fetch the list of countries. Please try again later.</p>
+                            }
+                        </div>
+                        <div class="col-md-6">
+                            <label for="phoneNumber">Phone Number:</label>
+                            <input type="tel" id="phoneNumber" asp-for="PhoneNumber" class="form-input" placeholder="Enter your new phone number" />
+                        </div>
+                    </div>
+
                     <button type="submit" class="form-button btn btn-danger">Update Profile</button>
                 </form>
             </div>

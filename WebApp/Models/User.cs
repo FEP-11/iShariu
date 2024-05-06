@@ -24,5 +24,6 @@ namespace WebApp.Models
         public bool HasMFAEnabled { get; set; }
         public bool AllowAccessToAgeRestrictedContent { get; set; }
         public bool UseDataToImproveIShariu { get; set; }
+        public string ProfileColor { get; set; } = "#808080";
     }
 }

@@ -53,6 +53,7 @@ document.getElementById('revealPhoneNumber').addEventListener('click', function(
         button.textContent = 'Reveal';
     }
 });
+
 document.getElementById('ageRestrictedContentToggle').addEventListener('change', function() {
     updateSetting('AllowAccessToAgeRestrictedContent', this.checked);
 });
@@ -111,3 +112,5 @@ document.getElementById('confirmDeleteAccount').addEventListener('click', functi
             console.error('Error:', error);
         });
 });
+
+

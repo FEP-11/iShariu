@@ -76,3 +76,17 @@
 .balloon {
     height: 50px;
 }
+
+.styled-dropdown {
+    background-color: #f8f9fa; 
+    border-radius: 5px; 
+}
+
+.styled-dropdown .dropdown-item {
+    color: #343a40; 
+}
+
+.styled-dropdown .dropdown-item:hover {
+    background-color: #e9ecef; 
+    color: #495057; 
+}

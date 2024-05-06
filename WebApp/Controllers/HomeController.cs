@@ -1,21 +1,26 @@
 ﻿using System.Diagnostics;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Models;
+using WebApp.Services;
 
 namespace WebApp.Controllers;
 
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
+    private readonly MongoDBService _mongoDBService;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILogger<HomeController> logger, MongoDBService mongoDBService)
     {
         _logger = logger;
+        _mongoDBService = mongoDBService;
     }
-
-    public IActionResult Index()
+    
+    public async Task<IActionResult> Index()
     {
-        return View();
+        var user = await _mongoDBService.GetByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+        return View(user);
     }
      
     public IActionResult Privacy()

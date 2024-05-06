@@ -68,6 +68,7 @@
     else
     {
         <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true"/>
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
         <link rel="stylesheet" href="~/css/admin-navbar.css" asp-append-version="true"/>
         <link rel="stylesheet" href="~/css/admin-sidebar.css" asp-append-version="true"/>
         <link rel="stylesheet" href="~/css/admin-dahsboard.css" asp-append-version="true"/>
@@ -83,8 +84,26 @@
             </div>
 
             <div class="right-section">
+                
+            @if (ViewData.ModelMetadata.ModelType == typeof(UserProfileViewModel) && Model.User != null && !string.IsNullOrEmpty(Model.User.Username))
+            {
+                <div class="profile-picture" style="background-color: @Model.User.ProfileColor;">
+                    @Model.User.Username.Substring(0, 1).ToUpper()
+                </div>
+            }
+            else if (ViewData.ModelMetadata.ModelType == typeof(User) && Model != null && !string.IsNullOrEmpty(Model.Username))
+            {
+                <div class="profile-picture" style="background-color: @Model.ProfileColor;">
+                    @Model.Username.Substring(0, 1).ToUpper()
+                </div>
+            }
+            else
+            {
+                <div class="profile-picture">
+                    ?
+                </div>
+            }
 
-                <img src="@Url.Action("ProfilePicture", "Account")" alt="Profile Picture" class="profile-picture">
                 <span class="username">@User.Identity.Name</span>
                 <p></p>
             </div>

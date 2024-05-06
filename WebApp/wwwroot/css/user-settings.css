@@ -13,6 +13,12 @@ html, .profile-container, .container, .tab-content {
     width: 100%
 }
 
+html, body {
+    height: auto;
+    overflow: auto;
+    width: 100%;
+}
+
 .profile-container {
     padding: 50px;
     border: 1px solid #ddd;
@@ -202,4 +208,40 @@ button.dsbld:hover {
     margin-right: 2.5em;
     width: auto;
 }
+
+.color-picker-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    padding-bottom: 1.3em;
+}
+
+.color-picker-container div {
+    margin-right: 10px;
+}
+
+.color-picker {
+    border: 1px solid #ddd;
+    padding: 2px !important;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+    width: 30px !important;
+    height: 30px !important;
+    margin: 0 !important;
+}
+
+.color-picker:hover {
+    border-color: #999;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.color-picker:focus {
+    border-color: #555;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+}
+
 

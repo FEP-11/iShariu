@@ -38,7 +38,7 @@ namespace WebApp.Controllers
             var claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.NameIdentifier, foundedUser.Id),
-                new Claim(ClaimTypes.Role, UserRole.Admin)
+                new Claim(ClaimTypes.Role, foundedUser.Role)
             };
 
             ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Cookies");
@@ -122,10 +122,25 @@ namespace WebApp.Controllers
                 return NotFound();
             }
 
-            user.Email = model.Email;
-            user.Location = model.Location;
-            user.PhoneNumber = model.PhoneNumber;
-            user.Username = model.Username;
+            if (model.Email != null)
+            {
+                user.Email = model.Email;
+            }
+
+            if (model.Location != null)
+            {
+                user.Location = model.Location;
+            }
+
+            if (model.PhoneNumber != null)
+            {
+                user.PhoneNumber = model.PhoneNumber;
+            }
+
+            if (model.Username != null)
+            {
+                user.Username = model.Username;
+            }
 
             if (!string.IsNullOrEmpty(model.Password))
             {
@@ -134,6 +149,11 @@ namespace WebApp.Controllers
 
             user.AllowAccessToAgeRestrictedContent = model.AllowAccessToAgeRestrictedContent;
             user.UseDataToImproveIShariu = model.UseDataToImproveIShariu;
+            
+            if (model.ProfileColor != null)
+            {
+                user.ProfileColor = model.ProfileColor;
+            }
 
             await _users.PutAsync(user.Id, user);
 
@@ -254,12 +274,12 @@ namespace WebApp.Controllers
             return Json(new { success = true });
         }
 
-        [HttpGet("courses")]
-        public async Task<IActionResult> Courses()
-        {
-            // Implement your courses logic here...
-            return View();
-        }
+        // [HttpGet("courses")]
+        // public async Task<IActionResult> Courses()
+        // {
+        //     // Implement your courses logic here...
+        //     return View();
+        // }
         
         
     }
