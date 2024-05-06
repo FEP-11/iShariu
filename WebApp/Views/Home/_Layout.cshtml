@@ -26,12 +26,13 @@
     @* Navbar *@
     <header class="header">
         <div class="left-section">
-            <img class="iShariu-logo" src="~/ballon.ico">
-            <p class="project-name">ЯШарю</p>
+            <a class="home-link" href="@Url.Action("Index", "Home")">
+                <img class="iShariu-logo" src="~/ballon.ico">
+                <p class="project-name">ЯШарю</p>
+            </a>
         </div>
 
         <div class="middle-section">
-            <p class="nav-item">Home</p>
             <p class="nav-item">Courses</p>
             <p class="nav-item">About us</p>
             <p class="nav-item">Contact</p>

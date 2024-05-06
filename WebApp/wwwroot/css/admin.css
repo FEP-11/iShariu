@@ -35,3 +35,13 @@ body {
     align-items: center;
     flex-direction: column;
 }
+
+.home-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+}
+
+

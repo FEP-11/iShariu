@@ -111,3 +111,27 @@
     text-align: center;
     width: 100%;
 }
+
+.home-link > .iShariu-logo {
+    width: 50px;
+    height: 50px;
+}
+
+.iShariu-logo {
+    margin-left: 3em !important;
+}
+
+.home-link > .project-name {
+    margin-left: 0;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.dropdown {
+    transition: transform 0.3s ease-in-out;
+}
+
+.dropdown:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+}

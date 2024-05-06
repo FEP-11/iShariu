@@ -78,35 +78,14 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
         
         <header class="header">
-            <div class="left-section">
+        <div class="left-section">
+            <a class="home-link" href="@Url.Action("Index", "Home")">
                 <img class="iShariu-logo" src="~/ballon.ico">
                 <p class="project-name">ЯШарю</p>
-            </div>
+            </a>
+        </div>
 
-            <div class="right-section">
-                
-            @if (ViewData.ModelMetadata.ModelType == typeof(UserProfileViewModel) && Model.User != null && !string.IsNullOrEmpty(Model.User.Username))
-            {
-                <div class="profile-picture" style="background-color: @Model.User.ProfileColor;">
-                    @Model.User.Username.Substring(0, 1).ToUpper()
-                </div>
-            }
-            else if (ViewData.ModelMetadata.ModelType == typeof(User) && Model != null && !string.IsNullOrEmpty(Model.Username))
-            {
-                <div class="profile-picture" style="background-color: @Model.ProfileColor;">
-                    @Model.Username.Substring(0, 1).ToUpper()
-                </div>
-            }
-            else
-            {
-                <div class="profile-picture">
-                    ?
-                </div>
-            }
-
-                <span class="username">@User.Identity.Name</span>
-                <p></p>
-            </div>
+        <div class="right-section"></div>
         </header>
     }
 
@@ -144,6 +123,9 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
