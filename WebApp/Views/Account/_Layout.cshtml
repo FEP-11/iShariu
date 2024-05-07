@@ -35,10 +35,12 @@
         <link rel="stylesheet" href="~/WebApp.styles.css" asp-append-version="true"/>
         
         <header class="header">
-            <div class="left-section">
-                <img class="iShariu-logo" src="~/ballon.ico">
-                <p class="project-name">ЯШарю</p>
-            </div>
+        <div class="left-section">
+                    <a class="home-link" href="@Url.Action("Index", "Home")">
+                        <img class="iShariu-logo" src="~/ballon.ico">
+                        <p class="project-name">ЯШарю</p>
+                    </a>
+                </div>
 
             <div class="middle-section">
                 <p class="nav-item">Home</p>

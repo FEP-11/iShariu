@@ -22,8 +22,16 @@ public class AboutController : Controller
         return View(user);
     }
     
-    public  IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        return View();
+        var user = await _mongoDBService.GetByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+        return View(user);
+    }
+    
+    [Route("/about/privacy")]
+    public async Task<IActionResult> Privacy()
+    {
+        var user = await _mongoDBService.GetByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+        return View(user);
     }
 }
