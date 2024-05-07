@@ -22,7 +22,7 @@ public class UserController : ControllerBase
     public async Task<IActionResult> PostAsync([FromBody] User user)
     {
         await _mongoDBService.PostAsync(user);
-        return CreatedAtAction(nameof(GetAsync), new { id = user.Id }, user);
+        return CreatedAtAction("GetAsync", new { id = user.Id }, user);
     }
 
     [HttpPut("{id}")]

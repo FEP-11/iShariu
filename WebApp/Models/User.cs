@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 namespace WebApp.Models
 {
+    [BsonIgnoreExtraElements]
     public class User
     {
         [BsonId]
@@ -16,9 +17,9 @@ namespace WebApp.Models
 
         // These fields are only relevant for creators
         public List<Course>? Courses { get; set; } = new List<Course>();
-        public int Sales { get; set; } = 0;
-        public decimal RevenueGenerated { get; set; } = 0m;
-        
-        public List<string> CourseIds { get; set; } = new List<string>();
+        public int? Sales { get; set; } = 0;
+        public decimal? RevenueGenerated { get; set; } = 0m;
+
+        public List<string>? CourseIds { get; set; } = new List<string>();
     }
 }

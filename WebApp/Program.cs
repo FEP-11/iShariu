@@ -4,25 +4,17 @@ using WebApp.Services;
 using DotNetEnv;
 using System;
 using MongoDB.Bson.Serialization;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Load environment variables from .env file
-Env.Load();
-
-// Get MongoDB connection string from environment variables
-string connectionString = Environment.GetEnvironmentVariable("MONGO_CONNECTION_STRING");
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
 // Configure MongoDB service with connection string from environment variables
-builder.Services.Configure<iShariuDatabaseSettings>(options =>
-{
-    options.ConnectionString = connectionString;
-    options.DatabaseName = builder.Configuration.GetSection("iShariu:DatabaseName").Value;
-    options.UsersCollectionName = builder.Configuration.GetSection("iShariu:UsersCollectionName").Value;
-});
+builder.Services.Configure<iShariuDatabaseSettings>(
+    builder.Configuration.GetSection("iShariu")
+    );
 
 builder.Services.AddSingleton<MongoDBService>();
 

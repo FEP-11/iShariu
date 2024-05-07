@@ -12,6 +12,7 @@ namespace WebApp.Services
     {
         private readonly IMongoCollection<User> _userCollection;
         private readonly IMongoCollection<Course> _courseCollection;
+        private readonly IMongoDatabase _database;
 
         public MongoDBService(IOptions<iShariuDatabaseSettings> settings)
         {
@@ -19,6 +20,11 @@ namespace WebApp.Services
             IMongoDatabase database = client.GetDatabase(settings.Value.DatabaseName);
             _userCollection = database.GetCollection<User>(settings.Value.UsersCollectionName);
             _courseCollection = database.GetCollection<Course>("Course"); 
+            _database = client.GetDatabase(settings.Value.DatabaseName);
+            
+            // Create collections of they don't exist
+            CreateCollectionIfNotExists(settings.Value.UsersCollectionName);
+            CreateCollectionIfNotExists(settings.Value.CoursesCollectionName);
         }
 
         // User methods
@@ -113,5 +119,13 @@ namespace WebApp.Services
             await PutCourseAsync(courseId, course);
         }
         
+        private void CreateCollectionIfNotExists(string collectionName)
+        {
+            var filter = new BsonDocument("name", collectionName);
+            var options = new ListCollectionsOptions { Filter = filter };
+            bool exists = _database.ListCollections(options).Any();
+
+            if (!exists) _database.CreateCollection(collectionName);
+        }
     }
 }
