@@ -4,27 +4,25 @@
 }
 
 <div class="container">
-    <div class="auth-img">
-        <img src="~/img/auth-side-image.png">
-    </div>
-
+    
     <form method="post" class="auth-form">
-        <div class="title">Sign In</div>
-        <div class="registration-message">If you don't have an account register You can
-            <a class="registration-link" asp-action="register" asp-controller="account">Register now!</a>
+        <div class="title">Welcome back!</div>
+        <div class="registration-subtitle">We are so excited to see you again!</div>
+
+        <div class="input-form mt-3">
+            <label class="input-title">Username</label>
+            <input class="input-field" type="text" asp-for="Username" id="usernameLogin" placeholder="Enter your username">
+
+            <label class="input-title">Password</label>
+            <input class="input-field" type="password" asp-for="Password" id="passwordLogin" placeholder="Enter your Password">
         </div>
 
-        <div class="input-form mt-5">
-            <label class="input-title">Username</label>
-            <input class="email-form mb-5" type="text" asp-for="Username" id="usernameLogin"
-                placeholder="Enter your username">
-            <label class="input-title">Password</label>
-            <input class="password-form" type="password" asp-for="Password" id="passwordLogin"
-                placeholder="Enter your Password">
-        </div>
-        <input type="checkbox" checked><span class="checkbox-text">Remember me!</span>
-        <div class="mt-5">
+        <div class="mt-3">
             <button type="submit" id="submitButton" class="submit-btn">Login</button>
+        </div>
+        
+        <div class="registration-message">Need an account?
+            <a class="registration-link" asp-action="register" asp-controller="account">Register</a>
         </div>
     </form>
 </div>

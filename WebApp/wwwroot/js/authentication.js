@@ -8,7 +8,12 @@ submitBtn.addEventListener("click", async e => {
     const password = document.getElementById("passwordForm").value
     const confirmPassword = document.getElementById("confirmPasswordForm").value
 
-    await addUser(email, username, password, confirmPassword)
+    const isUserAdded = await addUser(email, username, password, confirmPassword)
+
+    if (isUserAdded) {
+        const baseUrl = window.location.origin
+        document.location.href = baseUrl
+    }
 })
 
 // The function of adding user to db
@@ -20,6 +25,7 @@ async function addUser(email, username, password, confirmPassword) {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
+                id: generateMongoID(),
                 username: username,
                 email: email,
                 password: password,
@@ -30,6 +36,8 @@ async function addUser(email, username, password, confirmPassword) {
         if (response.ok) {
             await LogIn(username, password)
         }
+
+        return response.ok
     } else {
         console.error("Password isn't match with Confirm Password")
     }
@@ -40,10 +48,10 @@ async function LogIn(username, password) {
     const userForm = new FormData()
     userForm.append("username", username)
     userForm.append("password", password)
+
     const response = await fetch("/account/signin", {
         method: "POST",
         body: userForm,
-        
     })
 
     if (response.ok) {
@@ -56,7 +64,7 @@ async function LogIn(username, password) {
 // The function for finding existing user
 async function IsExist(email, username) {
     const response = await fetch("/api/user")
-    
+
     if (response.ok) {
         const users = await response.json()
         return users.some(user => user.username === username || user.email === email)
@@ -64,3 +72,16 @@ async function IsExist(email, username) {
         return false
     }
 }
+
+function generateMongoID() {
+    const characters = '0123456789abcdef';
+    let hexString = '';
+    for (let i = 0; i < 24; i++) {
+        hexString += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return hexString;
+}
+
+// TODO: fix resitration; verify wheater all field are filled and terms checbox; user 13+ y.o; passowrd strong;
+
+
