@@ -32,11 +32,11 @@ async function addUser(email, username, password, confirmPassword) {
                 role: "user"
             })
         })
-
+        
         if (response.ok) {
             await LogIn(username, password)
         }
-
+        
         return response.ok
     } else {
         console.error("Password isn't match with Confirm Password")
@@ -48,7 +48,7 @@ async function LogIn(username, password) {
     const userForm = new FormData()
     userForm.append("username", username)
     userForm.append("password", password)
-
+    
     const response = await fetch("/account/signin", {
         method: "POST",
         body: userForm,
@@ -64,7 +64,7 @@ async function LogIn(username, password) {
 // The function for finding existing user
 async function IsExist(email, username) {
     const response = await fetch("/api/user")
-
+    
     if (response.ok) {
         const users = await response.json()
         return users.some(user => user.username === username || user.email === email)
@@ -81,7 +81,3 @@ function generateMongoID() {
     }
     return hexString;
 }
-
-// TODO: fix resitration; verify wheater all field are filled and terms checbox; user 13+ y.o; passowrd strong;
-
-
