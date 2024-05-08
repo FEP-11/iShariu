@@ -22,12 +22,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
             .then(data => {
                 if (data.success) {
                     document.getElementById('changePasswordModal').style.display = 'none';
-                    document.querySelector('.modal-backdrop').remove();
 
                     var successToast = new bootstrap.Toast(document.getElementById('successToast'));
+                    
+                    window.location.reload();
                     successToast.show();
                 } else {
-                    document.getElementById('errorMessage').textContent = 'Error: ' + data.message;
+                    document.getElementById('errorMessage2').textContent = 'Error: ' + data.message;
                 }
             })
             .catch((error) => {

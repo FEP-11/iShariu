@@ -1,109 +1,73 @@
-﻿using Microsoft.Extensions.Options;
+﻿using System.Linq.Expressions;
+using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using WebApp.Models;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using WebApp.Models;
+using Microsoft.AspNetCore.Mvc;
+using WebApp.Interfaces;
 
 namespace WebApp.Services
 {
-    public class MongoDBService
+    public class MongoDBService<T> where T : IIdentifiable
     {
-        private readonly IMongoCollection<User> _userCollection;
-        private readonly IMongoCollection<Course> _courseCollection;
+        private readonly IMongoCollection<T> _collection;
         private readonly IMongoDatabase _database;
 
         public MongoDBService(IOptions<iShariuDatabaseSettings> settings)
         {
             MongoClient client = new MongoClient(settings.Value.ConnectionString);
             IMongoDatabase database = client.GetDatabase(settings.Value.DatabaseName);
-            _userCollection = database.GetCollection<User>(settings.Value.UsersCollectionName);
-            _courseCollection = database.GetCollection<Course>("Course"); 
+
+            string collectionName = typeof(T) == typeof(User) ? settings.Value.UsersCollectionName : settings.Value.CoursesCollectionName;
+            _collection = database.GetCollection<T>(collectionName);
             _database = client.GetDatabase(settings.Value.DatabaseName);
-            
-            // Create collections of they don't exist
+
+            // Create collections if they don't exist
             CreateCollectionIfNotExists(settings.Value.UsersCollectionName);
             CreateCollectionIfNotExists(settings.Value.CoursesCollectionName);
         }
-
-        // User methods
-        public async Task<List<User>> GetAsync() => await _userCollection.Find(new BsonDocument()).ToListAsync();
-
-        public async Task<User> GetAsync(string id)
+        
+        public async Task<List<T>> GetAsync() => await _collection.Find(new BsonDocument()).ToListAsync();
+        
+        public async Task<T> GetAsync(string id)
         {
-            FilterDefinition<User> filter = Builders<User>.Filter.Eq(u => u.Id, id);
-            return await _userCollection.Find(filter).SingleOrDefaultAsync();
+            FilterDefinition<T> filter = Builders<T>.Filter.Eq("Id", id);
+            return await _collection.Find(filter).FirstOrDefaultAsync();
         }
 
-        public async Task PostAsync(User user) => await _userCollection.InsertOneAsync(user);
+        public async Task<List<T>> GetAsync(FilterDefinition<T> filter) => await _collection.Find(filter).Limit(10).ToListAsync();
+        
+        public async Task PostAsync(T item) => await _collection.InsertOneAsync(item);
 
-        public async Task PutAsync(string id)
+        public async Task PutAsync(T item)
         {
-            FilterDefinition<User> filter = Builders<User>.Filter.Eq("Id", id);
-            UpdateDefinition<User> update = Builders<User>.Update.AddToSet<string>("Role", "user");
-            await _userCollection.UpdateOneAsync(filter, update);
+            FilterDefinition<T> filter = Builders<T>.Filter.Eq("Id", item.Id);
+            await _collection.ReplaceOneAsync(filter, item);
         }
 
-        public async Task DeleteUserAsync(string id)
+        public async Task DeleteAsync(string id)
         {
-            FilterDefinition<User> filter = Builders<User>.Filter.Eq("Id", id);
-            await _userCollection.DeleteOneAsync(filter);
-        }
-
-        public async Task<List<User>> GetAllCreators()
-        {
-            var filter = Builders<User>.Filter.Eq("Role", "creator");
-            return await _userCollection.Find(filter).Limit(10).ToListAsync();
-        }
-
-        // Course methods
-        public async Task<List<Course>> GetCoursesAsync() => await _courseCollection.Find(new BsonDocument()).ToListAsync();
-
-        public async Task<Course> GetCourseAsync(string id)
-        {
-            FilterDefinition<Course> filter = Builders<Course>.Filter.Eq(c => c.Id, id);
-            return await _courseCollection.Find(filter).SingleOrDefaultAsync();
-        }
-
-        public async Task PostCourseAsync(Course course) => await _courseCollection.InsertOneAsync(course);
-
-        public async Task PutCourseAsync(string id, Course updatedCourse)
-        {
-            FilterDefinition<Course> filter = Builders<Course>.Filter.Eq("Id", id);
-            await _courseCollection.ReplaceOneAsync(filter, updatedCourse);
-        }
-
-        public async Task DeleteCourseAsync(string id)
-        {
-            FilterDefinition<Course> filter = Builders<Course>.Filter.Eq("Id", id);
-            await _courseCollection.DeleteOneAsync(filter);
-        }
-
-        public async Task<List<Course>> GetBestSellingCoursesAsync()
-        {
-            var filter = Builders<Course>.Filter.Empty;
-            var sort = Builders<Course>.Sort.Descending(c => c.RevenueGenerated);
-            return await _courseCollection.Find(filter).Sort(sort).Limit(10).ToListAsync();
+            FilterDefinition<T> filter = Builders<T>.Filter.Eq("Id", id);
+            await _collection.DeleteOneAsync(filter);
         }
         
-        public async Task PutAsync(string id, User updatedUser)
+        public async Task<List<T>> GetBestSellingCoursesAsync()
         {
-            FilterDefinition<User> filter = Builders<User>.Filter.Eq("Id", id);
-            await _userCollection.ReplaceOneAsync(filter, updatedUser);
-        }
-        public async Task<User> GetByUsernameAsync(string username)
-        {
-            FilterDefinition<User> filter = Builders<User>.Filter.Eq(u => u.Username, username);
-            return await _userCollection.Find(filter).FirstOrDefaultAsync();
+            FilterDefinition<T> filter = Builders<T>.Filter.Empty;
+
+            if (typeof(T) == typeof(Course))
+            {
+                Expression<Func<T, object>> sortExpression = item => ((Course)(object)item).RevenueGenerated;
+                var sort = Builders<T>.Sort.Descending(sortExpression);
+                return await _collection.Find(filter).Sort(sort).ToListAsync();
+            }
+            else
+            {
+                return await _collection.Find(filter).ToListAsync();
+            }
         }
         
-        public async Task<User> GetByIdAsync(string id)
-        {
-            FilterDefinition<User> filter = Builders<User>.Filter.Eq(u => u.Id, id);
-            return await _userCollection.Find(filter).FirstOrDefaultAsync();
-        }
-        
+        [NonAction]
         private void CreateCollectionIfNotExists(string collectionName)
         {
             var filter = new BsonDocument("name", collectionName);

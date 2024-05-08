@@ -11,22 +11,27 @@ namespace WebApp.Controllers
     [Route("admin")]
     public class AdminController : Controller
     {
-        private readonly MongoDBService _dbService;
+        private readonly MongoDBService<User> _userService;
+        private readonly MongoDBService<Course> _courseService;
+        private readonly EntityService _entityService;
 
-        public AdminController(MongoDBService dbService)
+        public AdminController(MongoDBService<User> userService, MongoDBService<Course> courseService, 
+            EntityService entityService)
         {
-            _dbService = dbService;
+            _userService = userService;
+            _courseService = courseService;
+            _entityService = entityService;
         }
 
         [Route("dashboard")]
         public async Task<IActionResult> Index()
         {
-            var bestSellingCreators = (await _dbService.GetAllCreators())
+            var bestSellingCreators = (await _entityService.GetAllCreators())
                 .OrderByDescending(u => u.RevenueGenerated)
                 .Take(3)
                 .ToList();
 
-            var courses = await _dbService.GetBestSellingCoursesAsync();
+            var courses = await _entityService.GetBestSellingCoursesAsync();
             ViewData["Courses"] = courses;
 
             var totalSales = courses.Sum(c => c.Sales);
@@ -35,7 +40,7 @@ namespace WebApp.Controllers
             var totalRevenue = courses.Sum(c => c.RevenueGenerated);
             ViewData["Revenue"] = totalRevenue;
 
-            var creators = (await _dbService.GetAllCreators());
+            var creators = (await _entityService.GetAllCreators());
             var creatorsCount = creators.Count(u => u.Role == "creator");
             ViewData["Creators"] = creatorsCount;
 
@@ -46,7 +51,7 @@ namespace WebApp.Controllers
         public async Task<IActionResult> Users(string role, int page = 1)
         {
             const int pageSize = 9;
-            var users = await _dbService.GetAsync();
+            var users = await _userService.GetAsync();
 
             if (!string.IsNullOrEmpty(role))
             {
@@ -64,11 +69,8 @@ namespace WebApp.Controllers
         [HttpPost("changeUserDetails")]
         public async Task<IActionResult> ChangeUserDetails(string userId, string username, string email, string password, string role)
         {
-            var user = await _dbService.GetAsync(userId);
-            if (user == null)
-            {
-                return NotFound();
-            }
+            var user = await _userService.GetAsync(userId);
+            if (user == null) return NotFound();
 
             user.Username = username;
             user.Email = email;
@@ -78,13 +80,13 @@ namespace WebApp.Controllers
             }
             user.Role = role;
 
-            await _dbService.PutAsync(user.Id, user);
+            await _userService.PutAsync(user);
 
             return RedirectToAction("Users");
         }
         
         [HttpPost("addUser")]
-        public async Task<IActionResult> AddUser(string username, string email, string password, string role)
+        public async Task<IActionResult> AddUserAsync(string username, string email, string password, string role)
         {
             var newUser = new User
             {
@@ -94,24 +96,24 @@ namespace WebApp.Controllers
                 Role = role,
             };
             
-            await _dbService.PostAsync(newUser);
+            await _userService.PostAsync(newUser);
             
             return RedirectToAction("Users");
         }
         
         [HttpPost("deleteUser")]
-        public async Task<IActionResult> DeleteUser(string userId)
+        public async Task<IActionResult> DeleteUserAsync(string userId)
         {
-            await _dbService.DeleteUserAsync(userId);
+            await _userService.DeleteAsync(userId);
             
             return RedirectToAction("Users");
         }
         
         [HttpGet("courses")]
-        public async Task<IActionResult> Courses(int page = 1, string sortOrder = "courseName")
+        public async Task<IActionResult> CoursesAsync(int page = 1, string sortOrder = "courseName")
         {
             const int pageSize = 9;
-            var courses = await _dbService.GetCoursesAsync();
+            var courses = await _courseService.GetAsync();
             
             switch (sortOrder)
             {
@@ -140,7 +142,7 @@ namespace WebApp.Controllers
         [HttpPost("changeCourseDetails")]
         public async Task<IActionResult> ChangeCourseDetails(string courseId, string courseName, decimal coursePrice)
         {
-            var course = await _dbService.GetCourseAsync(courseId);
+            var course = await _courseService.GetAsync(courseId);
             if (course == null)
             {
                 return NotFound();
@@ -149,7 +151,7 @@ namespace WebApp.Controllers
             course.CourseName = courseName;
             course.CoursePrice = coursePrice;
 
-            await _dbService.PutCourseAsync(course.Id, course);
+            await _courseService.PutAsync(course);
 
             return RedirectToAction("Courses");
         }
@@ -159,7 +161,7 @@ namespace WebApp.Controllers
         {
             Console.WriteLine($"DeleteCourse method called with courseId: {courseId}");
 
-            await _dbService.DeleteCourseAsync(courseId);
+            await _courseService.DeleteAsync(courseId);
 
             return RedirectToAction("Courses");
         }
@@ -173,7 +175,7 @@ namespace WebApp.Controllers
                 CoursePrice = coursePrice,
             };
             
-            await _dbService.PostCourseAsync(newCourse);
+            await _courseService.PostAsync(newCourse);
             
             return RedirectToAction("Courses");
         }

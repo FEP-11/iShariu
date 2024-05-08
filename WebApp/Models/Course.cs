@@ -1,11 +1,12 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System.Collections.Generic;
+using WebApp.Interfaces;
 
 namespace WebApp.Models
 {
     [BsonIgnoreExtraElements]
-    public class Course
+    public class Course : IIdentifiable
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]

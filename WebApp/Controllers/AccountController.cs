@@ -14,12 +14,14 @@ namespace WebApp.Controllers
     public class AccountController : Controller
     {
         private readonly ILogger<AccountController> _logger;
-        private readonly MongoDBService _users;
+        private readonly MongoDBService<User> _userService;
+        private readonly MongoDBService<Course> _courseService;
 
-        public AccountController(ILogger<AccountController> logger, MongoDBService settings)
+        public AccountController(ILogger<AccountController> logger, MongoDBService<User> settings, MongoDBService<Course> courseService)
         {
             _logger = logger;
-            _users = settings;
+            _userService = settings;
+            _courseService = courseService;
         }
 
         [AllowAnonymous]
@@ -30,7 +32,7 @@ namespace WebApp.Controllers
         [HttpPost("/account/signin")]
         public async Task<ActionResult> SignInAsync([FromForm] User user)
         {
-            List<User> users = await _users.GetAsync();
+            List<User> users = await _userService.GetAsync();
             User? foundedUser = users.FirstOrDefault(u => u.Username == user.Username && u.Password == user.Password);
 
             if (foundedUser == null) return BadRequest();
@@ -65,31 +67,22 @@ namespace WebApp.Controllers
         [HttpGet("user/{id}")]
         public async Task<IActionResult> UserProfile(string id = null)
         {
-            if (id == null)
-            {
-                id = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            }
+            if (id == null) id = User.FindFirstValue(ClaimTypes.NameIdentifier);
             
-            var user = await _users.GetByIdAsync(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
+            var user = await _userService.GetAsync(id);
+            if (user == null) return Ok(user);
 
             var createdCourses = new List<Course>();
             foreach (var courseId in user.CreatedCourses)
             {
-                var course = await _users.GetCourseAsync(courseId);
-                if (course != null)
-                {
-                    createdCourses.Add(course);
-                }
+                var course = await _courseService.GetAsync(courseId);
+                if (course != null) createdCourses.Add(course);
             }
 
             var enrolledCourses = new List<Course>();
             foreach (var courseId in user.EnrolledCourses)
             {
-                var course = await _users.GetCourseAsync(courseId);
+                var course = await _courseService.GetAsync(courseId);
                 if (course != null)
                 {
                     enrolledCourses.Add(course);
@@ -116,25 +109,12 @@ namespace WebApp.Controllers
                 return Forbid();
             }
 
-            var user = await _users.GetByIdAsync(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
+            var user = await _userService.GetAsync(id);
+            if (user == null) return NotFound();
 
             if (model.Email != null)
             {
                 user.Email = model.Email;
-            }
-
-            if (model.Location != null)
-            {
-                user.Location = model.Location;
-            }
-
-            if (model.PhoneNumber != null)
-            {
-                user.PhoneNumber = model.PhoneNumber;
             }
 
             if (model.Username != null)
@@ -155,7 +135,7 @@ namespace WebApp.Controllers
                 user.ProfileColor = model.ProfileColor;
             }
 
-            await _users.PutAsync(user.Id, user);
+            await _userService.PutAsync(user);
 
             return RedirectToAction("UserProfile", new { id = model.Id });
         }
@@ -164,18 +144,11 @@ namespace WebApp.Controllers
         [HttpGet("user/{id}/settings")]
         public async Task<IActionResult> UserSettings(string id)
         {
-           
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (userId != id)
-            {
-                return Forbid();
-            }
+            if (userId != id) return Forbid();
 
-            var user = await _users.GetByIdAsync(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
+            var user = await _userService.GetAsync(id);
+            if (user == null) return NotFound();
 
             // Fetch the list of countries
             using var httpClient = new HttpClient();
@@ -200,7 +173,7 @@ namespace WebApp.Controllers
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordModel model)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await _users.GetByIdAsync(userId);
+            var user = await _userService.GetAsync(userId);
             if (user == null)
             {
                 return NotFound();
@@ -217,7 +190,7 @@ namespace WebApp.Controllers
             }
 
             user.Password = model.NewPassword;
-            await _users.PutAsync(user.Id, user);
+            await _userService.PutAsync(user);
 
             return Json(new { success = true });
         }
@@ -227,7 +200,7 @@ namespace WebApp.Controllers
         public async Task<IActionResult> UpdateSetting([FromBody] UpdateSettingModel model)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await _users.GetByIdAsync(userId);
+            var user = await _userService.GetAsync(userId);
             if (user == null)
             {
                 return NotFound();
@@ -245,7 +218,7 @@ namespace WebApp.Controllers
                     return BadRequest();
             }
 
-            await _users.PutAsync(user.Id, user);
+            await _userService.PutAsync(user);
 
             return Ok();
         }
@@ -255,7 +228,7 @@ namespace WebApp.Controllers
         public async Task<IActionResult> DeleteAccount([FromBody] DeleteAccountModel model)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = await _users.GetByIdAsync(userId);
+            var user = await _userService.GetAsync(userId);
             if (user == null)
             {
                 return NotFound();
@@ -266,7 +239,7 @@ namespace WebApp.Controllers
                 return Json(new { success = false, message = "Incorrect password." });
             }
 
-            await _users.DeleteUserAsync(user.Id);
+            await _userService.DeleteAsync(user.Id);
 
             // Sign out the user
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

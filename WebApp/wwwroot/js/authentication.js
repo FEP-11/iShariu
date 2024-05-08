@@ -5,10 +5,11 @@ submitBtn.addEventListener("click", async e => {
 
     const email = document.getElementById("emailForm").value
     const username = document.getElementById("usernameForm").value
+    const phoneNumber = document.getElementById("phoneNumberForm").value
     const password = document.getElementById("passwordForm").value
     const confirmPassword = document.getElementById("confirmPasswordForm").value
 
-    const isUserAdded = await addUser(email, username, password, confirmPassword)
+    const isUserAdded = await addUser(email, username, phoneNumber, password, confirmPassword)
 
     if (isUserAdded) {
         const baseUrl = window.location.origin
@@ -17,7 +18,7 @@ submitBtn.addEventListener("click", async e => {
 })
 
 // The function of adding user to db
-async function addUser(email, username, password, confirmPassword) {
+async function addUser(email, username, phoneNumber, password, confirmPassword) {
     if (password === confirmPassword && !(await IsExist(username))) {
         const response = await fetch("/api/user", {
             method: "POST",
@@ -26,8 +27,9 @@ async function addUser(email, username, password, confirmPassword) {
             },
             body: JSON.stringify({
                 id: generateMongoID(),
-                username: username,
                 email: email,
+                username: username,
+                phoneNumber: phoneNumber,
                 password: password,
                 role: "user"
             })

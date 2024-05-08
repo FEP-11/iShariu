@@ -9,17 +9,17 @@ namespace WebApp.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
-    private readonly MongoDBService _mongoDBService;
+    private readonly MongoDBService<User> _userCollection;
 
-    public HomeController(ILogger<HomeController> logger, MongoDBService mongoDBService)
+    public HomeController(ILogger<HomeController> logger, MongoDBService<User> userCollection)
     {
         _logger = logger;
-        _mongoDBService = mongoDBService;
+        _userCollection = userCollection;
     }
     
     public async Task<IActionResult> Index()
     {
-        var user = await _mongoDBService.GetByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+        var user = await _userCollection.GetAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
         return View(user);
     }
      

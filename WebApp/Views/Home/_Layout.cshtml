@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="shortcut icon" type="image/x-icon" href="~/ballon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,7 +19,6 @@
     <link rel="stylesheet" href="~/css/navbar.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WebApp.styles.css" asp-append-version="true" />
-    <script src="~/js/auth.js" defer asp-append-version="true"></script>
 </head>
 
 <body class="body-img">
@@ -39,16 +38,16 @@
         </div>
 
         <div class="right-section">
-        @if (User.Identity.IsAuthenticated)
-        {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            
-            @if (Model != null && !string.IsNullOrEmpty(Model.ProfileColor))
+            @if (User.Identity.IsAuthenticated)
             {
-                <div class="dropdown">
-                    <div class="m-lg-5 profile-picture" style="background-color: @Model.ProfileColor;" data-toggle="dropdown">
-                        @Model.Username.Substring(0, 1).ToUpper()
-                    </div>
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                @if (Model != null && !string.IsNullOrEmpty(Model.ProfileColor))
+                {
+                    <div class="dropdown">
+                        <div class="m-lg-5 profile-picture" style="background-color: @Model.ProfileColor;" data-toggle="dropdown">
+                            @Model.Username.Substring(0, 1).ToUpper()
+                        </div>
                         <div class="dropdown-menu dropdown-menu-right styled-dropdown">
                             <a class="dropdown-item" href="@Url.Action("UserProfile", "Account", new { id = userId })">
                                 <i class="fas fa-user"></i> Profile
@@ -66,14 +65,14 @@
                                 <i class="fas fa-sign-out-alt"></i> Log out
                             </a>
                         </div>
-                </div>
+                    </div>
+                }
             }
-        }
-        else
-        {
-            <a asp-action="signin" asp-controller="account"><button class="btn-sign-in">Sign in</button></a>
-            <a asp-action="register" asp-controller="account"><button class="btn-sign-up">Sign up</button></a>
-        }
+            else
+            {
+                <a asp-action="signin" asp-controller="account"><button class="btn-sign-in">Sign in</button></a>
+                <a asp-action="register" asp-controller="account"><button class="btn-sign-up">Sign up</button></a>
+            }
         </div>
     </header>
 
