@@ -32,10 +32,6 @@ html {
   min-height: 100%;
 }
 
-body {
-  margin-bottom: 60px;
-}
-
 .profile-picture {
   display: flex;
   align-items: center;

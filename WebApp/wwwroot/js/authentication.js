@@ -8,8 +8,9 @@ submitBtn.addEventListener("click", async e => {
     const phoneNumber = document.getElementById("phoneNumberForm").value
     const password = document.getElementById("passwordForm").value
     const confirmPassword = document.getElementById("confirmPasswordForm").value
+    const dateOfBirth = document.getElementById("dateOfBirthForm").value
 
-    const isUserAdded = await addUser(email, username, phoneNumber, password, confirmPassword)
+    const isUserAdded = await addUser(email, username, phoneNumber, password, confirmPassword, dateOfBirth)
 
     if (isUserAdded) {
         const baseUrl = window.location.origin
@@ -18,7 +19,7 @@ submitBtn.addEventListener("click", async e => {
 })
 
 // The function of adding user to db
-async function addUser(email, username, phoneNumber, password, confirmPassword) {
+async function addUser(email, username, phoneNumber, password, confirmPassword, dateOfBirth) {
     if (password === confirmPassword && !(await IsExist(username))) {
         const response = await fetch("/api/user", {
             method: "POST",
@@ -31,7 +32,8 @@ async function addUser(email, username, phoneNumber, password, confirmPassword) 
                 username: username,
                 phoneNumber: phoneNumber,
                 password: password,
-                role: "user"
+                role: "user",
+                dateOfBirth: dateOfBirth,
             })
         })
         

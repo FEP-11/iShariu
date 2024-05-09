@@ -59,7 +59,7 @@ namespace WebApp.Services
             {
                 Expression<Func<T, object>> sortExpression = item => ((Course)(object)item).RevenueGenerated;
                 var sort = Builders<T>.Sort.Descending(sortExpression);
-                return await _collection.Find(filter).Sort(sort).ToListAsync();
+                return await _collection.Find(filter).Limit(3).Sort(sort).ToListAsync();
             }
             else
             {
