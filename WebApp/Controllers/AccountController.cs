@@ -134,6 +134,8 @@ namespace WebApp.Controllers
             {
                 user.ProfileColor = model.ProfileColor;
             }
+            
+            user.Location = model.Location;
 
             await _userService.PutAsync(user);
 
