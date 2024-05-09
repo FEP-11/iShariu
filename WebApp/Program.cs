@@ -19,6 +19,8 @@ builder.Services.Configure<iShariuDatabaseSettings>(
 builder.Services.AddSingleton<MongoDBService<User>>();
 builder.Services.AddSingleton<MongoDBService<Course>>();
 
+builder.Services.AddScoped<EntityService>();
+
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
