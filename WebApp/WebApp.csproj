@@ -20,4 +20,8 @@
       <PackageReference Include="MongoDB.Driver" Version="2.24.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\Errors\Error404.cshtml" />
+    </ItemGroup>
+
 </Project>

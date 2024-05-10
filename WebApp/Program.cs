@@ -58,13 +58,26 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseSession();
+app.Use(async (ctx, next) =>
+{
+    await next();
+
+    if(ctx.Response.StatusCode == 404 && !ctx.Response.HasStarted)
+    {
+        string originalPath = ctx.Request.Path.Value;
+        ctx.Items["originalPath"] = originalPath;
+        ctx.Response.Redirect("/error/404");
+    }
+});
 
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+});
 
 app.Run();

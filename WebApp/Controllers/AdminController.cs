@@ -1,9 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Services;
-using System.Threading.Tasks;
 using WebApp.Models;
-using System.Linq;
 
 namespace WebApp.Controllers
 {
