@@ -1,0 +1,15 @@
+@model Course
+
+<h2>Create Course</h2>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" class="form-control" id="title" asp-for="CourseName" required>
+    </div>
+    <div class="form-group">
+        <label for="description">Description</label>
+        <textarea class="form-control" id="description" asp-for="CourseDescription" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>
