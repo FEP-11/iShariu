@@ -36,8 +36,11 @@ namespace WebApp.Services
         }
 
         public async Task<List<T>> GetAsync(FilterDefinition<T> filter) => await _collection.Find(filter).Limit(10).ToListAsync();
-        
-        public async Task PostAsync(T item) => await _collection.InsertOneAsync(item);
+
+        public async Task PostAsync(T item)
+        {
+            if (item.E)
+        }
 
         public async Task PutAsync(T item)
         {
