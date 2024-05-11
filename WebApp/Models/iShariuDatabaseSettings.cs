@@ -9,5 +9,6 @@
         public string UsersCollectionName { get; set; } = null!;
 
         public string CoursesCollectionName { get; set; } = null!;
+        public string LessonsCollectionName { get; set; } = null!;
     }
 }

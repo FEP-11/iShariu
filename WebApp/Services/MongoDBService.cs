@@ -14,22 +14,25 @@ namespace WebApp.Services
     {
         private readonly IMongoCollection<T> _collection;
         private readonly IMongoDatabase _database;
-        private readonly ILogger<MongoDBService<T>> _logger;
 
         public MongoDBService(IOptions<iShariuDatabaseSettings> settings, ILogger<MongoDBService<T>> logger)
         {
             MongoClient client = new MongoClient(settings.Value.ConnectionString);
             IMongoDatabase database = client.GetDatabase(settings.Value.DatabaseName);
 
-            string collectionName = typeof(T) == typeof(User) ? settings.Value.UsersCollectionName : settings.Value.CoursesCollectionName;
+            string collectionName = typeof(T) switch
+            {
+                var t when t == typeof(User) => settings.Value.UsersCollectionName,
+                var t when t == typeof(Course) => settings.Value.CoursesCollectionName,
+                var t when t == typeof(Lesson) => settings.Value.LessonsCollectionName
+            };
             _collection = database.GetCollection<T>(collectionName);
             _database = client.GetDatabase(settings.Value.DatabaseName);
 
             // Create collections if they don't exist
             CreateCollectionIfNotExists(settings.Value.UsersCollectionName);
             CreateCollectionIfNotExists(settings.Value.CoursesCollectionName);
-
-            _logger = logger;
+            CreateCollectionIfNotExists(settings.Value.LessonsCollectionName);
         }
         
         public async Task<List<T>> GetAsync() => await _collection.Find(new BsonDocument()).ToListAsync();

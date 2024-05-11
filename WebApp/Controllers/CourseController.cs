@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace WebApp.Controllers;
-
-public class CourseController : Controller
-{
-    public IActionResult Index() => View();
-    
-    
-=======
 using System.Security.Claims;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +5,7 @@ using WebApp.Models;
 using WebApp.Services;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using MongoDB.Bson;
 
 namespace WebApp.Controllers
@@ -35,14 +25,13 @@ namespace WebApp.Controllers
             _logger = logger;
         }
         
-        
+        [Authorize(Policy = "Creator")]
         [HttpGet]
         public async Task<IActionResult> Create()
         {
             var languages = await GetLanguages();
-            ViewBag.Languages = languages;
-            
             ViewBag.Categories = new List<string> { "Programming", "Design", "Marketing", "Business", "Photography", "Music" };
+            ViewBag.Languages = languages;
             
             return View(new Course());
         }
@@ -55,8 +44,7 @@ namespace WebApp.Controllers
                 return RedirectToAction("Signin", "Account");
             course.CreatorId = userId;
 
-            if (string.IsNullOrEmpty(course.Id))
-                course.Id = ObjectId.GenerateNewId().ToString();
+            if (string.IsNullOrEmpty(course.Id)) course.Id = ObjectId.GenerateNewId().ToString();
 
             foreach (var lesson in lessons)
             {
@@ -106,5 +94,4 @@ namespace WebApp.Controllers
             return View(courses);
         }
     }
->>>>>>> fec106faaa2ca4fb3dbf975b8096060c0d46a635
 }
