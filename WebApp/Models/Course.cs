@@ -16,13 +16,13 @@ namespace WebApp.Models
         public string? CourseDescription { get; set; }
         public string? CourseImage { get; set; }
         public string? CourseCategory { get; set; }
-        public string? CourseLevel { get; set; }
+        public string? CourseDifficulty { get; set; }
         public string? CourseLanguage { get; set; }
         public string? CourseRating { get; set; }
         public string? CourseHours { get; set; }
         public string? CourseAccess { get; set; }
 
-        public decimal CoursePrice { get; set; }
+        public decimal? CoursePrice { get; set; }
         public int Sales { get; set; }
         public decimal RevenueGenerated { get; set; }
         
