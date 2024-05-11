@@ -4,7 +4,9 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
+using WebApp.Controllers;
 using WebApp.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace WebApp.Services
 {
@@ -12,8 +14,9 @@ namespace WebApp.Services
     {
         private readonly IMongoCollection<T> _collection;
         private readonly IMongoDatabase _database;
+        private readonly ILogger<MongoDBService<T>> _logger;
 
-        public MongoDBService(IOptions<iShariuDatabaseSettings> settings)
+        public MongoDBService(IOptions<iShariuDatabaseSettings> settings, ILogger<MongoDBService<T>> logger)
         {
             MongoClient client = new MongoClient(settings.Value.ConnectionString);
             IMongoDatabase database = client.GetDatabase(settings.Value.DatabaseName);
@@ -25,6 +28,8 @@ namespace WebApp.Services
             // Create collections if they don't exist
             CreateCollectionIfNotExists(settings.Value.UsersCollectionName);
             CreateCollectionIfNotExists(settings.Value.CoursesCollectionName);
+
+            _logger = logger;
         }
         
         public async Task<List<T>> GetAsync() => await _collection.Find(new BsonDocument()).ToListAsync();
@@ -36,10 +41,13 @@ namespace WebApp.Services
         }
 
         public async Task<List<T>> GetAsync(FilterDefinition<T> filter) => await _collection.Find(filter).Limit(10).ToListAsync();
-
+        
         public async Task PostAsync(T item)
         {
-            if (item.E)
+            if (string.IsNullOrEmpty(item.Id))
+                item.Id = ObjectId.GenerateNewId().ToString();
+            
+            await _collection.InsertOneAsync(item);
         }
 
         public async Task PutAsync(T item)

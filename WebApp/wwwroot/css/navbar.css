@@ -51,6 +51,14 @@
     margin-right: 30px;
 }
 
+a.nav-item {
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+    color: inherit;
+    margin-bottom: 16px;
+}
+
 .right-section {
     display: flex;
     flex: 1;
