@@ -43,3 +43,60 @@ h2 {
     outline: none;
     box-shadow: 0px 0px 5px rgba(255, 99, 71, 0.5);
 }
+
+ .card {
+     width: 350px;
+     height: 415px;
+     margin-left: 150px;
+     margin-top: 88px;
+     border-radius: 30px;
+     font-family: Inter,sans-serif;
+     border: 2px solid #DADAF7;
+     position: relative;
+ }
+
+.card-img-top {
+    width: 100%;
+    height: 180px;
+    margin: auto;
+    border-radius: 30px 30px 0 0 ;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 90%, 0% 100%);
+}
+
+.play-img {
+    width: 15px;
+    height: auto;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.course-tale {
+    font-size: 16px;
+    padding: 15px 0;
+}
+
+.course-name {
+    padding: 20px 0;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.line {
+    width: 100%;
+    border-top: 1px solid #DADAF7;
+}
+
+.user-img {
+    width: 18px;
+    height: auto;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.course-creator {
+    width: 100%;
+    padding: 15px 0;
+    font-size: 18px;
+    font-weight: bold;
+    margin: auto;
+}
