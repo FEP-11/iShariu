@@ -64,18 +64,41 @@ html {
   font-size: 20px;
   font-weight: bold;
 }
-
 .error-img {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  background-color: #f4f4f4;
-  max-width: 100%;
-  background-image: url(../img/error-background-image.png);
-  background-size: 100% 100%;
-  background-repeat: repeat;
+  padding: 20px;
+  background-color: #ffffff;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: right;
+}
+
+.error-img > img {
+  margin-right: 100px;
+  margin-top: 100px;
+  width: 35%;
+  height: 35%;
+}
+
+.error-info {
+  width: 50%;
+  margin-left: 100px;
+}
+
+.error-info > h1 {
+  font-size: 2em;
+  color: #333;
+}
+
+.error-info > h2 {
+  font-size: 1.5em;
+  color: #666;
+}
+
+.error-info > p {
+  font-size: 1em;
+  color: #999;
 }
 
