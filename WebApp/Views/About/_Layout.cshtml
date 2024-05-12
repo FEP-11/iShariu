@@ -23,19 +23,18 @@
     <script src="~/js/auth.js" defer asp-append-version="true"></script>
 </head>
 
-<body class="mb-0">
-    @* Navbar *@
-    <header class="header">
+<header class="header">
         <div class="left-section">
-            <img class="iShariu-logo" src="~/ballon.ico">
-            <p class="project-name">ЯШарю</p>
+            <a class="home-link" href="@Url.Action("Index", "Home")">
+                <img class="iShariu-logo" src="~/ballon.ico">
+                <p class="project-name">ЯШарю</p>
+            </a>
         </div>
 
         <div class="middle-section">
-            <p class="nav-item">Home</p>
-            <p class="nav-item">Courses</p>
+            <a class="nav-item" href="@Url.Action("Index", "Home")">Home</a>
+            <a class="nav-item" href="@Url.Action("Index", "Course")">Courses</a>
             <p class="nav-item">About us</p>
-            <p class="nav-item">Contact</p>
         </div>
 
 <div class="right-section">
