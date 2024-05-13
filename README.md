@@ -13,7 +13,7 @@ Welcome to iShariu! iShariu is an online course platform designed to provide a w
 ## Technologies Used
 - **ASP.NET MVC**: Framework for building web applications with Model-View-Controller architecture.
 - **MongoDB**: NoSQL database for storing course information, user data, and other relevant information.
-- **HTML/CSS/JavaScript**: Frontend technologies for creating user interfaces and interactive elements.
+- **HTML/CSS/Bootstrap v5.0/JavaScript**: Frontend technologies for creating user interfaces and interactive elements.
 - **C#**: Backend language for server-side logic and interactions with the database.
 
 ## Getting Started
