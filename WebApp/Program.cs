@@ -1,10 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using WebApp.Models;
 using WebApp.Services;
-using DotNetEnv;
-using System;
-using MongoDB.Bson.Serialization;
-using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 

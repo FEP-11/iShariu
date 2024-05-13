@@ -4,7 +4,7 @@ services:
   webapp:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;https://+:80
+      - ASPNETCORE_URLS=http://+:443;http://+:80
     ports:
       - "45678:80"
       - "45677:443"
