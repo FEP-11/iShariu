@@ -55,7 +55,7 @@ a.nav-item {
     display: flex;
     justify-content: center;
     text-decoration: none;
-    color: inherit !important;
+    color: inherit;
     margin-bottom: 16px;
 }
 
