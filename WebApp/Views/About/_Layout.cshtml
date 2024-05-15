@@ -19,57 +19,26 @@
     <link rel="stylesheet" href="~/css/navbar.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WebApp.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/terms.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/about.css" asp-append-version="true" />
     <script src="~/js/auth.js" defer asp-append-version="true"></script>
 </head>
 
-<body class="mb-0">
-    @* Navbar *@
-    <header class="header">
+<header class="header">
         <div class="left-section">
-            <img class="iShariu-logo" src="~/ballon.ico">
-            <p class="project-name">ЯШарю</p>
+            <a class="home-link" href="@Url.Action("Index", "Home")">
+                <img class="iShariu-logo" src="~/ballon.ico">
+                <p class="project-name">ЯШарю</p>
+            </a>
         </div>
 
         <div class="middle-section">
-            <p class="nav-item">Home</p>
-            <p class="nav-item">Courses</p>
+            <a class="nav-item" href="@Url.Action("Index", "Home")">Home</a>
+            <a class="nav-item" href="@Url.Action("Index", "Course")">Courses</a>
             <p class="nav-item">About us</p>
-            <p class="nav-item">Contact</p>
         </div>
 
 <div class="right-section">
-        @if (User.Identity.IsAuthenticated)
-        {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            
-            @if (Model != null && !string.IsNullOrEmpty(Model.ProfileColor))
-            {
-                <div class="dropdown">
-                    <div class="m-lg-5 profile-picture" style="background-color: @Model.ProfileColor;" data-toggle="dropdown">
-                        @Model.Username.Substring(0, 1).ToUpper()
-                    </div>
-                        <div class="dropdown-menu dropdown-menu-right styled-dropdown">
-                            <a class="dropdown-item" href="@Url.Action("UserProfile", "Account", new { id = userId })">
-                                <i class="fas fa-user"></i> Profile
-                            </a>
-                            @if (User.IsInRole("admin"))
-                            {
-                                <a asp-action="index" asp-controller="admin" class="dropdown-item">
-                                    <i class="fas fa-tools"></i> Admin panel
-                                </a>
-                            }
-                            <a class="dropdown-item" href="@Url.Action("UserSettings", "Account", new { id = userId })">
-                                <i class="fas fa-cog"></i> Settings
-                            </a>
-                            <a asp-action="logout" asp-controller="account" class="dropdown-item">
-                                <i class="fas fa-sign-out-alt"></i> Log out
-                            </a>
-                        </div>
-                </div>
-            }
-        }
-        else
+        @if (!User.Identity.IsAuthenticated)
         {
             <a asp-action="signin" asp-controller="account"><button class="btn-sign-in">Sign in</button></a>
             <a asp-action="register" asp-controller="account"><button class="btn-sign-up">Sign up</button></a>
@@ -86,8 +55,7 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://stakpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
-</body>
 
 </html>

@@ -31,15 +31,17 @@
     @* Navbar *@
     <header class="header">
         <div class="left-section">
-            <img class="iShariu-logo" src="~/ballon.ico">
-            <p class="project-name">ЯШарю</p>
+            <a class="home-link" href="@Url.Action("Index", "Home")">
+                <img class="iShariu-logo" src="~/ballon.ico">
+                <p class="project-name">ЯШарю</p>
+            </a>
         </div>
 
         <div class="middle-section">
-            <p class="nav-item">Home</p>
-            <p class="nav-item">Courses</p>
-            <p class="nav-item">About us</p>
-            <p class="nav-item">Contact</p>
+            <a class="nav-item" href="@Url.Action("Index", controller: "Home")">Home</a>
+            <a class="nav-item" href="@Url.Action("Index", "Course")">Courses</a>
+            <a class="nav-item" href="@Url.Action("Index", controller: "About")">About us</a>
+            <a class="nav-item" href="/about/privacy#section10">Contact</a>
         </div>
 
         <div class="right-section">

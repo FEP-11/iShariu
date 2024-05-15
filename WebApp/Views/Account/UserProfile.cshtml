@@ -25,7 +25,7 @@
     <div class="courses-container">
         @foreach (var course in Model.CreatedCourses.Take(3))
         {
-            <div class="course"><h3>@course.CourseName</h3></div>
+            <a href="/courses/lessons/@course.Id"><div class="course"><h3>@course.CourseName</h3></div></a>
         }
     </div>
 
