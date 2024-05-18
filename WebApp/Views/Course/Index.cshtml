@@ -1,4 +1,9 @@
 @model IEnumerable<Course>
+
+@{
+    ViewData["Title"] = "Courses";
+}
+
 @if (User.IsInRole(UserRole.Creator))
 {
     <a class="btn btn-danger" style="margin-top: 5em;" href="@Url.Action("Create", "Course")">Create course</a>
