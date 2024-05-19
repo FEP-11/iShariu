@@ -14,9 +14,12 @@ namespace WebApp.Services
     {
         private readonly IMongoCollection<T> _collection;
         private readonly IMongoDatabase _database;
+        private readonly ILogger<MongoDBService<T>> _logger;
 
         public MongoDBService(IOptions<iShariuDatabaseSettings> settings, ILogger<MongoDBService<T>> logger)
         {
+            _logger = logger;
+            
             MongoClient client = new MongoClient(settings.Value.ConnectionString);
             IMongoDatabase database = client.GetDatabase(settings.Value.DatabaseName);
 
@@ -26,6 +29,7 @@ namespace WebApp.Services
                 var t when t == typeof(Course) => settings.Value.CoursesCollectionName,
                 var t when t == typeof(Lesson) => settings.Value.LessonsCollectionName,
                 var t when t == typeof(Message) => settings.Value.MessagesCollectionName,
+                _ => throw new ArgumentException($"Unsupported type: {typeof(T)}")
             };
             _collection = database.GetCollection<T>(collectionName);
             _database = client.GetDatabase(settings.Value.DatabaseName);
@@ -36,7 +40,7 @@ namespace WebApp.Services
             CreateCollectionIfNotExists(settings.Value.LessonsCollectionName);
             CreateCollectionIfNotExists(settings.Value.MessagesCollectionName);
 
-            InitializeOnDbCreation();
+            InitializeOnDbCreation().GetAwaiter().GetResult();
         }
 
         public async Task<List<T>> GetAsync() => await _collection.Find(new BsonDocument()).ToListAsync();
@@ -107,7 +111,14 @@ namespace WebApp.Services
             var userCollection = _database.GetCollection<User>("User");
             var courseCollection = _database.GetCollection<Course>("Course");
             var lessonCollection = _database.GetCollection<Lesson>("Lesson");
-
+            
+            if (await userCollection.CountDocumentsAsync(new BsonDocument()) > 0 ||
+                await courseCollection.CountDocumentsAsync(new BsonDocument()) > 0 ||
+                await lessonCollection.CountDocumentsAsync(new BsonDocument()) > 0)
+            {
+                return;
+            }
+            
             List<User> users = new List<User>
             {
                 new User
@@ -248,7 +259,28 @@ namespace WebApp.Services
             foreach (var course in courses)
                 await courseCollection.InsertOneAsync(course);
             foreach (var lesson in lessons)
-                await lessonCollection.InsertOneAsync(lesson);
+            {
+                var lessonFilter = Builders<Lesson>.Filter.Eq("_id", lesson.Id);
+                var existingLesson = await lessonCollection.Find(lessonFilter).FirstOrDefaultAsync();
+
+                if (existingLesson == null)
+                {
+                    try
+                    {
+                        await lessonCollection.InsertOneAsync(lesson);
+                    }
+                    catch (MongoWriteException ex)
+                    {
+                        if (ex.WriteError.Category != ServerErrorCategory.DuplicateKey)
+                        {
+                            throw;
+                        }
+
+                        _logger.LogError(ex, "Duplicate key error while inserting lesson with id {LessonId}",
+                            lesson.Id);
+                    }
+                }
+            }
         }
     }
 }
