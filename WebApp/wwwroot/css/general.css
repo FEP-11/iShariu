@@ -6,14 +6,20 @@
 
 body {
     font-family: Inter, Arial;
-    padding-top: 65px;
+    margin: 0;
+    padding: 0;
 }
 
 .body-img {
     background-image: url(../img/home-background-image.png);
-    background-position: left 50% bottom 50%;
-    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
     background-size: cover;
-    background-attachment: fixed;
-    position: relative;
+    background-repeat: no-repeat;
 }
