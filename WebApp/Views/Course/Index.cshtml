@@ -1,1 +1,25 @@
-<a class="btn btn-danger" style="margin-top: 5em;" href="@Url.Action("Create", "Course")">Create course</a>
+@model IEnumerable<Course>
+@if (User.IsInRole(UserRole.Creator))
+{
+    <a class="btn btn-danger" style="margin-top: 5em;" href="@Url.Action("Create", "Course")">Create course</a>
+}
+
+
+<div class="card-group row">
+    @for (int i = 0; i < Model.Count(); i++)
+    {
+        var course = Model.ElementAt(i);
+        var creator = ViewBag.Creator[i];
+        <div class="col-md-3">
+            <div class="card">
+                <img src="@(course.CourseImage != null ? course.CourseImage : "/img/no-image.png")" class="card-img-top blurry-image" alt="card-img">    
+                <div class="card-body">
+                    <h5 class="course-tale"><img src="img/play.png" class="play-img" alt="play-img">@course.LessonIds.Count()x Lessons</h5>
+                    <p class="course-name">@course.CourseName</p>
+                    <div class="line"></div>
+                    <p class="course-creator"><img src="img/user.png" class="user-img" alt="user-img">@(creator != null ? creator.Username : "Deleted User")</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>

@@ -7,7 +7,7 @@
     padding: 0;
     background-color: #f4f4f4;
     max-width: 100%;
-    background-image: url(../img/Login.png);
+    background-image: url("../img/auth-background-image.png");
     background-size: 100% 100%;
     background-repeat: repeat;
 }

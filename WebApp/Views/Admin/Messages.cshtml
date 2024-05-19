@@ -1,0 +1,19 @@
+﻿@model IEnumerable<WebApp.Models.Message>
+
+<div>
+    @foreach (var message in Model)
+    {
+        <div class="message-container message-flex-container">
+            <a href="@Url.Action("UserProfile", "Account", new { id = message.SkibidiMan })" class="message-id-link">
+                <span class="message-id">@message.SkibidiMan</span>
+            </a>
+            <span class="message-content">@message.Content</span>
+            <form method="post" action="@Url.Action("DeleteMessage", "Admin")">
+                <input type="hidden" name="messageId" value="@message.Id" />
+                <button type="submit" class="btn btn-danger">
+                    <i class="fas fa-trash"></i> <!-- Trash can icon -->
+                </button>
+            </form>
+        </div>
+    }
+</div>

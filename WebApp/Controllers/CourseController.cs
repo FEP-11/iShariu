@@ -90,7 +90,15 @@ public class CourseController : Controller
     public async Task<IActionResult> Index()
     {
         var courses = await _courseService.GetAsync();
-        return View(courses);
+        ViewBag.Creator = new List<User>();
+        
+        foreach (var course in courses)
+        {
+            var creator = await _userService.GetAsync(course.CreatorId);
+            ViewBag.Creator.Add(creator); 
+        }
+        
+        return View(courses);   
     }
     
     [HttpGet("/courses/lessons/{id}")]

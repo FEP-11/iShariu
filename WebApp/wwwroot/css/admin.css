@@ -44,4 +44,31 @@ body {
     color: inherit;
 }
 
+.message-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.message-id {
+    font-weight: bold;
+    color: #7289da;
+    margin-right: 10px;
+}
+
+.message-content {
+    color: #2c2f33;
+}
+
+.message-flex-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 
