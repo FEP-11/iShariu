@@ -114,10 +114,7 @@ namespace WebApp.Services
             
             if (await userCollection.CountDocumentsAsync(new BsonDocument()) > 0 ||
                 await courseCollection.CountDocumentsAsync(new BsonDocument()) > 0 ||
-                await lessonCollection.CountDocumentsAsync(new BsonDocument()) > 0)
-            {
-                return;
-            }
+                await lessonCollection.CountDocumentsAsync(new BsonDocument()) > 0) return;
             
             List<User> users = new List<User>
             {
@@ -141,13 +138,14 @@ namespace WebApp.Services
                 },
                 new User
                 {
+                    Id = "664a4bbf931eabcc5a4b3db1",
                     Username = "creator",
                     Email = "creator1@example.com",
                     Role = UserRole.Creator,
                     Password = UserRole.Creator,
                     Location = "UA",
                     JoinDate = DateTime.UtcNow,
-                    CreatedCourses = new List<string>(),
+                    CreatedCourses = new List<string> { "664a55a91d40d957fe5a7477", "664a55a91d40d957fe5a7478" },
                     EnrolledCourses = new List<string>(),
                     Sales = 0,
                     RevenueGenerated = 0m,
@@ -181,6 +179,7 @@ namespace WebApp.Services
             {
                 new Course
                 {
+                    Id = "664a55a91d40d957fe5a7477",
                     CourseName = "Course 1",
                     CourseDescription = "Description for Course 1",
                     CourseCategory = "Category 1",
@@ -193,11 +192,12 @@ namespace WebApp.Services
                     Sales = 0,
                     RevenueGenerated = 0m,
                     UserIds = new List<string>(),
-                    CreatorId = "creator1",
+                    CreatorId = "664a4bbf931eabcc5a4b3db1",
                     LessonIds = new List<string>()
                 },
                 new Course
                 {
+                    Id = "664a55a91d40d957fe5a7478",
                     CourseName = "Course 2",
                     CourseDescription = "Description for Course 2",
                     CourseCategory = "Category 2",
@@ -210,7 +210,7 @@ namespace WebApp.Services
                     Sales = 0,
                     RevenueGenerated = 0m,
                     UserIds = new List<string>(),
-                    CreatorId = "creator1",
+                    CreatorId = "664a4bbf931eabcc5a4b3db1",
                     LessonIds = new List<string>()
                 }
             };
@@ -254,33 +254,8 @@ namespace WebApp.Services
                 courses[i / 3].LessonIds.Add(lessons[i].Id);
             }
 
-            foreach (User user in users)
-                await userCollection.InsertOneAsync(user);
-            foreach (var course in courses)
-                await courseCollection.InsertOneAsync(course);
-            foreach (var lesson in lessons)
-            {
-                var lessonFilter = Builders<Lesson>.Filter.Eq("_id", lesson.Id);
-                var existingLesson = await lessonCollection.Find(lessonFilter).FirstOrDefaultAsync();
-
-                if (existingLesson == null)
-                {
-                    try
-                    {
-                        await lessonCollection.InsertOneAsync(lesson);
-                    }
-                    catch (MongoWriteException ex)
-                    {
-                        if (ex.WriteError.Category != ServerErrorCategory.DuplicateKey)
-                        {
-                            throw;
-                        }
-
-                        _logger.LogError(ex, "Duplicate key error while inserting lesson with id {LessonId}",
-                            lesson.Id);
-                    }
-                }
-            }
+            await userCollection.InsertManyAsync(users);
+            await courseCollection.InsertManyAsync(courses);
         }
     }
 }
