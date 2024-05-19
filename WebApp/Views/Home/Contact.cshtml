@@ -1,0 +1,11 @@
+﻿@model WebApp.Models.Message
+
+<div class="body-img no-background">
+    <div class="contact-form">
+        <form method="post" asp-action="SubmitMessage" asp-controller="Home">
+            <p>Please fill out the form below with your message.</p>
+            <textarea id="message" asp-for="Content" rows="4" cols="50" placeholder="Type your message here..."></textarea><br>
+            <input type="submit" value="Submit" class="btn btn-danger">
+        </form>
+    </div>
+</div>

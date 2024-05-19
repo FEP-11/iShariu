@@ -21,19 +21,33 @@
         </div>
     </div>
 
-    <h2>Created Courses</h2>
+<h2>Created Courses</h2>
     <div class="courses-container">
-        @foreach (var course in Model.CreatedCourses.Take(3))
+        @foreach (var course in Model.CreatedCourses)
         {
-            <a href="/courses/lessons/@course.Id"><div class="course"><h3>@course.CourseName</h3></div></a>
+            <a href="/courses/lessons/@course.Id">
+                <div class="course @(string.IsNullOrEmpty(course.CourseImage) ? "" : "course-with-image")">
+                    <h3>@course.CourseName</h3>
+                    @if (!string.IsNullOrEmpty(course.CourseImage))
+                    {
+                        <img src="@course.CourseImage" alt="@course.CourseName image" />
+                    }
+                </div>
+            </a>
         }
     </div>
 
     <h2>Enrolled Courses</h2>
     <div class="courses-container">
-        @foreach (var course in Model.EnrolledCourses.Take(3))
+        @foreach (var course in Model.EnrolledCourses)
         {
-            <div class="course"><h3>@course.CourseName</h3></div>
+            <div class="course @(string.IsNullOrEmpty(course.CourseImage) ? "" : "course-with-image")">
+                <h3>@course.CourseName</h3>
+                @if (!string.IsNullOrEmpty(course.CourseImage))
+                {
+                    <img src="@course.CourseImage" alt="@course.CourseName image" />
+                }
+            </div>
         }
     </div>
 </div>
