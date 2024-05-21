@@ -1,25 +1,26 @@
 ﻿<div class="terms-container">
+
     <h1>iShariu's Privacy Policy</h1>
 
-    <ol>
-        <li><a href="#section1">Welcome!</a></li>
-        <li><a href="#section2">iShariu is the best place to study, grow up and broaden your horizons</a></li>
-        <li>
-            <a href="#section3">The information we collect</a>
-            <ul>
-                <li><a href="#section3a">Information you provide to us</a></li>
-                <li><a href="#section3b">Information we collect automatically</a></li>
-                <li><a href="#section3c">Information we recieve from other sources</a></li>
-            </ul>
-        </li>
-        <li><a href="#section4">How we use your information</a></li>
-        <li><a href="#section5">How we disclose your information</a></li>
-        <li><a href="#section6">Data retention</a></li>
-        <li><a href="#section7">How we protect your information</a></li>
-        <li><a href="#section8">How to control your privacy</a></li>
-        <li><a href="#section9">Changes to this Privacy Policy</a></li>
-        <li><a href="#section10">Contact us</a></li>
-    </ol>
+<ol>
+    <li><a href="#section1" class="top">Welcome!</a></li>
+    <li><a href="#section2" class="top">iShariu is the best place to study, grow up and broaden your horizons</a></li>
+    <li>
+        <a href="#section3" class="top">The information we collect</a>
+        <ul>
+            <li><a href="#section3a" class="top">Information you provide to us</a></li>
+            <li><a href="#section3b" class="top">Information we collect automatically</a></li>
+            <li><a href="#section3c" class="top">Information we receive from other sources</a></li>
+        </ul>
+    </li>
+    <li><a href="#section4" class="top">How we use your information</a></li>
+    <li><a href="#section5" class="top">How we disclose your information</a></li>
+    <li><a href="#section6" class="top">Data retention</a></li>
+    <li><a href="#section7" class="top">How we protect your information</a></li>
+    <li><a href="#section8" class="top">How to control your privacy</a></li>
+    <li><a href="#section9" class="top">Changes to this Privacy Policy</a></li>
+    <li><a href="#section10" class="top">Contact us</a></li>
+</ol>
 
     <section id="section1">
         <h2>Welcome!</h2>
@@ -253,7 +254,26 @@
         Twitter: www.twitter.com/iShariu<br>
         Instagram: www.instagram.com/iShariu
     </p>
-    <a class="btn btn-danger" href="@Url.Action("Contact", "Home")">Write us a message</a>
 </section>
 
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', (event) => {
+    document.querySelectorAll('.top').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            const sectionId = this.getAttribute('href');
+            const section = document.querySelector(sectionId);
+
+            if (section) {
+                section.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+});
+</script>
+

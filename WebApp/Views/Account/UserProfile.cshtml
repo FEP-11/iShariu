@@ -1,7 +1,4 @@
 ﻿@model UserProfileViewModel
-@{
-    ViewData["Title"] = "User Profile";
-}
 
 <div class="profile-container">
     <div class="user-info-container">
@@ -24,33 +21,19 @@
         </div>
     </div>
 
-<h2>Created Courses</h2>
+    <h2>Created Courses</h2>
     <div class="courses-container">
-        @foreach (var course in Model.CreatedCourses)
+        @foreach (var course in Model.CreatedCourses.Take(3))
         {
-            <a href="/courses/lessons/@course.Id">
-                <div class="course @(string.IsNullOrEmpty(course.CourseImage) ? "" : "course-with-image")">
-                    <h3>@course.CourseName</h3>
-                    @if (!string.IsNullOrEmpty(course.CourseImage))
-                    {
-                        <img src="@course.CourseImage" alt="@course.CourseName image" />
-                    }
-                </div>
-            </a>
+            <a href="/courses/lessons/@course.Id"><div class="course"><h3>@course.CourseName</h3></div></a>
         }
     </div>
 
     <h2>Enrolled Courses</h2>
     <div class="courses-container">
-        @foreach (var course in Model.EnrolledCourses)
+        @foreach (var course in Model.EnrolledCourses.Take(3))
         {
-            <div class="course @(string.IsNullOrEmpty(course.CourseImage) ? "" : "course-with-image")">
-                <h3>@course.CourseName</h3>
-                @if (!string.IsNullOrEmpty(course.CourseImage))
-                {
-                    <img src="@course.CourseImage" alt="@course.CourseName image" />
-                }
-            </div>
+            <div class="course"><h3>@course.CourseName</h3></div>
         }
     </div>
 </div>

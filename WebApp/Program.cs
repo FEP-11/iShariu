@@ -15,8 +15,6 @@ builder.Services.Configure<iShariuDatabaseSettings>(
 builder.Services.AddSingleton<MongoDBService<User>>();
 builder.Services.AddSingleton<MongoDBService<Course>>();
 builder.Services.AddSingleton<MongoDBService<Lesson>>();
-builder.Services.AddSingleton<MongoDBService<Message>>();
-
 
 builder.Services.AddScoped<EntityService>();
 

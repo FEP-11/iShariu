@@ -1,3 +1,8 @@
+body {
+    font-family: Inter, Arial, sans-serif;
+    
+}
+
 .header {
     height: 4em;
 
@@ -49,6 +54,10 @@
     height: 0;
     cursor: pointer;
     margin-right: 30px;
+}
+
+.nav-item:hover {
+    color: #FC4928FF !important;
 }
 
 a.nav-item {
@@ -127,6 +136,10 @@ a.nav-item {
 
 .iShariu-logo {
     margin-left: 3em !important;
+}
+
+.iShariu-logo:active {
+    transform: translateY(1px); /* Сдвигаем элемент на 1 пиксель вниз при активации */
 }
 
 .home-link > .project-name {

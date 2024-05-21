@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Services;
 using WebApp.Models;
-using ZstdSharp.Unsafe;
 
 namespace WebApp.Controllers
 {
@@ -13,15 +12,13 @@ namespace WebApp.Controllers
         private readonly MongoDBService<User> _userService;
         private readonly MongoDBService<Course> _courseService;
         private readonly EntityService _entityService;
-        private readonly MongoDBService<Message> _messageService;
 
         public AdminController(MongoDBService<User> userService, MongoDBService<Course> courseService, 
-            EntityService entityService, MongoDBService<Message> messageService)
+            EntityService entityService)
         {
             _userService = userService;
             _courseService = courseService;
             _entityService = entityService;
-            _messageService = messageService;
         }
 
         [Route("dashboard")]
@@ -66,34 +63,19 @@ namespace WebApp.Controllers
 
             return View("Users", pagedUsers);
         }
-
-        [HttpGet("messages")]
-        public async Task<IActionResult> Messages()
-        {
-            var messages = await _messageService.GetAsync();
-            return View(messages);
-        }
-        
-        [HttpPost("deleteMessage")]
-        public async Task<IActionResult> DeleteMessage(string messageId)
-        {
-            await _messageService.DeleteAsync(messageId);
-            return RedirectToAction("Messages");
-        }
         
         [HttpPost("changeUserDetails")]
         public async Task<IActionResult> ChangeUserDetails(string userId, string username, string email, string password, string role)
         {
             var user = await _userService.GetAsync(userId);
-            if (user == null) 
-                return NotFound();
+            if (user == null) return NotFound();
 
             user.Username = username;
             user.Email = email;
-            
             if (!string.IsNullOrEmpty(password))
+            {
                 user.Password = password;
-            
+            }
             user.Role = role;
 
             await _userService.PutAsync(user);
@@ -207,6 +189,5 @@ namespace WebApp.Controllers
         {
             return View();
         }
-        
     }
 }

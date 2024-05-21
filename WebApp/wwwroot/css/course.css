@@ -1,7 +1,7 @@
 body {
     background-color: #ffffff;
     color: #000000;
-    font-family: 'Whitney', sans-serif;
+    font-family: Inter, Arial, sans-serif;
 }
 
 h2 {
@@ -93,7 +93,7 @@ h2 {
 }
 
 .course-creator {
-    display: inline-block;
+    width: 100%;
     padding: 15px 0;
     font-size: 18px;
     font-weight: bold;
@@ -172,16 +172,4 @@ h2 {
 .card-group {
     margin-left: 2em !important;
     margin-right: 2em !important;
-}
-
-.btn-shariu {
-    background-color: #FF6347;
-    color: #ffffff;
-    border: none;
-    padding: 0.5em 1em;
-    border-radius: 0.25rem;
-    font-size: 1em;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
 }

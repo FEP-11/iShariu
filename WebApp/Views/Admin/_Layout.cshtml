@@ -57,9 +57,6 @@
                     <a href="@Url.Action("Courses", "Admin")" class="list-group-item list-group-item-action @(ViewContext.RouteData.Values["Controller"].ToString() == "Admin" && ViewContext.RouteData.Values["Action"].ToString() == "Courses" ? "active-link" : "")">
                         <i class="fas fa-book"></i> Courses
                     </a>
-                    <a href="@Url.Action("Messages", "Admin")" class="list-group-item list-group-item-action @(ViewContext.RouteData.Values["Controller"].ToString() == "Admin" && ViewContext.RouteData.Values["Action"].ToString() == "Messages" ? "active-link" : "")">
-                        <i class="fas fa-envelope"></i> Messages
-                    </a>
                     <a href="@Url.Action("Sales", "Admin")" class="list-group-item list-group-item-action @(ViewContext.RouteData.Values["Controller"].ToString() == "Admin" && ViewContext.RouteData.Values["Action"].ToString() == "Sales" ? "active-link" : "")">
                         <i class="fas fa-chart-line"></i> Sales
                     </a>

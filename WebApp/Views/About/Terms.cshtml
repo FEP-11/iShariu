@@ -2,29 +2,30 @@
     <h1>iShariu's Terms of Service</h1>
 
     <ol>
-        <li><a href="#section1">Who we are</a></li>
-        <li><a href="#section2">Age requirements and responsibility of parents and legal guardians</a></li>
-        <li><a href="#section3">What you can expect from us</a></li>
-        <li><a href="#section4">Your iShariu account</a></li>
+        <li><a href="#section1" class="top">Who we are</a></li>
+        <li><a href="#section2" class="top">Age requirements and responsibility of parents and legal guardians</a></li>
+        <li><a href="#section3" class="top">What you can expect from us</a></li>
+        <li><a href="#section4" class="top">Your iShariu account</a></li>
         <li>
-            <a href="#section5">Content in iShariu’s services</a>
+            <a href="#section5" class="top">Content in iShariu’s services</a>
             <ul>
-                <li><a href="#section5a">Your Content</a></li>
-                <li><a href="#section5b">iShariu’s content</a></li>
-                <li><a href="#section5c">Other content</a></li>
+                <li><a href="#section5a" class="top">Your Content</a></li>
+                <li><a href="#section5b" class="top">iShariu’s content</a></li>
+                <li><a href="#section5c" class="top">Other content</a></li>
             </ul>
         </li>
-        <li><a href="#section6">Copyright</a></li>
-        <li><a href="#section7">iShariu’s paid services</a></li>
-        <li><a href="#section8">Restrictions on your use of iShariu’s services</a></li>
-        <li><a href="#section9">Termination</a></li>
-        <li><a href="#section10">Appeals</a></li>
-        <li><a href="#section11">Indemnity</a></li>
-        <li><a href="#section12">Services “AS IS”</a></li>
-        <li><a href="#section13">Data Charges</a></li>
-        <li><a href="#section14">Limitation of liability</a></li>
-        <li><a href="#section15">More important stuff</a></li>
+        <li><a href="#section6" class="top">Copyright</a></li>
+        <li><a href="#section7" class="top">iShariu’s paid services</a></li>
+        <li><a href="#section8" class="top">Restrictions on your use of iShariu’s services</a></li>
+        <li><a href="#section9" class="top">Termination</a></li>
+        <li><a href="#section10" class="top">Appeals</a></li>
+        <li><a href="#section11" class="top">Indemnity</a></li>
+        <li><a href="#section12" class="top">Services “AS IS”</a></li>
+        <li><a href="#section13" class="top">Data Charges</a></li>
+        <li><a href="#section14" class="top">Limitation of liability</a></li>
+        <li><a href="#section15" class="top">More important stuff</a></li>
     </ol>
+
     
     <p>
         Welcome! iShariu is the best place to study, grow up and broaden your horizons. We’re happy you’re here.<br>
@@ -91,7 +92,7 @@
     
     <section id="section6">
         <h2>Copyright</h2>
-            <p>We respect the intellectual property of others and expect our users to do the same. See our Copyright & IP Policy for information on how to file a copyright complaint.</p>
+        <p>We respect the intellectual property of others and expect our users to do the same. See our Copyright & IP Policy for information on how to file a copyright complaint.</p>
     </section>
     
     <section id="section7">
@@ -176,3 +177,22 @@
     </section>
     
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', (event) => {
+    document.querySelectorAll('.top').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            const sectionId = this.getAttribute('href');
+            const section = document.querySelector(sectionId);
+
+            if (section) {
+                section.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+});
+</script>

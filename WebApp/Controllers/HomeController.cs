@@ -8,13 +8,13 @@ namespace WebApp.Controllers;
 
 public class HomeController : Controller
 {
+    private readonly ILogger<HomeController> _logger;
     private readonly MongoDBService<User> _userCollection;
-    private readonly MongoDBService<Message> _messageService;
 
-    public HomeController(MongoDBService<User> userCollection, MongoDBService<Message> messageService)
+    public HomeController(ILogger<HomeController> logger, MongoDBService<User> userCollection)
     {
+        _logger = logger;
         _userCollection = userCollection;
-        _messageService = messageService;
     }
     
     public async Task<IActionResult> Index()
@@ -32,23 +32,5 @@ public class HomeController : Controller
     public IActionResult Error()
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-    }
-    
-    [HttpPost]
-    public async Task<IActionResult> SubmitMessage(Message message)
-    {
-        if (message == null || string.IsNullOrEmpty(message.Content))
-            return BadRequest("suck dick");
-
-        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        message.SkibidiMan = userId;
-        
-        await _messageService.PostAsync(message);
-        return RedirectToAction("Index");
-    }
-
-    public IActionResult Contact()
-    {
-        return View();
     }
 }

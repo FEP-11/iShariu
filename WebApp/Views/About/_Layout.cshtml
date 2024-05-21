@@ -1,5 +1,11 @@
 ﻿@using System.Security.Claims
 @using Microsoft.AspNetCore.Mvc.TagHelpers
+@model dynamic
+
+@{
+    ViewData["Title"] = "Contact us";
+}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,7 +32,7 @@
 <header class="header">
         <div class="left-section">
             <a class="home-link" href="@Url.Action("Index", "Home")">
-                <img class="iShariu-logo" src="~/ballon.ico">
+                <img class="iShariu-logo" src="~/ballon.ico" alt="ico">
                 <p class="project-name">ЯШарю</p>
             </a>
         </div>
@@ -34,7 +40,7 @@
         <div class="middle-section">
             <a class="nav-item" href="@Url.Action("Index", "Home")">Home</a>
             <a class="nav-item" href="@Url.Action("Index", "Course")">Courses</a>
-            <p class="nav-item">About us</p>
+            <a class="nav-item" href="@Url.Action("Index", "About")">About us</a>
         </div>
 
 <div class="right-section">
@@ -55,7 +61,7 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stakpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 
 </html>
