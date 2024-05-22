@@ -1,5 +1,5 @@
 @using System.Security.Claims
-@using System.Security.Cryptography
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,7 +13,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="~/css/general.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
@@ -22,7 +21,7 @@
     <link rel="stylesheet" href="~/WebApp.styles.css" asp-append-version="true" />
 </head>
 
-<body class="body-img">
+<body> 
     @* Navbar *@
     <header class="header">
         <div class="left-section">
@@ -59,6 +58,12 @@
                                     <i class="fas fa-tools"></i> Admin panel
                                 </a>
                             }
+                            else if (User.IsInRole("creator"))
+                            {
+                                <a href="@Url.Action(action: "create", controller: "course")" class="dropdown-item">
+                                    <i class="fas fa-plus"></i> Create Course
+                                </a>
+                            }
                             <a class="dropdown-item" href="@Url.Action("UserSettings", "Account", new { id = userId })">
                                 <i class="fas fa-cog"></i> Settings
                             </a>
@@ -78,11 +83,9 @@
     </header>
 
     @* Main page *@
-    <div class="container">
-        <main role="main" class="pb-3">
+        <div>
             @RenderBody()
-        </main>
-    </div>
+        </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

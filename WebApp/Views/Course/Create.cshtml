@@ -1,5 +1,5 @@
 @{
-    ViewData["Title"] = "Create Course";
+ViewData["Title"] = "Create Course";
 }
 
 @model Course
@@ -34,7 +34,7 @@
                 <option value="">Select Category</option>
                 @foreach (var category in ViewBag.Categories)
                 {
-                    <option value="@category">@category</option>
+                <option value="@category">@category</option>
                 }
             </select>
         </div>
@@ -69,7 +69,7 @@
                 <option value="">Select Language</option>
                 @foreach (var language in ViewBag.Languages)
                 {
-                    <option value="@language">@language</option>
+                <option value="@language">@language</option>
                 }
             </select>
         </div>
@@ -78,12 +78,12 @@
             <input type="text" class="form-control" id="image" asp-for="CourseImage" required>
         </div>
         <button type="button" class="btn btn-primary custom-button mt-3 float-left" id="nextStepBtn"><span>Next</span></button>
-        
+
         <div class="clearfix"></div>
     </div>
-    
+
     <div class="form-content step-2" style="display: none; margin-bottom: 15px;">
-        
+
         <div id="lessonContainer"></div>
         <div class="d-flex justify-content-between mt-3">
             <button type="button" class="btn btn-primary custom-button" id="backStepBtn"><span>Back</span></button>

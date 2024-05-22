@@ -2,18 +2,20 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="main-title">яШарю</h1>
-    <p class="main-description">Learn and grow with us</p>
-    @if (!User.Identity.IsAuthenticated)
-    {
-        <a href="/account/signin">
-            <button class="main-button">Start for Free!</button>
-        </a>
-    }
-    else
-    {
-        <button class="main-button">Continue Learning</button>
-    }
-    <p class="contact">Having issues? <a class="url-contact" href="/about/privacy#section10">Contact us &#8594;</a></p>
+<div class="body-img">
+    <div class="text-center" style="margin-bottom: 17em">
+        <h1 class="main-title">ЯШарю</h1>
+        <p class="main-description">Learn and grow with us</p>
+        @if (!User.Identity.IsAuthenticated)
+        {
+            <a href="/account/signin">
+                <button class="main-button">Start for Free!</button>
+            </a>
+        }
+        else
+        {
+            <button class="main-button">Continue Learning</button>
+        }
+        <p class="contact">Having issues? <a class="url-contact" href="/about/privacy#section10">Contact us &#8594;</a></p>
+    </div>
 </div>

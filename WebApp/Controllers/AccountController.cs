@@ -166,6 +166,7 @@ namespace WebApp.Controllers
             return View(user);
         }
 
+        [NonAction]
         private async Task<List<Country>?> GetCountries()
         {
             using var httpClient = new HttpClient();

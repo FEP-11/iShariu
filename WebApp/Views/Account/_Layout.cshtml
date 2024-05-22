@@ -56,6 +56,12 @@
                     {
                         <a asp-action="index" asp-controller="admin"><button class="btn btn-info">Admin</button></a>
                     }
+                    else if (User.IsInRole("creator"))
+                    {
+                        <a href="@Url.Action(action: "create", controller: "course")" class="dropdown-item">
+                            <i class="fas fa-plus"></i> Create Course
+                        </a>
+                    }
                     <div class="username">Hello, @User.Identity.Name</div>
                     <a asp-action="logout" asp-controller="account"><button type="submit" class="btn-logout">Log out</button></a>
                 }

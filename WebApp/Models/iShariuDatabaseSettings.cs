@@ -10,5 +10,6 @@
 
         public string CoursesCollectionName { get; set; } = null!;
         public string LessonsCollectionName { get; set; } = null!;
+        public string MessagesCollectionName { get; set; } = null!;
     }
 }

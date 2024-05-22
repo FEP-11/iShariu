@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+﻿document.addEventListener('DOMContentLoaded', function() {
     var accessElement = document.getElementById('access');
     var priceFieldElement = document.getElementById('priceField');
     var courseFormElement = document.getElementById('courseForm');

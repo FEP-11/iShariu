@@ -1,6 +1,5 @@
 body {
     font-family: Inter, Arial, sans-serif;
-    
 }
 
 .header {
@@ -54,6 +53,10 @@ body {
     height: 0;
     cursor: pointer;
     margin-right: 30px;
+}
+
+.iShariu-logo:active {
+    transform: translateY(1px);
 }
 
 .nav-item:hover {
@@ -139,7 +142,7 @@ a.nav-item {
 }
 
 .iShariu-logo:active {
-    transform: translateY(1px);
+    transform: translateY(1px); 
 }
 
 .home-link > .project-name {
