@@ -1,0 +1,103 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    max-width: 100%;
+    background-image: url("../img/auth-background-image.png");
+    background-size: 100% 100%;
+    background-repeat: repeat;
+}
+
+.auth-img {
+    display: none;
+}
+
+.auth-form {
+    width: 100%;
+    max-width: 500px;
+    padding: 2em;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+    font-size: 1.5em;
+    text-align: center;
+    color: #333;
+}
+
+.registration-subtitle
+{
+    font-size: 1em;
+    text-align: center;
+    color: #6c6c6c;
+}
+
+.registration-message {
+    margin-top: 1em;
+    font-size: 0.8em;
+}
+
+.registration-link {
+    color: #FF6347;
+    text-decoration: none;
+    font-size: 0.9em;
+}
+
+.input-title {
+    font-size: 0.9em;
+    margin-bottom: 0.5em;
+    color: #333;
+}
+
+.input-field {
+    width: 100%;
+    padding: 0.5em;
+    margin-bottom: 1em;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.input-field:focus {
+    border-color: #FF6347;
+    outline: none;
+    box-shadow: 0px 0px 5px rgba(255, 99, 71, 0.5);
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 0.5em;
+    border: none;
+    border-radius: 5px;
+    background-color: #FF6347;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #FF4500;
+}
+
+.input-title {
+    font-size: 0.7em;
+    margin-bottom: 0.5em;
+    color: #212121;
+    text-transform: uppercase; 
+}
+
+.terms {
+    font-size: 0.8em; 
+    margin-top: 1em;
+    color: #676767; 
+}
+
+

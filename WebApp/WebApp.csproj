@@ -4,6 +4,24 @@
         <TargetFramework>net7.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>cd5dc4d2-bfd1-41dd-87ac-0e815c18983a</UserSecretsId>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
     </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Remove="Controllers\AdminPanel.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="DotNetEnv" Version="3.0.0" />
+      <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.4" />
+      <PackageReference Include="MongoDB.Bson" Version="2.24.0" />
+      <PackageReference Include="MongoDB.Driver" Version="2.24.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\Errors\Error404.cshtml" />
+    </ItemGroup>
 
 </Project>

@@ -1,0 +1,114 @@
+@using System.Security.Claims
+@model IEnumerable<Course>
+@{
+    ViewData["Title"] = "Courses";
+    var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+}
+
+<div class="card-group row">
+    @for (int i = 0; i < Model.Count(); i++)
+    {
+        var course = Model.ElementAt(i);
+        var creator = ViewBag.Creator[i];
+        
+        <div class="col-md-3">
+            <div class="card">
+                <a href="@Url.Action(action: "Lessons", controller: "Course", values: new { id = course.Id })">
+                    <img src="@(course.CourseImage != null ? course.CourseImage : "/img/no-image.png")" class="card-img-top blurry-image" alt="card-img">
+                </a>
+                <div class="card-body">
+                    <h5 class="course-tale"><img src="img/play.png" class="play-img" alt="play-img">@course.LessonIds.Count()x Lessons</h5>
+                    <p class="course-name">
+                        <a class="text-decoration-none text-black" 
+                           href="@Url.Action(action: "Lessons", controller: "Course", values: new { id = course.Id })">
+                            @course.CourseName
+                        </a>
+                    </p>
+                    <div class="line"></div>
+                    @if (creator != null && User.Identity.IsAuthenticated)
+                    {
+                        <p class="course-creator">
+                            <img src="img/user.png" class="user-img" alt="user-img">
+                            <a class="text-decoration-none text-black" 
+                               href="@Url.Action(action: "UserProfile", controller: "Account", values: new { Id = course.CreatorId })">
+                                @creator.Username
+                            </a>
+                        </p>
+                            @if (course.CreatorId == currentUserId)
+                            {
+                            <a class="btn btn-danger" asp-action="EditCourse" asp-controller="Course" asp-route-courseId="@course.Id">
+                                Edit
+                            </a>
+                            }
+                            else
+                            {
+                            @if (!((User)ViewBag.User).EnrolledCourses.Any(c => c == course.Id))
+                            {
+                            <a class="btn-shariu"
+                               href="@Url.Action(action: "AddToLibrary", controller: "Course", values: new { userId = currentUserId, courseId = course.Id})">
+                                Add to Library
+                            </a>
+                            }
+                            else
+                            {
+                            <a class="btn-shariu"
+                               href="@Url.Action(action: "Lessons", controller: "Course", values: new { id = course.Id })">
+                                Study
+                            </a>
+                            }
+                            }
+                    }
+                    else if (creator == null && User.Identity.IsAuthenticated)
+                    {
+                        <p class="course-creator">
+                            <img src="img/user.png" class="user-img" alt="user-img">
+                            Deleted User
+                        </p>
+
+                        @if (((User)ViewBag.User).EnrolledCourses.Any(c => c == course.Id))
+                        {
+                            <a class="btn-shariu"
+                               href="@Url.Action(action: "AddToLibrary", controller: "Course", values: new { userId = currentUserId, courseId = course.Id})">
+                                Add to Library
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="btn-shariu"
+                               href="@Url.Action(action: "Lessons", controller: "Course", values: new { id = course.Id })">
+                                Study
+                            </a>
+                        }
+                    }
+                    else if (creator != null)
+                    {
+                        <p class="course-creator">
+                            <img src="img/user.png" class="user-img" alt="user-img">
+                            <a class="text-decoration-none text-black" 
+                               href="@Url.Action(action: "UserProfile", controller: "Account", values: new { Id = course.CreatorId })">
+                                @creator.Username
+                            </a>
+                        </p>
+                        
+                        <a class="btn-shariu" 
+                           href="@Url.Action(action: "signin", controller: "account")">
+                            Study
+                        </a>
+                    }
+                    else
+                    {
+                        <p class="course-creator">
+                            <img src="img/user.png" class="user-img" alt="user-img">
+                            Deleted User
+                        </p>
+                        
+                        <a class="btn-shariu" 
+                           href="@Url.Action(action: "signin", controller: "account")">
+                            Study
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>

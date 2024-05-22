@@ -1,0 +1,258 @@
+body {
+    background: url('../img/course_back.png') !important;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    color: #000000;
+    font-family: Inter, Arial, sans-serif;
+}
+
+h2 {
+    font-size: 2em;
+    color: #da7272;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 1em;
+    margin-top: 3em;
+}
+
+.form-group {
+    width: 50%;
+    margin: auto;
+    margin-bottom: 20px;
+    background-color: #f7f7f7;
+    padding: 1em;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-container label {
+    color: #8e9297;
+    font-size: 0.8em;
+    font-weight: 700;
+    margin-bottom: 0.5em;
+}
+
+.form-container input, .form-container select, .form-container textarea {
+    background-color: #f0f0f0;
+    border: none;
+    color: #6e6262;
+    padding: 0.5em;
+    width: 100%;
+}
+
+.form-container input::placeholder, .form-container select::placeholder, .form-container textarea::placeholder {
+    color: #978e8e;
+}
+
+.form-container input:focus, .form-container select:focus, .form-container textarea:focus {
+    border-color: #FF6347;
+    outline: none;
+    box-shadow: 0px 0px 5px rgba(255, 99, 71, 0.5);
+}
+
+.form-check-inline {
+    margin-right: 1em;
+}
+
+.form-check-label {
+    margin-right: 0.5em;
+}
+
+.lesson-group {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.card {
+    width: 330px;
+    height: 415px;
+    margin-top: 88px;
+    border-radius: 30px;
+    font-family: Inter, sans-serif;
+    border: 2px solid #DADAF7;
+    position: relative;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 180px;
+    margin: auto;
+    border-radius: 30px 30px 0 0 ;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 90%, 0% 100%);
+}
+
+.play-img {
+    width: 15px;
+    height: auto;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.course-tale {
+    font-size: 16px;
+    padding: 15px 0;
+}
+
+.course-name {
+    padding: 20px 0;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.line {
+    width: 100%;
+    border-top: 1px solid #DADAF7;
+}
+
+.user-img {
+    width: 18px;
+    height: auto;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.course-creator {
+    display: inline-block;
+    padding: 15px 0;
+    font-size: 18px;
+    font-weight: bold;
+    margin: auto;
+}
+
+.lesson-link {
+    color: #333;
+    background-color: #f8f9fa;
+    border-radius: 0.25rem;
+    margin-bottom: 0.5rem;
+    transition: all 0.2s ease-in-out;
+    width: auto;
+    height: 50px;
+}
+
+.course-content-header {
+    font-size: 1.2em;
+    font-weight: bold;
+    border-bottom: 2px solid #464646;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+    text-transform: uppercase;
+}
+
+.nav-box {
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    display: inline-block;
+    vertical-align: top;
+    width: 35%;
+    height: 100vh;
+    margin-right: 0;
+}
+
+.content-box {
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    margin-bottom: 1rem;
+    display: inline-block;
+    vertical-align: top;
+    width: 64%;
+    height: 100vh;
+    margin-left: 0;
+}
+
+.lesson-content {
+    padding: 1rem;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    width: 100%;
+    height: 100%;
+}
+
+.tab-content {
+    height: 100vh;
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%;
+    height: 0;
+}
+
+.iframe-fullscreen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.card-group {
+    margin-left: 2em !important;
+    margin-right: 2em !important;
+}
+
+.btn-shariu {
+    background-color: #FF6347;
+    color: #ffffff;
+    border: none;
+    padding: 0.5em 1em;
+    border-radius: 0.25rem;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.lesson-group {
+    margin-bottom: 15px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+input[type="radio"]:checked {
+    border-color: #FC4928FF;
+    background-color: #FC4928FF;
+}
+
+input[type="radio"]:checked:before {
+    border-color: #FC4928FF;
+    background-color: #FC4928FF;
+}
+
+input[type="radio"]:hover {
+    cursor: pointer;
+}
+
+.btn {
+    width: auto;
+    height: auto;
+    border-radius: 25px;
+    background-color: #FC4928;
+    color: white;
+    border: none;
+    transition: opacity 0.15s, background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #D32F2F;
+    opacity: 0.8;
+}
+
+.btn:active {
+    opacity: 0.5;
+}
+
+.btn:focus,
+.btn:active {
+    opacity: 0.5;
+}

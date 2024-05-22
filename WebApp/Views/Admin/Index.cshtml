@@ -1,0 +1,53 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="dashboard">
+    <h1 class="main-text">Current information: </h1>
+
+    <div class="info-boxes">
+        <div class="info-box">
+            <h2>Sales</h2>
+            <p class="number">@ViewData["Sales"]</p>
+        </div>
+        <div class="info-box">
+            <h2>Creators</h2>
+            <p class="number">@ViewData["Creators"]</p>
+        </div>
+        <div class="info-box">
+            <h2>Revenue Generated</h2>
+            <p class="number">@ViewData["Revenue"]</p>
+        </div>
+    </div>
+
+    <div class="boxes-row">
+    <div class="creator-box">
+        <h2>Best Selling Creators</h2>
+        @model List<User>  
+        <div class="table">
+            @foreach (var user in Model)
+            {
+                <div class="table-row">
+                    <div class="table-cell title">@user.Username</div>
+                    <div class="table-cell">@user.Sales sales</div>
+                    <div class="table-cell">$@user.RevenueGenerated revenue</div>
+                </div>
+            }
+        </div>
+        <a class="show-all-items" href="/admin/users?role=creator">View All Creators</a>
+    </div>
+    
+    <div class="course-box">
+        <h2>Best Selling Courses</h2>
+        @foreach (var course in (List<Course>)ViewData["Courses"])
+        {
+            <div class="table-row">
+                <div class="table-cell title">@course.CourseName</div>
+                <div class="table-cell">@course.Sales sales</div>
+                <div class="table-cell">$@course.RevenueGenerated revenue</div>
+            </div>
+        }
+        <a class="show-all-items" href="/admin/courses">View All Courses</a>
+    </div>
+</div>
+</div>

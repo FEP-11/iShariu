@@ -1,0 +1,57 @@
+﻿@model Course
+@{
+    ViewData["Title"] = "Lessons List";
+}
+
+<div style="margin-top: 11vh;">
+    <h3 style="align-content: center;">@Model.CourseName</h3>
+    <div class="content-box"> 
+        <div class="tab-content" id="v-pills-tabContent">
+            @foreach (var lesson in ViewBag.Lessons)
+            {
+                <div class="tab-pane fade lesson-content" id="lesson-content-@lesson.Id" role="tabpanel" aria-labelledby="lesson-link-@lesson.Id">
+                    <div>
+                        @{
+                            Uri uriResult;
+                            bool isYoutubeLink = Uri.TryCreate(lesson.VideoUrl, UriKind.Absolute, out uriResult)
+                                && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps)
+                                && (uriResult.Host == "www.youtube.com");    
+                        }
+                        
+                        @if (isYoutubeLink)
+                        {
+                            string videoLink = lesson.VideoUrl;
+                            string videoId = videoLink.Split("v=")[1];
+                            string embedLink = $"https://www.youtube.com/embed/{videoId}";
+                            
+                            <div class="video-container">
+                                <iframe class="iframe-fullscreen" src="@embedLink"
+                                        title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write;
+                                        encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                            </div>
+                            <hr/>
+                            <div>
+                                @lesson.TextContent
+                            </div>
+                        }
+                        else
+                        {
+                            <h1>URL isn't youtube</h1>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="nav-box"> 
+        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <h4 class="course-content-header">Course Content</h4>
+            @for (var i = 0; i < ViewBag.Lessons.Count; i++)
+            {
+                var lesson = ViewBag.Lessons[i];
+                <a class="nav-link lesson-link" id="lesson-link-@lesson.Id" data-toggle="pill" href="#lesson-content-@lesson.Id" role="tab" aria-controls="v-pills-home" aria-selected="true"><b>Lesson @(i + 1): @lesson.Name</b></a>
+            }
+        </div>
+    </div>
+</div>

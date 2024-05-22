@@ -1,0 +1,33 @@
+.list-group {
+    background-color: #ffffff;
+    border-radius: 5px;
+    height: calc(90vh - 2 * 1vh); 
+}
+
+.list-group-item {
+    border: none;
+    padding: 15px 20px;
+    color: #495057;
+}
+
+.list-group-item.active {
+    background-color: #ffffff;
+    color: red;
+}
+
+.list-group-item:hover {
+    background-color: #e9ecef;
+}
+
+.logout-button {
+    color: #911e1e;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.logout-button:hover {
+    color: red;
+    background-color: #ffffff;
+}

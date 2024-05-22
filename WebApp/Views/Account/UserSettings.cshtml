@@ -1,0 +1,197 @@
+﻿@{
+    ViewData["Title"] = "User Settings";
+}
+
+<div class="profile-container">
+    <div class="container">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="account-tab" data-toggle="tab" href="#account" role="tab" aria-controls="account" aria-selected="true">Account Settings</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="security-tab" data-toggle="tab" href="#security" role="tab" aria-controls="security" aria-selected="false">Login & Security</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="notifications-tab" data-toggle="tab" href="#notifications" role="tab" aria-controls="notifications" aria-selected="false">Notifications</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
+                @using System.Security.Claims                
+                @using Microsoft.AspNetCore.Mvc.TagHelpers
+                @model WebApp.Models.User
+                @{
+                    var countries = ViewData["Countries"] as List<Country>;
+                }
+
+                <form asp-action="UpdateProfile" asp-controller="Account" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)" method="post" class="edit-profile-form">
+                    <input type="hidden" asp-for="Id" />
+                    
+                    <div class="color-picker-container">
+                        <div>Profile picture color:</div>
+                        <input type="color" id="profileColor" name="profileColor" value="@Model.ProfileColor" class="color-picker"/>
+                    </div>
+                    <hr class="settings-divider">
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="username">Username:</label>
+                            <input type="text" id="username" asp-for="Username" class="form-input" placeholder="Enter your new username" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" asp-for="Email" class="form-input" placeholder="Enter your new email" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="location">Location:</label>
+                            @if (countries != null && countries.Any())
+                            {
+                                <select id="location" asp-for="Location" class="form-input large-select">
+                                    <option value="">Select a country</option>
+                                    @foreach (var country in countries)
+                                    {
+                                        <option value="@country.Cca2">@country.Name.Common</option>
+                                    }
+                                </select>
+                            }
+                            else
+                            {
+                                <p>Could not fetch the list of countries. Please try again later.</p>
+                            }
+                        </div>
+                        <div class="col-md-6">
+                            <label for="phoneNumber">Phone Number:</label>
+                            <input type="tel" id="phoneNumber" asp-for="PhoneNumber" class="form-input" placeholder="Enter your new phone number" />
+                        </div>
+                    </div>
+
+                    <button type="submit" class="form-button btn btn-danger">Update Profile</button>
+                </form>
+            </div>
+            <div class="tab-pane fade" id="security" role="tabpanel" aria-labelledby="security-tab">
+                @if (Model.HasMFAEnabled)
+                {
+                    <p class="mfa-enabled">Multi-factor authentication is enabled.</p>
+                }
+                else
+                {
+                    <p class="mfa-disabled">Multi-factor authentication is not enabled.</p>
+                }
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#changePasswordModal">
+                    Change password
+                </button>
+                
+                <div class="authenticator-app">
+                    <h2>Authenticator App</h2>
+                    <p>Configuring an authenticator app is a good way to add an extra level of security to<br> your account to make sure that only you have the ability to log in.</p>
+                    <button type="button" class="btn btn-secondary dsbld" data-toggle="tooltip" title="Soon...">Connect authenticator app</button>
+                </div>
+                
+                <div class="sms-backup-authentication">
+                    <h2>SMS Backup Authentication</h2>
+                    <div class="phone-number-container">
+                        <span id="phoneNumberDisplay" data-phone-number="@Model.PhoneNumber">Your current phone number is: ******@Model.PhoneNumber.Substring(Model.PhoneNumber.Length - 3).</span>
+                        <button id="revealPhoneNumber" type="button" class="btn btn-link">Reveal</button>
+                    </div>
+                    <button type="button" class="btn btn-secondary dsbld" data-toggle="tooltip" title="Soon...">Connect SMS authentication</button>
+                </div>
+                
+                <hr class="settings-divider">
+
+                <div class="form-check form-switch">
+                  <input class="form-check-input" type="checkbox" id="ageRestrictedContentToggle" asp-for="AllowAccessToAgeRestrictedContent">
+                  <label class="form-check-label" for="ageRestrictedContentToggle">Allow access to age restricted content</label>
+                </div>
+
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="improveIShariuToggle" asp-for="UseDataToImproveIShariu">
+                    <label class="form-check-label" for="improveIShariuToggle">Use your data to improve iShariu</label>
+                </div>
+                
+                <div class="terms-and-privacy">
+                    Check out our 
+                    <a href="/about/terms" target="_blank">Terms of Service</a> 
+                    and 
+                    <a href="/about/privacy" target="_blank">Privacy Policy</a>.
+                </div>
+                
+                <div class="delete-account-container">
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteAccountModal">
+                        Delete Account
+                    </button>
+                </div>
+                <div class="modal fade" id="deleteAccountModal" tabindex="-1" role="dialog" aria-labelledby="deleteAccountModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deleteAccountModalLabel">Delete Account</h5>
+                            </div>
+                                <div class="modal-body">
+                                    Are you sure you want to delete your account? This action cannot be undone.
+                                    <div class="form-group">
+                                        <input type="password" class="form-control" id="deleteAccountPassword" placeholder="Enter your password">
+                                    </div>
+                                    <div id="errorMessage" style="color: red;"></div>
+                                </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-danger" id="confirmDeleteAccount">Delete Account</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="changePasswordModalLabel">Change Password</h5>
+                            </div>
+                            <div class="modal-body">
+                                <form id="changePasswordForm">
+                                    <div class="form-group">
+                                        <label for="currentPassword">Current Password</label>
+                                        <input type="password" class="form-control" id="currentPassword" placeholder="Enter current password">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="newPassword">New Password</label>
+                                        <input type="password" class="form-control" id="newPassword" placeholder="Enter new password">
+                                    </div>
+                                    <div id="errorMessage" style="color: red;"></div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-danger" id="submitChangePassword">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="toast" id="successToast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header">
+                        <strong class="mr-auto">Success</strong>
+                        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="toast-body">
+                        Password changed successfully.
+                    </div>
+                </div>
+
+            </div>
+            <div class="tab-pane fade" id="notifications" role="tabpanel" aria-labelledby="notifications-tab">
+                <!-- Notifications Form Goes Here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/user-settings.js"></script>
+}

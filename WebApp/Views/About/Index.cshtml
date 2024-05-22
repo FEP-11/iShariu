@@ -1,0 +1,59 @@
+﻿@model dynamic
+
+@{
+    ViewData["Title"] = "About Us";
+}
+
+<div class="about-fullscreen-box">
+    <div class="about-text-section">
+        <h1>Create Space for Everyone to Find Belonging</h1>
+        <p>This is where your learning journey begins. iShariu is a platform that provides a variety of courses, used by millions of people to enhance their skills and knowledge. It's a place where everyone can find a course that suits their interests and needs, creating a sense of belonging and community.</p>
+    </div>
+    <div class="about-image-section">
+        <img src="../img/aboutus-right-image.png" alt="About Us">
+    </div>
+</div>
+
+<div class="about-container">
+    <div class="mission-section">
+        <div class="image-section">
+            <img src="../img/our-mission-image.png" alt="Our Mission">
+        </div>
+        <div class="text-section">
+            <h2>Our Mission</h2>
+            <p>Our mission is to make learning accessible and enjoyable for everyone. We believe in the power of knowledge and aim to create a community of lifelong learners. We strive to provide high-quality, diverse, and accessible courses that cater to a wide range of interests and skill levels. Our platform is designed to be user-friendly and engaging, encouraging learners to explore and discover new areas of interest.</p>
+        </div>
+    </div>
+    <div class="vision-section">
+        <div class="text-section">
+            <h2>Our Vision</h2>
+            <p>We envision a world where everyone has the opportunity to learn and grow. Through iShariu, we hope to empower individuals and communities with the tools they need to succeed. We believe that education is a fundamental right, and we are committed to breaking down barriers to access. We envision a future where everyone, regardless of their background or circumstances, has the opportunity to learn, grow, and achieve their potential.</p>
+        </div>
+        <div class="image-section">
+            <img src="../img/our-vision-image.png" alt="Our Vision">
+        </div>
+    </div>
+</div>
+
+<div class="metrics-section">
+    <h2>Our Metrics</h2>
+    <div class="info-boxes">
+        <div class="info-box">
+           <p class="number">@Model.Metrics.UserCount</p>
+            <h3>Users</h3>
+        </div>
+        <div class="info-box">
+            <p class="number">@Model.Metrics.CourseCount</p>
+            <h3>Courses</h3>
+        </div>
+        <div class="info-box">
+            <p class="number">@Model.Metrics.CreatorCount</p>
+            <h3>Creators</h3>
+        </div>
+    </div>
+</div>
+
+<div class="footer-links">
+    <a href="@Url.Action("Terms", "About")">Terms of Service</a>
+    <a href="@Url.Action("Privacy", "About")">Privacy Policy</a>
+</div>

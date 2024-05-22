@@ -1,0 +1,56 @@
+﻿@model UserProfileViewModel
+@{
+    ViewData["Title"] = "User Profile";
+}
+
+<div class="profile-container">
+    <div class="user-info-container">
+            <div class="profile-picture profile-picture-large" style="background-color: @Model.User.ProfileColor;">
+                <span class="profile-picture-text">@Model.User.Username.Substring(0, 1).ToUpper()</span>
+            </div>
+        <div class="user-info">
+            <h1>@Model.User.Username</h1>
+            <p>Email: @Model.User.Email</p>
+            <p>Role: @Model.User.Role</p>
+            @if (!string.IsNullOrEmpty(Model.User.Location))
+            {
+                <p>Location: <img src="https://flagsapi.com/@Model.User.Location.Substring(0, 2)/flat/32.png" alt="@Model.User.Location flag"/> @Model.User.Location</p>
+            }
+            else
+            {
+                <p>Location: Not set</p>
+            }
+            <p>Joined: @Model.User.JoinDate.ToString("MMMM dd, yyyy")</p>
+        </div>
+    </div>
+
+<h2>Created Courses</h2>
+    <div class="courses-container">
+        @foreach (var course in Model.CreatedCourses)
+        {
+            <a href="/courses/lessons/@course.Id">
+                <div class="course @(string.IsNullOrEmpty(course.CourseImage) ? "" : "course-with-image")">
+                    <h3>@course.CourseName</h3>
+                    @if (!string.IsNullOrEmpty(course.CourseImage))
+                    {
+                        <img src="@course.CourseImage" alt="@course.CourseName image" />
+                    }
+                </div>
+            </a>
+        }
+    </div>
+
+    <h2>Enrolled Courses</h2>
+    <div class="courses-container">
+        @foreach (var course in Model.EnrolledCourses)
+        {
+            <div class="course @(string.IsNullOrEmpty(course.CourseImage) ? "" : "course-with-image")">
+                <h3>@course.CourseName</h3>
+                @if (!string.IsNullOrEmpty(course.CourseImage))
+                {
+                    <img src="@course.CourseImage" alt="@course.CourseName image" />
+                }
+            </div>
+        }
+    </div>
+</div>

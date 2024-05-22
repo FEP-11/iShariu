@@ -1,0 +1,90 @@
+.header {
+    display: flex;
+    height: 4em;
+    justify-content: space-between;
+    background-color: #f8f9fa;
+    margin-bottom: 1em;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-bottom: 1px solid rgb(228, 228, 228);
+}
+
+.left-section,
+.middle-section,
+.right-section {
+    display: flex;
+    align-items: center;
+}
+
+.left-section .iShariu-logo {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.middle-section .nav-item {
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.right-section a {
+    margin-right: 10px;
+}
+
+.btn-sign-in,
+.btn-sign-up {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-sign-in {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-sign-up {
+    background-color: #28a745;
+    color: white;
+}
+
+.form-control.mr-sm-2 {
+    border-radius: 10px; 
+}
+
+.profile-picture {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 3em;
+}
+
+.title {
+    margin-right: 10px;
+}
+
+.project-name {
+    height: 0;
+    font-weight: bold;
+    color: #ac2020;
+    font-size: 1.3em;
+    align-items: center;
+    cursor: pointer;
+}
+
+.iShariu-logo {
+    height: 4em;
+    margin-left: 5em;
+    cursor: pointer;
+}
+
+.iShariu-logo {
+    margin-left: 3em !important;
+    margin-right: 0 !important;
+}
+
+.home-link > .project-name {
+    margin-left: 0;
+    font-size: 20px;
+    font-weight: bold;
+}
