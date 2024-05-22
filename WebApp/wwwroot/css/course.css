@@ -1,5 +1,8 @@
 body {
-    background-color: #ffffff;
+    background: url('../img/course_back.png') !important;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
     color: #000000;
     font-family: Inter, Arial, sans-serif;
 }
@@ -13,20 +16,25 @@ h2 {
     margin-top: 3em;
 }
 
-.form-group {
-    margin-bottom: 1em;
+.form-container {
     width: 50%;
     margin: auto;
+    margin-bottom: 20px;
+    background-color: #f7f7f7;
+    padding:
+            1em;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.form-group label {
+.form-container label {
     color: #8e9297;
     font-size: 0.8em;
     font-weight: 700;
     margin-bottom: 0.5em;
 }
 
-.form-group input, .form-group select, .form-group textarea {
+.form-container input, .form-container select, .form-container textarea {
     background-color: #f0f0f0;
     border: none;
     color: #6e6262;
@@ -34,22 +42,38 @@ h2 {
     width: 100%;
 }
 
-.form-group input::placeholder, .form-group select::placeholder, .form-group textarea::placeholder {
+.form-container input::placeholder, .form-container select::placeholder, .form-container textarea::placeholder {
     color: #978e8e;
 }
 
-.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+.form-container input:focus, .form-container select:focus, .form-container textarea:focus {
     border-color: #FF6347;
     outline: none;
     box-shadow: 0px 0px 5px rgba(255, 99, 71, 0.5);
 }
 
+.form-check-inline {
+    margin-right: 1em;
+}
+
+.form-check-label {
+    margin-right: 0.5em;
+}
+
+.lesson-group {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Other styles */
 .card {
     width: 330px;
     height: 415px;
     margin-top: 88px;
     border-radius: 30px;
-    font-family: Inter,sans-serif;
+    font-family: Inter, sans-serif;
     border: 2px solid #DADAF7;
     position: relative;
 }
@@ -58,7 +82,7 @@ h2 {
     width: 100%;
     height: 180px;
     margin: auto;
-    border-radius: 30px 30px 0 0 ;
+    border-radius: 30px 30px 0 0;
     clip-path: polygon(0% 0%, 100% 0%, 100% 90%, 0% 100%);
 }
 
@@ -172,4 +196,53 @@ h2 {
 .card-group {
     margin-left: 2em !important;
     margin-right: 2em !important;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.lesson-group {
+    margin-bottom: 15px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+input[type="radio"]:checked {
+    border-color: #FC4928FF;
+    background-color: #FC4928FF;
+}
+
+input[type="radio"]:checked:before {
+    border-color: #FC4928FF;
+    background-color: #FC4928FF;
+}
+
+input[type="radio"]:hover {
+    cursor: pointer;
+}
+
+.btn {
+    width: auto;
+    height: auto;
+    border-radius: 25px;
+    background-color: #FC4928;
+    color: white;
+    border: none;
+    transition: opacity 0.15s, background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #D32F2F;
+    opacity: 0.8;
+}
+
+.btn:active {
+    opacity: 0.5;
+}
+
+.btn:focus,
+.btn:active {
+    opacity: 0.5;
 }

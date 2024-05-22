@@ -1,65 +1,101 @@
+@{
+    ViewData["Title"] = "Create Course";
+}
+
 @model Course
 
-<h2>Create Course</h2>
+<h2 id="step1Title">Create Course</h2>
 
-<form id="courseForm" asp-action="Create" method="post">
-    <div class="form-group">
-        <label for="title">Title</label>
-        <input type="text" class="form-control" id="title" asp-for="CourseName" required>
-    </div>
-    <div class="form-group">
-        <label for="description">Description</label>
-        <textarea class="form-control" id="description" asp-for="CourseDescription" required></textarea>
-    </div>
-    <div class="form-group">
-        <label for="access">Access</label>
-        <select class="form-control" id="access" asp-for="CourseAccess" required>
-            <option value="">Select Access</option>
-            <option value="Free">Free</option>
-            <option value="Paid">Paid</option>
-        </select>
-    </div>
-    <div class="form-group" id="priceField" style="display: none;">
-        <label for="price">Price</label>
-        <input type="number" class="form-control" id="price" asp-for="CoursePrice">
-    </div>
-    <div class="form-group">
-        <label for="category">Category</label>
-        <select class="form-control" id="category" asp-for="CourseCategory" required>
-            <option value="">Select Category</option>
-            @foreach (var category in ViewBag.Categories)
-            {
-                <option value="@category">@category</option>
-            }
-        </select>
-    </div>
-<div class="form-group">
-    <label for="difficulty">Difficulty</label>
-    <input type="range" class="form-control-range" id="difficulty" name="difficulty" min="1" max="5" step="1" asp-for="CourseDifficulty" required>
-    <label id="difficultyLabel"></label>
-</div>
-    <div class="form-group">
-        <label for="language">Language</label>
-        <select class="form-control" id="language" asp-for="CourseLanguage" required>
-            <option value="">Select Language</option>
-            @foreach (var language in ViewBag.Languages)
-            {
-                <option value="@language">@language</option>
-            }
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="image">Course Image URL</label>
-        <input type="text" class="form-control" id="image" asp-for="CourseImage" required>
+<form id="courseForm" asp-action="Create" method="post" class="form-container">
+    <div class="form-content step-1">
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" id="title" asp-for="CourseName" required>
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" id="description" asp-for="CourseDescription" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="access">Access</label>
+            <select class="form-control" id="access" style="cursor: pointer;" asp-for="CourseAccess" required>
+                <option value="">Select Access</option>
+                <option value="Free">Free</option>
+                <option value="Paid">Paid</option>
+            </select>
+        </div>
+        <div class="form-group" id="priceField" style="display: none;">
+            <label for="price">Price</label>
+            <input type="number" class="form-control" id="price" asp-for="CoursePrice">
+        </div>
+        <div class="form-group">
+            <label for="category" >Category</label>
+            <select class="form-control" id="category" style="cursor: pointer;" asp-for="CourseCategory" required>
+                <option value="">Select Category</option>
+                @foreach (var category in ViewBag.Categories)
+                {
+                    <option value="@category">@category</option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="difficulty">Difficulty</label>
+            <div id="difficulty">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="difficulty" id="difficulty1" value="1" asp-for="CourseDifficulty" required>
+                    <label class="form-check-label" for="difficulty1">1</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="difficulty" id="difficulty2" value="2" asp-for="CourseDifficulty" required>
+                    <label class="form-check-label" for="difficulty2">2</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="difficulty" id="difficulty3" value="3" asp-for="CourseDifficulty" required>
+                    <label class="form-check-label" for="difficulty3">3</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="difficulty" id="difficulty4" value="4" asp-for="CourseDifficulty" required>
+                    <label class="form-check-label" for="difficulty4">4</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="difficulty" id="difficulty5" value="5" asp-for="CourseDifficulty" required>
+                    <label class="form-check-label" for="difficulty5">5</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="language">Language</label>
+            <select class="form-control" id="language" style="cursor: pointer;" asp-for="CourseLanguage" required>
+                <option value="">Select Language</option>
+                @foreach (var language in ViewBag.Languages)
+                {
+                    <option value="@language">@language</option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="image">Course Image URL</label>
+            <input type="text" class="form-control" id="image" asp-for="CourseImage" required>
+        </div>
+        <button type="button" class="btn btn-primary custom-button mt-3 float-left" id="nextStepBtn"><span>Next</span></button>
+        
+        <div class="clearfix"></div>
     </div>
     
-    <!-- Add Lesson Button -->
-    <button id="addLessonBtn" class="btn btn-primary">Add Lesson</button>
-    
-    <!-- Lesson Container -->
-    <div id="lessonContainer"></div>
-    
-    <button type="submit" class="btn btn-primary">Create</button>
+    <div class="form-content step-2" style="display: none; margin-bottom: 15px;">
+        
+        <div id="lessonContainer"></div>
+        <div class="d-flex justify-content-between mt-3">
+            <button type="button" class="btn btn-primary custom-button" id="backStepBtn"><span>Back</span></button>
+
+            <div>
+                <button id="addLessonBtn" class="btn btn-primary custom-button">Add Lesson</button>
+
+                <button type="submit" class="btn btn-primary">Create</button>
+            </div>
+        </div>
+
+    </div>
 </form>
 
 <script src="~/js/course-settings.js" asp-append-version="true"></script>

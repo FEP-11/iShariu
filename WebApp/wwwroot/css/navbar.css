@@ -139,7 +139,7 @@ a.nav-item {
 }
 
 .iShariu-logo:active {
-    transform: translateY(1px); /* Сдвигаем элемент на 1 пиксель вниз при активации */
+    transform: translateY(1px);
 }
 
 .home-link > .project-name {
