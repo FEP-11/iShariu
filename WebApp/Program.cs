@@ -12,11 +12,10 @@ builder.Services.Configure<iShariuDatabaseSettings>(
     builder.Configuration.GetSection("iShariu")
     );
 
-builder.Services.AddSingleton<MongoDBService<User>>();
-builder.Services.AddSingleton<MongoDBService<Course>>();
-builder.Services.AddSingleton<MongoDBService<Lesson>>();
-builder.Services.AddSingleton<MongoDBService<Message>>();
-
+builder.Services.AddScoped<MongoDBService<User>>();
+builder.Services.AddScoped<MongoDBService<Course>>();
+builder.Services.AddScoped<MongoDBService<Lesson>>();
+builder.Services.AddScoped<MongoDBService<Message>>();
 
 builder.Services.AddScoped<EntityService>();
 
